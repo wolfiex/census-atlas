@@ -1,0 +1,4 @@
+.accordion-item-header {
+    user-select: none;
+    cursor: pointer;
+}

@@ -1,0 +1,13 @@
+<li class='accordion-item' aria-expanded={params.open}>
+
+    <div class='accordion-item-header' on:click={handleToggle}>
+        <slot name='header' />
+    </div>
+
+    <div class='accordion-item-body' use:collapse={params}>
+        <slot name='body' />
+    </div>
+
+    <slot/>
+
+</li>

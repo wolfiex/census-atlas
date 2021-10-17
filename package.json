@@ -22,12 +22,15 @@
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
     "sirv-cli": "^1.0.0",
-    "svelte": "^3.0.0",
+    "svelte": "^3.31.2",
     "topojson-client": "^3.1.0"
   },
   "dependencies": {
+    "d3-interpolate": "^2.0.1",
     "d3-scale": "^3.2.3",
     "d3-shape": "^2.0.0",
-    "simple-statistics": "^7.4.0"
+    "simple-statistics": "^7.4.0",
+    "svelte-collapse": "^0.0.4",
+    "svelte-collapsible": "^0.2.1"
   }
 }
