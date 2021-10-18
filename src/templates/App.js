@@ -14,10 +14,43 @@ import { getData, getNomis, getBreaks, getTopo, processData } from "./utils.js";
 
 import { default as PanelSection } from './CustomAccordionPanel.svelte'
 
+var panels = {
+    data:
+    {
+        key: 'data',
+        title: 'Select Indicator',
+        text: `Example text:
+        Use the Search Bar Below.`
+    },
+    
+    area:
+    {
+        key: 'area',
+        title: 'Pick an area',
+        text: ``
+    },
+    infobox:
+    {
+        key: 'Info',
+        title: 'Summary',
+        text: ``,
+        active:true,
+    },
+    chart:
+    {
+        key: 'Comparison Chart',
+        title: '',
+        text: ``,
+        active:true,
+    }
+}
+
 
 // CONFIG
 // const apiurl = "https://www.nomisweb.co.uk/api/v01/dataset/";
 // const apikey = "0x3cfb19ead752b37bb90da0eb3a0fe78baa9fa055";
+
+
 const geography = "TYPE298";
 const mapstyle = "https://bothness.github.io/ons-basemaps/data/style-omt.json";
 const tabledata = "https://bothness.github.io/census-atlas/data/indicators.json";

@@ -18,10 +18,43 @@ import { getData, getNomis, getBreaks, getTopo, processData } from "./utils.js";
 
 import { default as PanelSection } from './CustomAccordionPanel.svelte'
 
+var panels = {
+    data:
+    {
+        key: 'data',
+        title: 'Select Indicator',
+        text: `Example text:
+        Use the Search Bar Below.`
+    },
+    
+    area:
+    {
+        key: 'area',
+        title: 'Pick an area',
+        text: ``
+    },
+    infobox:
+    {
+        key: 'Info',
+        title: 'Summary',
+        text: ``,
+        active:true,
+    },
+    chart:
+    {
+        key: 'Comparison Chart',
+        title: '',
+        text: ``,
+        active:true,
+    }
+}
+
 
 // CONFIG
 // const apiurl = "https://www.nomisweb.co.uk/api/v01/dataset/";
 // const apikey = "0x3cfb19ead752b37bb90da0eb3a0fe78baa9fa055";
+
+
 const geography = "TYPE298";
 const mapstyle = "https://bothness.github.io/ons-basemaps/data/style-omt.json";
 const tabledata = "https://bothness.github.io/census-atlas/data/indicators.json";
@@ -391,10 +424,22 @@ onMount(() => initialise());
 <Loader height="100vh" width="100vw" position="fixed" bgcolor="rgba(255, 255, 255, 0.7)" /> {/if}
 
 <Panel>
-    <h1>2011 Census Atlas Demo</h1> {#if indicators && selectItem} {#if selectData}
+    <h1 >2011 Census Atlas Demo</h1> 
+    <!-- <h1 style='border-bottom: 1px solid rgb(100, 120, 140);'/> -->
+    
+    {#if indicators && selectItem} 
+    
+    {#if selectData}
+    
+    <PanelSection bind:all={panels} key='chart'> 
     <ColChart data={selectData.lsoa.data} dataIndex={selectData.lsoa.index} breaks={selectData.lsoa.breaks} avg={selectData.ew.data} selected={active.lsoa.hovered ? active.lsoa.hovered : active.lsoa.selected} parent={active.lad.hovered ? selectData.lad.index[active.lad.hovered].median.code
         : active.lad.highlighted ? selectData.lad.index[active.lad.highlighted].median.code : active.lad.selected ? selectData.lad.index[active.lad.selected].median.code : null} siblings={active.lad.selected ? ladlookup[active.lad.selected].children : null}
-        key="perc" /> {/if}
+        key="perc" /> 
+        
+        </PanelSection>
+    {/if}
+        
+    <PanelSection bind:all={panels} key='infobox'>    
     <div id="infobox">
         {selectMeta.table.name}
         <small>({selectMeta.table.code})</small><br />
@@ -443,23 +488,30 @@ onMount(() => initialise());
             <div /> {/if} {/if}
         </div>
     </div>
+    </PanelSection>
+    
 
     {#if ladlist}
+    
+    <PanelSection bind:all={panels} key='area'>
     <Select options={ladlist} bind:selected={active.lad.selected} search={true} placeholder="Find a district..." on:select={()=> active.lsoa.selected = null} />
+    </PanelSection>
 		{/if}
 
 
 
-<PanelSection/>
-		<Group
+<PanelSection bind:all={panels} key='data'>
+		
+        <Group 
 			props={{ name: '2011 Census Tables', children: indicators, menu:0 }}
 			bind:selected={selectItem}
 			expanded />
-            
+        
+</PanelSection>
             
 	{/if}
 </Panel>
-
+<!-- 
 {#if mapLocation}
 <Map bind:map style={mapstyle} minzoom={4} maxzoom={14} bind:zoom={mapZoom} location={mapLocation}>
 	{#if selectData}
@@ -576,7 +628,7 @@ onMount(() => initialise());
 		</MapSource>
 	{/if}
 </Map>
-{/if}
+{/if} -->
 </main>
 
 <style>

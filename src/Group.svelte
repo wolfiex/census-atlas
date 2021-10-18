@@ -85,7 +85,7 @@ function select(name, info, num, infoname){
       
   
 
-<!-- 
+
 {#if props.type == 'group-radio'}
 <span class:expanded on:click={toggle} style="padding-left: 2.3em">
 	<input type="radio" bind:group={selected} value={props} on:click={radioClick} />
@@ -96,9 +96,9 @@ function select(name, info, num, infoname){
 	<span class='expanded'>'\e875'</span>{props.name}
 </span>
 {/if}
-{#if props.code && props.type != 'group-radio'}<small>({props.code})</small>{/if} -->
+{#if props.code && props.type != 'group-radio'}<small>({props.code})</small>{/if}
 
-  <!-- 
+  
       {#if expanded}
       	<ul>
       		{#each props.children as child}
@@ -111,7 +111,7 @@ function select(name, info, num, infoname){
       			</li>
       		{/each}
       	</ul>
-      {/if} -->
+      {/if}
   
  
 </div>

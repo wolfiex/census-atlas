@@ -1,25 +1,30 @@
 
 <Accordion>
-	
+	<!-- 
 	{ #each items as item }
-	
+	 -->
 		<AccordionItem key={item.key} bind:active={item.active}>
 			
 			<div slot='header' class='header' >
 				
-				<span class='name'>{item.active}  </span>
-				<h4 class='title' >{item.title}  </h4>
+				<span class='name'>{item.key}  </span>
 				
+                
+                <h4 class='title' >{item.title}  </h4>
+                
 				<div class='icon' >{item.active?'^':'>'}</div>
 			
 			</div>
 			
 			<p slot='body' class='body'>
-				{ item.text }
+				{ item.text || '' }
+            <slot>
+                Content Pending.
+            </slot>
 			</p>
 
 		</AccordionItem>
 	
-	{ /each }
+	<!-- { /each } -->
 
 </Accordion>
