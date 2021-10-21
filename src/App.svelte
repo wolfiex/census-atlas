@@ -25,28 +25,26 @@ var panels = {
     {
         key: 'data',
         title: 'Select Indicator',
-        text: `Example text:
-        Use the Search Bar Below.`
+        text: `This is where you select an indicator to view. `
     },
-
     area:
     {
         key: 'area',
         title: 'Pick an area',
-        text: ``
+        text: `This is where you select an area`
     },
     infobox:
     {
         key: 'Info',
         title: 'Summary',
-        text: ``,
+        text: `Summary details of your selection.`,
         active:true,
     },
     chart:
     {
         key: 'Comparison Chart',
         title: '',
-        text: ``,
+        text: `A comparison chart of your inicator with the avarage.`,
         active:true,
     }
 }
@@ -153,9 +151,9 @@ function setIndicator(indicators, code) {
     });
 }
 
-function initialise() {
+async function initialise() {
 
-   csv(boundurl).then((bounds)=>{
+   await csv(boundurl).then((bounds)=>{
 
      bounddata = new Map(bounds.map(d=>{return [d.AREACD,d]}))
 
@@ -444,7 +442,7 @@ $: if (!mapLoaded && map) {
     });
 }
 
-onMount(() => initialise());
+onMount(initialise)
 
 </script>
 
@@ -710,4 +708,5 @@ hr {
     height: 24px;
     cursor: pointer;
 }
+
 </style>
