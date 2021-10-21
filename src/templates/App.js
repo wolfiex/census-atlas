@@ -121,26 +121,17 @@ let mapLoaded = false;
 let mapZoom = null;
 
 // FUNCTIONS
-function updateURL() {
-  let hash = location.hash;
-  let newhash = `#/${selectCode}/${
-    active.lad.selected ? active.lad.selected : ""
-  }/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom},${
-    mapLocation.lon
-  },${mapLocation.lat}`;
-  if (hash != newhash) {
-    history.pushState(undefined, undefined, newhash);
-  }
-}
-
-async function replaceURL() {
+function changeURL() {
   let hash = `#/${selectCode}/${
     active.lad.selected ? active.lad.selected : ""
   }/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom},${
     mapLocation.lon
   },${mapLocation.lat}`;
-  history.replaceState(undefined, undefined, hash);
+  if (hash != location.hash) {
+    history.pushState(undefined, undefined, hash);
+  }
 }
+
 
 function setIndicator(indicators, code) {
   indicators.forEach((indicator) => {
@@ -250,7 +241,7 @@ function setSelect() {
     };
 
     loadData();
-    updateURL();
+    changeURL();
   }
 }
 
@@ -285,9 +276,7 @@ function loadData() {
 
       console.log("2eeee", dataset.lsoa.data);
 
-      dataset.lsoa.data.forEach(get_lsoa_fill);
-
-      function get_lsoa_fill(d) {
+      dataset.lsoa.data.forEach(function (d) {
         var n = 4;
         if (d.perc <= breaks[1]) {
           n = 0;
@@ -301,11 +290,10 @@ function loadData() {
         d.color = colors.base[n];
         d.muted = colors.muted[n];
         d.fill = colors.base[n];
-      }
+      });
 
       let proc = processData(res, lsoalookup);
       dataset.lsoa.index = proc.lsoa.index;
-
       dataset.lad.data = proc.lad.data;
       dataset.lad.index = proc.lad.index;
 
@@ -337,7 +325,7 @@ function doSelect() {
       active.lsoa.selected = null;
     }
     setColors();
-    updateURL();
+    changeURL();
   }
 }
 
@@ -394,14 +382,15 @@ function getSib(type, diff) {
 // Update state based on URL
 let hash = location.hash == "" ? "" : location.hash.split("/");
 if (hash.length == 5) {
-  selectCode = hash[1];
-  active.lad.selected = hash[2] != "" ? hash[2] : "";
-  active.lsoa.selected = hash[3] != "" ? hash[3] : "";
-  let zxy = hash[4].split(",");
+
+  let zoom, lon, lat, other;
+  [zoom, selectCode, active.lad.selected, active.lsoa.selected, other] = hash;
+  [zoom, lon, lat] = other.split(",");
+
   mapLocation = {
-    zoom: zxy[0],
-    lon: zxy[1],
-    lat: zxy[2],
+    zoom,
+    lon,
+    lat,
   };
 }
 
@@ -445,10 +434,10 @@ $: if (!mapLoaded && map) {
     let center = map.getCenter();
     mapLocation = {
       zoom: map.getZoom().toFixed(0),
-      lon: center.lng.toFixed(5),
-      lat: center.lat.toFixed(5),
+      lon: center.lng,
+      lat: center.lat,
     };
-    replaceURL().then(null);
+    changeURL();
   });
 }
 
