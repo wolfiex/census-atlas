@@ -15,6 +15,7 @@ export async function getTopo(url, layer) {
   return geojson;
 }
 
+
 export async function getNomis(url, code) {
   let response = await fetch(url);
   let string = await response.text();
@@ -85,7 +86,7 @@ export function processData(data, lookup) {
 
 export function getBreaks(chunks) {
 	let breaks = [];
-	
+
 	chunks.forEach(chunk => {
 		breaks.push(chunk[0]);
 	});

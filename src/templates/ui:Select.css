@@ -1,0 +1,101 @@
+a {
+  text-decoration: none;
+  display: block;
+  padding: 0;
+  border: 2px solid #206095 !important;
+}
+a span {
+  display: inline-block;
+  padding: 10px 5px;
+}
+#select {
+  margin-bottom: 20px;
+}
+#dropdown ul {
+  background: #eee;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#dropdown li {
+  line-height: 1em;
+  padding: 6px 0;
+}
+#dropdown li:hover {
+  color: #fff;
+  background-color: #206095;
+  font-weight: 500;
+}
+/* normalize the input elements, make them look like everything else */
+#select input {
+  width: calc(100% - 40px);
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  display: inline-block;
+  padding: 10px 5px;
+  margin: 0;
+  background-color: #fff;
+  border: 2px solid #206095 !important;
+  border-radius: 0px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+#select input:focus {
+  outline: none;
+}
+/* custom field (drop-down, text element) styling  */
+#select {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+.active {
+  z-index: 1000;
+}
+/* the toggle is the visible part in the form */
+#toggle,
+#select input {
+  line-height: inherit;
+  color: #206095;
+  font-weight: 500;
+  cursor: pointer;
+}
+/* drop-down list / text element */
+#dropdown {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+}
+.selected {
+  color: #fff !important;
+  background-color: #206095;
+}
+.button {
+  color: #fff;
+  background-color: #206095;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  float: right;
+}
+.down {
+  background-image: url("../icons/chevron-down.svg");
+  width: 30px;
+}
+.search {
+  background-image: url("../icons/search.svg");
+  width: 30px;
+}
+.close {
+  background-image: url("../icons/x-close.svg");
+  width: 30px;
+}

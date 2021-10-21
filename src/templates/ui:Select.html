@@ -1,0 +1,35 @@
+<div id="select" class:active={expanded}>
+	{#if selected}
+	<a id="toggle" class="selected" on:click={toggle}>
+		<span>{name}</span>
+		<span class="button close" on:click={unSelect}>&nbsp;</span>
+	</a>
+	{:else}
+	<a id="toggle" on:click={toggle}>
+		<span>{placeholder ? placeholder : 'Select one'}</span>
+		{#if search}
+		<span class="button search">&nbsp;</span>
+		{:else}
+		<span class="button down">&nbsp;</span>
+		{/if}
+	</a>
+	{/if}
+
+
+	{#if expanded}
+	<div id="dropdown" bind:this={el}>
+		{#if search == true}
+		<input type="text" placeholder="" bind:value={filter} autocomplete="false" bind:this={input} on:keyup={submit} />
+		{/if}
+		<ul>
+			{#if filtered[0]}
+			{#each filtered as option}
+			<li on:click="{() => select(option)}">{option.name}</li>
+			{/each}
+			{:else}
+			<li>No results</li>
+			{/if}
+		</ul>
+	</div>
+	{/if}
+</div>

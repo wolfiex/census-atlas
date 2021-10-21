@@ -1,19 +1,18 @@
 import { onMount } from "svelte";
-import { bbox } from "@turf/turf";
 import { ckmeans } from 'simple-statistics';
 import Panel from "./Panel.svelte";
 import Group from "./Group.svelte";
-import Map from "./Map.svelte";
+import MapComponent from "./MapComponent.svelte";
 import MapSource from "./MapSource.svelte";
 import MapLayer from "./MapLayer.svelte";
 import ColChart from "./charts/Histogram.svelte";
 import Loader from "./ui/Loader.svelte";
 import Select from "./ui/Select.svelte";
 import { getData, getNomis, getBreaks, getTopo, processData } from "./utils.js";
+import {csv} from 'd3-fetch'
 
 
-import { default as PanelSection } from './CustomAccordionPanel.svelte'
-
+import { default as PanelSection } from './ui/CustomAccordionPanel.svelte'
 import {default as Geolocate} from "./geolocate.svelte";
 
 
@@ -52,6 +51,11 @@ var panels = {
 // CONFIG
 // const apiurl = "https://www.nomisweb.co.uk/api/v01/dataset/";
 // const apikey = "0x3cfb19ead752b37bb90da0eb3a0fe78baa9fa055";
+
+
+// const ladtopdesc;
+const boundurl = "https://raw.githubusercontent.com/wolfiex/TopoStat/main/area_summary.csv"
+
 
 
 const geography = "TYPE298";
@@ -112,6 +116,7 @@ let active = {
 let selectCode = "QS119EW005";
 let mapLocation = null;
 
+let bounddata;
 let selectItem;
 let selectMeta;
 let selectData;
@@ -145,9 +150,21 @@ function setIndicator(indicators, code) {
 }
 
 function initialise() {
+
+   csv(boundurl).then((bounds)=>{
+
+     bounddata = new Map(bounds.map(d=>{return [d.AREACD,d]}))
+
+     console.log(bounddata)
+   })
+
+
+
     getTopo(ladtopo.url, ladtopo.layer)
         .then((geo) => {
             ladbounds = geo;
+
+
 
             let lookup = {};
             let list = [];
@@ -163,11 +180,18 @@ function initialise() {
             ladlist = list;
 
             let location = geo.features[Math.floor(Math.random() * geo.features.length)];
-            let bounds = bbox(location);
+
+            console.log(location)
+
+            let b = bounddata.get(location.properties.AREACD)
+
+
+
+
             mapLocation = {
                 zoom: 11,
-                lon: +((bounds[0] + bounds[2]) / 2).toFixed(5),
-                lat: +((bounds[1] + bounds[3]) / 2).toFixed(5)
+                lon: +b.lon,
+                lat: +b.lat
             };
 
             return lookup;
@@ -330,9 +354,11 @@ function setColors() {
                 d.selected = false;
             }
         });
-        // zoom to district on map
-        let geometry = ladbounds.features.find(f => f.properties[ladtopo.code] == active.lad.selected).geometry;
-        let bounds = bbox(geometry);
+
+
+        let b = bounddata.get(active.lad.selected)
+        let bounds = [b.minx,b.miny,b.maxx,b.maxy]
+
         if (!active.lsoa.selected) {
             map.fitBounds(bounds, { padding: 20 });
         }
@@ -354,9 +380,8 @@ function getSib(type, diff) {
             active.lsoa.selected = filtered[index].code;
 
             // Fit to parent LAD
-            let geometry = ladbounds.features.find(f => f.properties[ladtopo.code] == active.lad.selected).geometry;
-            let bounds = bbox(geometry);
-            map.fitBounds(bounds, { padding: 20 });
+            let b = bounddata.get(active.lad.selected)
+            map.fitBounds([b.minx,b.miny,b.maxx,b.maxy], { padding: 20 });
         }
     }
 }

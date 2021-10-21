@@ -69,16 +69,18 @@
     </PanelSection>
 
 
-<Geolocate width='30px'/>
+
 
     {#if ladlist}
 
     <PanelSection bind:all={panels} key='area'>
 
-      <Select options={ladlist} bind:selected={active.lad.selected} search={true} placeholder="Find a district..." on:select={()=> active.lsoa.selected = null} />
 
 
+<!-- wrapper html to shrink select -->
+      <Select options={ladlist} bind:selected={active.lad.selected} search={true} placeholder="Find a district..."  on:select={()=> active.lsoa.selected = null} />
 
+<Geolocate width='30px'/>
     </PanelSection>
 		{/if}
 
@@ -100,9 +102,9 @@
 
 
 
-<!--
+
 {#if mapLocation}
-<Map bind:map style={mapstyle} minzoom={4} maxzoom={14} bind:zoom={mapZoom} location={mapLocation}>
+<MapComponent bind:map style={mapstyle} minzoom={4} maxzoom={14} bind:zoom={mapZoom} location={mapLocation}>
 	{#if selectData}
 		<MapSource
 			id="lsoa"
@@ -216,5 +218,5 @@
 				on:select={() => active.lsoa.selected = null} />
 		</MapSource>
 	{/if}
-</Map>
-{/if} -->
+</MapComponent>
+{/if}
