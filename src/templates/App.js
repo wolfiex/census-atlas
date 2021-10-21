@@ -14,6 +14,9 @@ import { getData, getNomis, getBreaks, getTopo, processData } from "./utils.js";
 
 import { default as PanelSection } from './CustomAccordionPanel.svelte'
 
+import {default as Geolocate} from "./geolocate.svelte";
+
+
 var panels = {
     data:
     {
@@ -22,7 +25,7 @@ var panels = {
         text: `Example text:
         Use the Search Bar Below.`
     },
-    
+
     area:
     {
         key: 'area',

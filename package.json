@@ -1,6 +1,6 @@
 {
   "name": "census-atlas",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "http://onsvisual.github.io/census-atlas",
   "scripts": {
     "build": "rollup -c",

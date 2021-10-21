@@ -18,6 +18,9 @@ import { getData, getNomis, getBreaks, getTopo, processData } from "./utils.js";
 
 import { default as PanelSection } from './CustomAccordionPanel.svelte'
 
+import {default as Geolocate} from "./geolocate.svelte";
+
+
 var panels = {
     data:
     {
@@ -26,7 +29,7 @@ var panels = {
         text: `Example text:
         Use the Search Bar Below.`
     },
-    
+
     area:
     {
         key: 'area',
@@ -417,6 +420,7 @@ $: if (!mapLoaded && map) {
 }
 
 onMount(() => initialise());
+
 </script>
 
 <main>
@@ -424,22 +428,22 @@ onMount(() => initialise());
 <Loader height="100vh" width="100vw" position="fixed" bgcolor="rgba(255, 255, 255, 0.7)" /> {/if}
 
 <Panel>
-    <h1 >2011 Census Atlas Demo</h1> 
+    <h1 >2011 Census Atlas Demo</h1>
     <!-- <h1 style='border-bottom: 1px solid rgb(100, 120, 140);'/> -->
-    
-    {#if indicators && selectItem} 
-    
+
+    {#if indicators && selectItem}
+
     {#if selectData}
-    
-    <PanelSection bind:all={panels} key='chart'> 
+
+    <PanelSection bind:all={panels} key='chart'>
     <ColChart data={selectData.lsoa.data} dataIndex={selectData.lsoa.index} breaks={selectData.lsoa.breaks} avg={selectData.ew.data} selected={active.lsoa.hovered ? active.lsoa.hovered : active.lsoa.selected} parent={active.lad.hovered ? selectData.lad.index[active.lad.hovered].median.code
         : active.lad.highlighted ? selectData.lad.index[active.lad.highlighted].median.code : active.lad.selected ? selectData.lad.index[active.lad.selected].median.code : null} siblings={active.lad.selected ? ladlookup[active.lad.selected].children : null}
-        key="perc" /> 
-        
+        key="perc" />
+
         </PanelSection>
     {/if}
-        
-    <PanelSection bind:all={panels} key='infobox'>    
+
+    <PanelSection bind:all={panels} key='infobox'>
     <div id="infobox">
         {selectMeta.table.name}
         <small>({selectMeta.table.code})</small><br />
@@ -489,29 +493,40 @@ onMount(() => initialise());
         </div>
     </div>
     </PanelSection>
-    
+
+
+<Geolocate width='30px'/>
 
     {#if ladlist}
-    
+
     <PanelSection bind:all={panels} key='area'>
-    <Select options={ladlist} bind:selected={active.lad.selected} search={true} placeholder="Find a district..." on:select={()=> active.lsoa.selected = null} />
+
+      <Select options={ladlist} bind:selected={active.lad.selected} search={true} placeholder="Find a district..." on:select={()=> active.lsoa.selected = null} />
+
+
+
     </PanelSection>
 		{/if}
 
 
 
 <PanelSection bind:all={panels} key='data'>
-		
-        <Group 
+
+        <Group
 			props={{ name: '2011 Census Tables', children: indicators, menu:0 }}
 			bind:selected={selectItem}
 			expanded />
-        
+
 </PanelSection>
-            
+
 	{/if}
 </Panel>
-<!-- 
+
+
+
+
+
+<!--
 {#if mapLocation}
 <Map bind:map style={mapstyle} minzoom={4} maxzoom={14} bind:zoom={mapZoom} location={mapLocation}>
 	{#if selectData}
@@ -629,6 +644,7 @@ onMount(() => initialise());
 	{/if}
 </Map>
 {/if} -->
+
 </main>
 
 <style>
