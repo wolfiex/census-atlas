@@ -4,7 +4,7 @@
 	import { centroid } from "@turf/turf";
 
 	const dispatch = createEventDispatcher();
-	
+
 	export let id;
 	export let source;
 	export let sourceLayer = null;
@@ -22,20 +22,20 @@
 	export let hover = false;
 	export let highlight = false;
 	export let order = null;
-	export let maxzoom;
-	export let minzoom;
-	
+	export let maxzoom = undefined;
+	export let minzoom = undefined;
+
 	const { getMap } = getContext('map');
 	const map = getMap();
-	
+
 	let selectedPrev = null;
 	let highlightedPrev = null;
 	let selectedGeo = null;
-	
+
 	if (map.getLayer(id)) {
     map.removeLayer(id);
 	}
-	
+
 	let options = {
 		'id': id,
 		'type': type,
@@ -47,7 +47,7 @@
 	if (filter) {
 		options['filter'] = filter;
 	}
-	
+
 	if (sourceLayer) {
 		options['source-layer'] = sourceLayer;
 	}
@@ -57,7 +57,7 @@
 	if (minzoom) {
 		options['minzoom'] = minzoom;
 	}
-	
+
 	map.addLayer(options, order);
 
 	function updateData() {
@@ -75,7 +75,7 @@
 	}
 
 	$: data && updateData();
-	
+
 	$: if (click && selected != selectedPrev) {
 		if (selectedPrev) {
 			map.setFeatureState(
@@ -107,7 +107,7 @@
 		}
 		highlightedPrev = highlighted;
 	}
-	
+
 	if (click) {
 		map.on('click', id, (e) => {
       if (e.features.length > 0) {
@@ -116,14 +116,14 @@
 				dispatch('select', {
 					code: selected
 				});
-				
+
 				if (selectedPrev) {
 					map.setFeatureState(
             { source: source, sourceLayer: sourceLayer, id: selectedPrev },
             { selected: false }
           );
 				}
-				
+
 				map.setFeatureState(
           { source: source, sourceLayer: sourceLayer, id: selected },
           { selected: true }
@@ -135,7 +135,7 @@
 						center: center.geometry.coordinates
 					});
 				}
-				
+
 				selectedPrev = selected;
 			} else {
 				selectedPrev = selected = null;
@@ -145,7 +145,7 @@
 			}
     });
 	}
-	
+
 	if (hover) {
 		map.on('mousemove', id, (e) => {
       if (e.features.length > 0) {
@@ -156,7 +156,7 @@
           );
         }
 				hovered = e.features[0].id;
-				
+
         map.setFeatureState(
           { source: source, sourceLayer: sourceLayer, id: hovered },
           { hovered: true }
@@ -166,7 +166,7 @@
 				map.getCanvas().style.cursor = 'pointer';
       }
 		});
-		
+
 		map.on('mouseleave', id, (e) => {
 			if (hovered) {
         map.setFeatureState(
@@ -177,5 +177,5 @@
 			hovered = null;
     });
 	}
-	
+
 </script>

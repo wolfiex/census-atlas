@@ -1,6 +1,6 @@
 <script>
 	import { getContext } from 'svelte';
-	
+
 	export let id;
 	export let type;
 	export let url = null;
@@ -10,12 +10,17 @@
 	export let promoteId = null;
 	export let minzoom = null;
 	export let maxzoom = null;
-	
+
 	let loaded = false;
-	
+	let debug = false;
+
+	if (debug === false) console.log=()=>{}
+
+
+
 	const { getMap } = getContext('map');
 	const map = getMap();
-	
+
 	if (map.getSource(id)) {
     map.removeSource(id);
 	}
@@ -42,7 +47,7 @@
 			}, 500);
 		}
 	}
-	
+
 	// Set optional source properties
 	if (minzoom) {
     props.minzoom = minzoom;
@@ -56,7 +61,7 @@
 	} else if (promoteId) {
 		props.promoteId = promoteId;
 	}
-	
+
 	function addSource() {
 		console.log(id + ' map source loading...');
   	if (type == "geojson") {
@@ -86,7 +91,7 @@
 	};
 
 	isMapLoaded();
-	
+
 </script>
 
 {#if loaded}

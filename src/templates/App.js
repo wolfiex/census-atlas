@@ -132,7 +132,7 @@ function updateURL() {
     }
 }
 
-function replaceURL() {
+async function replaceURL() {
     let hash = `#/${selectCode}/${active.lad.selected ? active.lad.selected : ''}/${active.lsoa.selected ? active.lsoa.selected : ''}/${mapLocation.zoom},${mapLocation.lon},${mapLocation.lat}`;
     history.replaceState(undefined, undefined, hash);
 }
@@ -156,13 +156,9 @@ async function initialise() {
      console.log(bounddata)
    })
 
-
-
     getTopo(ladtopo.url, ladtopo.layer)
         .then((geo) => {
             ladbounds = geo;
-
-
 
             let lookup = {};
             let list = [];
@@ -182,9 +178,6 @@ async function initialise() {
             console.log(location)
 
             let b = bounddata.get(location.properties.AREACD)
-
-
-
 
             mapLocation = {
                 zoom: 11,
@@ -434,7 +427,7 @@ $: if (!mapLoaded && map) {
             lon: center.lng.toFixed(5),
             lat: center.lat.toFixed(5)
         };
-        replaceURL();
+        replaceURL().then(null);
     });
 }
 
