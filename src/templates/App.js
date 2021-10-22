@@ -9,7 +9,7 @@ import ColChart from "./charts/Histogram.svelte";
 import Loader from "./ui/Loader.svelte";
 import Select from "./ui/Select.svelte";
 import { getData, getNomis, getBreaks, getTopo, processData } from "./utils.js";
-import { csv } from "d3-fetch";
+import { csv, json } from "d3-fetch";
 
 import { default as PanelSection } from "./ui/CustomAccordionPanel.svelte";
 import { default as Geolocate } from "./geolocate.svelte";
@@ -47,18 +47,20 @@ var panels = {
 
 // const ladtopdesc;
 const boundurl =
-  "https://raw.githubusercontent.com/wolfiex/TopoStat/main/area_summary.csv";
+  "https://raw.githubusercontent.com/wolfiex/TopoStat/main/ladb_20.csv";
+const lsoaurl =
+  "https://raw.githubusercontent.com/wolfiex/TopoStat/main/lsoa11_20.json";
 
 const geography = "TYPE298";
 const mapstyle = "https://bothness.github.io/ons-basemaps/data/style-omt.json";
 const tabledata =
   "https://bothness.github.io/census-atlas/data/indicators.json";
-const ladtopo = {
-  url: "https://bothness.github.io/census-atlas/data/lad_boundaries_2020.json",
-  layer: "LA2020EW",
-  code: "AREACD",
-  name: "AREANM",
-};
+// const ladtopo = {
+//   url: "https://bothness.github.io/census-atlas/data/lad_boundaries_2020.json",
+//   layer: "LA2020EW",
+//   code: "AREACD",
+//   name: "AREANM",
+// };
 const lsoabldg = {
   url: "https://cdn.ons.gov.uk/maptiles/buildings/v1/{z}/{x}/{y}.pbf",
   layer: "buildings",
@@ -78,6 +80,7 @@ const ladvector = {
 };
 const lsoadata =
   "https://bothness.github.io/census-atlas/data/lsoa2011_lad2020.csv";
+
 const colors = {
   base: ["#d5f690", "#5bc4b1", "#2e9daa", "#0079a2", "#005583", "#cccccc"],
   muted: ["#f5fce2", "#d7ede8", "#cbe2e5", "#c2d7e3", "#bdccd9", "#f0f0f0"],
@@ -88,8 +91,8 @@ let map = null;
 
 // DATA
 let indicators;
-let ladbounds;
-let ladlookup;
+// let ladbounds;
+// let ladlookup;
 let ladlist;
 let lsoalookup;
 let data = {};
@@ -111,7 +114,7 @@ let active = {
 let selectCode = "QS119EW005";
 let mapLocation = null;
 
-let bounddata;
+let lad_dta;
 let selectItem;
 let selectMeta;
 let selectData;
@@ -132,7 +135,6 @@ function changeURL() {
   }
 }
 
-
 function setIndicator(indicators, code) {
   indicators.forEach((indicator) => {
     if (indicator.code && indicator.code == code) {
@@ -145,83 +147,47 @@ function setIndicator(indicators, code) {
 
 async function initialise() {
   await csv(boundurl).then((bounds) => {
-    bounddata = new Map(
+    lad_dta = new Map(
       bounds.map((d) => {
+        d.children = d.children.split(",");
         return [d.AREACD, d];
       })
     );
-    // console.log(bounddata)
+
+    // we should probably remove this duplication at some point
+    ladlist = [...lad_dta.values()].map((d) => {
+      return { name: d.AREANM, code: d.AREACD };
+    });
+    ladlist.sort((a, b) => a.name.localeCompare(b.name));
   });
 
-  getTopo(ladtopo.url, ladtopo.layer)
-    .then((geo) => {
-      ladbounds = geo;
+  let location = lad_dta.get(
+    [...lad_dta.keys()][Math.floor(Math.random() * lad_dta.size)]
+  );
 
-      let lookup = {};
-      let list = [];
-      geo.features.forEach((f) => {
-        lookup[f.properties[ladtopo.code]] = {
-          code: f.properties[ladtopo.code],
-          name: f.properties[ladtopo.name],
-        };
-        list.push(lookup[f.properties[ladtopo.code]]);
-      });
+  mapLocation = {
+    zoom: 11,
+    lon: +location.lon,
+    lat: +location.lat,
+  };
 
-      list.sort((a, b) => a.name.localeCompare(b.name));
-      ladlist = list;
+  lsoalookup = await json(lsoaurl);
 
-      let location =
-        geo.features[Math.floor(Math.random() * geo.features.length)];
+  console.log(lsoalookup)
 
-      console.log(location);
+  await json(tabledata)
+    // .then((res) => res.json())
+    .then((json) => {
+      indicators = json;
 
-      let b = bounddata.get(location.properties.AREACD);
+      setIndicator(indicators, selectCode);
 
-      mapLocation = {
-        zoom: 11,
-        lon: +b.lon,
-        lat: +b.lat,
-      };
-
-      return lookup;
-    })
-    .then((lookup) => {
-      ladlookup = lookup;
-
-      getData(lsoadata)
-        .then((data) => {
-          console.log(data);
-          let lookup = {};
-          data.forEach((d) => {
-            lookup[d.code] = {
-              name: d.name,
-              parent: d.parent,
-            };
-
-            if (!ladlookup[d.parent].children) {
-              ladlookup[d.parent].children = [d.code];
-            } else {
-              ladlookup[d.parent].children.push(d.code);
-            }
-          });
-          return lookup;
-        })
-        .then((lookup) => {
-          lsoalookup = lookup;
-
-          fetch(tabledata)
-            .then((res) => res.json())
-            .then((json) => {
-              indicators = json;
-
-              setIndicator(indicators, selectCode);
-
-              if (!selectItem) {
-                selectItem = indicators[0].children[0].children[0];
-              }
-            });
-        });
+      if (!selectItem) {
+        selectItem = indicators[0].children[0].children[0];
+      }
     });
+  //     });
+  // });
 }
 
 function setSelect() {
@@ -292,6 +258,8 @@ function loadData() {
         d.fill = colors.base[n];
       });
 
+      console.log("a", res, "b", lsoalookup);
+
       let proc = processData(res, lsoalookup);
       dataset.lsoa.index = proc.lsoa.index;
       dataset.lad.data = proc.lad.data;
@@ -304,6 +272,7 @@ function loadData() {
       dataset.ew.data = proc.ew.data;
 
       data[selectItem.code] = dataset;
+
       selectData = dataset;
       console.log("data loaded from csv!");
       if (active.lad.selected) {
@@ -320,7 +289,7 @@ function doSelect() {
     if (
       active.lad.selected &&
       active.lsoa.selected &&
-      !ladlookup[active.lad.selected].children.includes(active.lsoa.selected)
+      !lad_dta.get(active.lad.selected).children.includes(active.lsoa.selected)
     ) {
       active.lsoa.selected = null;
     }
@@ -343,7 +312,7 @@ function setColors() {
       }
     });
 
-    let b = bounddata.get(active.lad.selected);
+    let b = lad_dta.get(active.lad.selected);
     let bounds = [b.minx, b.miny, b.maxx, b.maxy];
 
     if (!active.lsoa.selected) {
@@ -364,7 +333,7 @@ function getSib(type, diff) {
     }
   } else if (type == "lsoa") {
     let filtered = selectData.lsoa.data.filter((d) =>
-      ladlookup[active.lad.selected].children.includes(d.code)
+      lad_dta.get(active.lad.selected).children.includes(d.code)
     );
     let index =
       filtered.findIndex((d) => d.code == active.lsoa.selected) + diff;
@@ -372,7 +341,7 @@ function getSib(type, diff) {
       active.lsoa.selected = filtered[index].code;
 
       // Fit to parent LAD
-      let b = bounddata.get(active.lad.selected);
+      let b = lad_dta.get(active.lad.selected);
       map.fitBounds([b.minx, b.miny, b.maxx, b.maxy], { padding: 20 });
     }
   }
@@ -382,7 +351,6 @@ function getSib(type, diff) {
 // Update state based on URL
 let hash = location.hash == "" ? "" : location.hash.split("/");
 if (hash.length == 5) {
-
   let zoom, lon, lat, other;
   [zoom, selectCode, active.lad.selected, active.lsoa.selected, other] = hash;
   [zoom, lon, lat] = other.split(",");

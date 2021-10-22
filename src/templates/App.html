@@ -14,7 +14,7 @@
 
     <PanelSection bind:all={panels} key='chart'>
     <ColChart data={selectData.lsoa.data} dataIndex={selectData.lsoa.index} breaks={selectData.lsoa.breaks} avg={selectData.ew.data} selected={active.lsoa.hovered ? active.lsoa.hovered : active.lsoa.selected} parent={active.lad.hovered ? selectData.lad.index[active.lad.hovered].median.code
-        : active.lad.highlighted ? selectData.lad.index[active.lad.highlighted].median.code : active.lad.selected ? selectData.lad.index[active.lad.selected].median.code : null} siblings={active.lad.selected ? ladlookup[active.lad.selected].children : null}
+        : active.lad.highlighted ? selectData.lad.index[active.lad.highlighted].median.code : active.lad.selected ? selectData.lad.index[active.lad.selected].median.code : null} siblings={active.lad.selected ? lad_dta.get(active.lad.selected).children : null}
         key="perc" />
 
         </PanelSection>
@@ -39,7 +39,7 @@
             {#if active.lad.hovered || active.lad.highlighted || active.lad.selected}
             <div>
                 <hr style="border-top-color: #27A0CC" />
-                <strong>{active.lad.hovered ? ladlookup[active.lad.hovered].name : active.lad.highlighted ? ladlookup[active.lad.highlighted].name : ladlookup[active.lad.selected].name}</strong><br />
+                <strong>{active.lad.hovered ? lad_dta.get(active.lad.hovered).name : active.lad.highlighted ? lad_dta.get(active.lad.highlighted).name : lad_dta.get(active.lad.selected).name}</strong><br />
                 <strong class="text-lrg">
 								{#if active.lad.selected}<img src="./icons/chevron-left.svg" class="next" on:click={() => getSib('lad', -1)}>{/if}
 								{active.lad.hovered ? selectData.lad.index[active.lad.hovered].perc.toFixed(1) : active.lad.highlighted ? selectData.lad.index[active.lad.highlighted].perc.toFixed(1) : selectData.lad.index[active.lad.selected].perc.toFixed(1)}%
@@ -168,7 +168,7 @@
 				}} />
 		</MapSource>
 	{/if}
-	{#if ladbounds}
+	{#if lad_dta}
 		<MapSource
 			id="lad"
 			type="vector"
