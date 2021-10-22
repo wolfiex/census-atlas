@@ -5,7 +5,7 @@
 
 
 <main>
-    
+    <meta name="theme-color" content="currentcolor">
 
 
  {#if loading}

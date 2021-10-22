@@ -1,3 +1,4 @@
+// rollup.config.js
 import svelte from 'rollup-plugin-svelte';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
@@ -33,10 +34,11 @@ export default {
 	output: {
 		sourcemap: true,
 		format: 'iife',
-		name: 'app',
+		name: 'ONSCensusAtlas',
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
@@ -68,9 +70,22 @@ export default {
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
-		production && terser()
+		production && terser({ output: { comments: false } })
 	],
 	watch: {
 		clearScreen: false
 	}
 };
+
+
+
+
+// export default {
+//   entry: 'src/index.js',
+//   dest: 'bundle.min.js',
+//   format: 'iife',
+//   plugins: [
+//     svelte(),
+//     uglify()
+//   ]
+// };
