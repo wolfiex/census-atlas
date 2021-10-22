@@ -4,14 +4,16 @@
 <script>
     
 import { Accordion } from 'svelte-collapsible'
-import { default as AccordionItem } from './CustomAccordionItem.svelte' 
+import { default as AccordionItem } from './CustomAccordionItem.svelte'
 
 
 // export let items
 export let key
 export let all
+export let selected=null;
 
 let item = all[key]
+
 </script>
 
 <main>
@@ -25,7 +27,12 @@ let item = all[key]
 			<div slot='header' class='header'  >
 
 				<span class='name' data-tooltip={ item.text || false }>{item.key}  </span>
+
+				{#if selected}
+				<h4 class='title' >{selected}  </h4>
+				{:else}
         <h4 class='title' >{item.title}  </h4>
+				{/if}
 				<div class='icon' >{item.active?'^':'>'}</div>
 
 			</div>
@@ -114,7 +121,7 @@ let item = all[key]
 	[data-tooltip]:before {
 	position: absolute;
 	bottom: 100%;
-	left: 80%;
+	right: 80%;
 	margin-bottom: 5px;
 	margin-left:10px;
 	padding: 7px;
@@ -138,7 +145,7 @@ let item = all[key]
 	[data-tooltip]:after {
 	position: absolute;
 	bottom: 100%;
-	left: 50%;
+	right: 50%;
 	width: 0;
 	border-top: 5px solid #000;
 	border-top: 5px solid hsla(0, 0%, 20%, 0.9);

@@ -24,7 +24,7 @@
 		<ul>
 			{#if filtered[0]}
 			{#each filtered as option}
-			<li on:click="{() => select(option)}">{option.name}</li>
+			<li on:click="{() => select(option)}">{option.AREANM}</li>
 			{/each}
 			{:else}
 			<li>No results</li>

@@ -115,6 +115,7 @@ let selectCode = "QS119EW005";
 let mapLocation = null;
 
 let lad_dta;
+;
 let selectItem;
 let selectMeta;
 let selectData;
@@ -154,11 +155,7 @@ async function initialise() {
       })
     );
 
-    // we should probably remove this duplication at some point
-    ladlist = [...lad_dta.values()].map((d) => {
-      return { name: d.AREANM, code: d.AREACD };
-    });
-    ladlist.sort((a, b) => a.name.localeCompare(b.name));
+
   });
 
   let location = lad_dta.get(
@@ -173,10 +170,8 @@ async function initialise() {
 
   lsoalookup = await json(lsoaurl);
 
-  console.log(lsoalookup)
 
   await json(tabledata)
-    // .then((res) => res.json())
     .then((json) => {
       indicators = json;
 
@@ -293,6 +288,7 @@ function doSelect() {
     ) {
       active.lsoa.selected = null;
     }
+
     setColors();
     changeURL();
   }
@@ -330,6 +326,7 @@ function getSib(type, diff) {
     if (index >= 0 && index < selectData.lad.data.length) {
       active.lsoa.selected = null;
       active.lad.selected = selectData.lad.data[index].code;
+
     }
   } else if (type == "lsoa") {
     let filtered = selectData.lsoa.data.filter((d) =>
@@ -391,6 +388,9 @@ $: active.lad.selected =
   lsoalookup && active.lsoa.selected
     ? lsoalookup[active.lsoa.selected].parent
     : active.lad.selected;
+//
+$:if (lad_dta) active.lad.name = lad_dta.get(active.lad.selected).AREANM || null
+
 $: data[selectCode] &&
   (active.lad.selected || active.lad.selected == null) &&
   doSelect();

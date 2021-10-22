@@ -74,14 +74,12 @@
 
 
 
-    {#if ladlist}
+    {#if lad_dta}
 
-    <PanelSection bind:all={panels} key='area'>
-
-
+    <PanelSection bind:all={panels} key='area' bind:selected={active.lad.name}>
 
 <!-- wrapper html to shrink select -->
-      <Select options={ladlist} bind:selected={active.lad.selected} search={true} placeholder="Find a district..."  on:select={()=> active.lsoa.selected = null} />
+      <Select options={[...lad_dta.values()]} bind:selected={active.lad.selected} search={true} placeholder="Find a district..."  on:select={()=> active.lsoa.selected = null} />
 
 <Geolocate width='30px'/>
     </PanelSection>
