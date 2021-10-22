@@ -79,9 +79,12 @@
     <PanelSection bind:all={panels} key='area' bind:selected={active.lad.name}>
 
 <!-- wrapper html to shrink select -->
-      <Select options={[...lad_dta.values()]} bind:selected={active.lad.selected} search={true} placeholder="Find a district..."  on:select={()=> active.lsoa.selected = null} />
+      <Select options={[...lad_dta.values()]} bind:name={active.lad.name} bind:selected={active.lad.selected} search={true} placeholder="Find a district..."  on:select={()=> active.lsoa.selected = null} >
+        <Geolocate width='30px' bind:position={latlon}/>
 
-<Geolocate width='30px'/>
+        </Select>
+
+
     </PanelSection>
 		{/if}
 

@@ -14,7 +14,11 @@ import { csv, json } from "d3-fetch";
 import { default as PanelSection } from "./ui/CustomAccordionPanel.svelte";
 import { default as Geolocate } from "./geolocate.svelte";
 
-// console.log(Object.getOwnPropertyNames(Geolocate.prototype),Geolocate.prototype.initgeo())
+// console.warn(Object.getOwnPropertyNames(Geolocate.prototype),Geolocate.prototype.initgeo().then(console.warn)
+// )
+
+
+
 
 var panels = {
   data: {
@@ -91,9 +95,8 @@ let map = null;
 
 // DATA
 let indicators;
-// let ladbounds;
-// let ladlookup;
 let ladlist;
+let latlon = undefined;
 let lsoalookup;
 let data = {};
 let active = {
@@ -115,7 +118,7 @@ let selectCode = "QS119EW005";
 let mapLocation = null;
 
 let lad_dta;
-;
+
 let selectItem;
 let selectMeta;
 let selectData;
@@ -131,7 +134,7 @@ function changeURL() {
   }/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom},${
     mapLocation.lon
   },${mapLocation.lat}`;
-  if (hash != location.hash) {
+  if (hash != window.location.hash) {
     history.pushState(undefined, undefined, hash);
   }
 }
@@ -147,6 +150,8 @@ function setIndicator(indicators, code) {
 }
 
 async function initialise() {
+
+
   await csv(boundurl).then((bounds) => {
     lad_dta = new Map(
       bounds.map((d) => {
@@ -156,11 +161,14 @@ async function initialise() {
     );
 
 
-  });
+  })
+
 
   let location = lad_dta.get(
     [...lad_dta.keys()][Math.floor(Math.random() * lad_dta.size)]
   );
+
+
 
   mapLocation = {
     zoom: 11,
@@ -168,22 +176,26 @@ async function initialise() {
     lat: +location.lat,
   };
 
-  lsoalookup = await json(lsoaurl);
+  // no need to be blocking
+    json(tabledata)
+      .then((json) => {
+        indicators = json;
+
+        setIndicator(indicators, selectCode);
+
+        if (!selectItem) {
+          selectItem = indicators[0].children[0].children[0];
+        }
+      });
 
 
-  await json(tabledata)
-    .then((json) => {
-      indicators = json;
+    json(lsoaurl).then(data=>{lsoalookup = data} )
 
-      setIndicator(indicators, selectCode);
 
-      if (!selectItem) {
-        selectItem = indicators[0].children[0].children[0];
-      }
-    });
-  //     });
-  // });
+
+
 }
+/// END "INIT"
 
 function setSelect() {
   if (!(selectMeta && selectItem && selectMeta.code == selectItem.code)) {
@@ -346,7 +358,7 @@ function getSib(type, diff) {
 
 // CODE
 // Update state based on URL
-let hash = location.hash == "" ? "" : location.hash.split("/");
+let hash = window.location.hash == "" ? "" : window.location.hash.split("/");
 if (hash.length == 5) {
   let zoom, lon, lat, other;
   [zoom, selectCode, active.lad.selected, active.lsoa.selected, other] = hash;
@@ -360,7 +372,7 @@ if (hash.length == 5) {
 }
 
 // Respond to URL change
-window.onpopstate = () => {
+function hashChange () {
   let hash = location.hash == "" ? "" : location.hash.split("/");
 
   if (selectCode != hash[1]) {
@@ -378,6 +390,7 @@ window.onpopstate = () => {
     map.jumpTo(mapLocation);
   }
 };
+window.onpopstate = hashChange
 
 $: selectItem && setSelect(); // Update meta when selection updates
 $: active.lad.highlighted =
@@ -389,7 +402,7 @@ $: active.lad.selected =
     ? lsoalookup[active.lsoa.selected].parent
     : active.lad.selected;
 //
-$:if (lad_dta) active.lad.name = lad_dta.get(active.lad.selected).AREANM || null
+$:if (lad_dta & active.lad.name) active.lad.name = lad_dta.get(active.lad.selected).AREANM || null
 
 $: data[selectCode] &&
   (active.lad.selected || active.lad.selected == null) &&
@@ -407,6 +420,40 @@ $: if (!mapLoaded && map) {
     };
     changeURL();
   });
+}
+
+$: if (latlon) {
+
+  console.warn(latlon)
+
+  let dist = [99999,null]
+  for (let [key, val] of lad_dta) {
+  // console.warn(key + " = " + value);
+      let dt = Math.sqrt((latlon.latitude-val.lat)**2+(latlon.longitude-val.lon)**2)
+
+      if (dt<dist[0]){dist=[dt,val]}
+  }
+newLocale(dist)
+
+latlon=undefined
+}
+
+function newLocale(dist){
+  // location.hash = `#/${selectCode}/${dist[1].AREACD
+  // }//${14},${
+  //   dist[1].lon
+  // },${dist[1].lat}`;
+  // history.pushState(undefined, undefined, hash);
+  // hashChange
+  location.hash = hash
+  active.lsoa.null=null
+  active.lsoa.selected=null
+  active.lad.selected = dist[1].AREACD;
+  active.lad.name = dist[1].AREANM;
+
+
+  map.fitBounds([dist[1].minx, dist[1].miny, dist[1].maxx, dist[1].maxy], { padding: 20 });
+
 }
 
 onMount(initialise);

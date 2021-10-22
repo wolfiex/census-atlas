@@ -17,13 +17,16 @@ tm = Template(
 
 <!-- Use templates folder to update -->
 
-<script>
-    {{globals}}
-</script>
 
 <main>
     {{body}}
 </main>
+
+
+<script>
+    {{globals}}
+</script>
+
 
 <style>
     {{stylesheet}}

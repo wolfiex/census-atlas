@@ -4,22 +4,20 @@
 <svelte:options accessors/>
 <main>
 
-
+{#if navigator.geolocation}
 
 <button
-  on:click={showPosition} data-tooltip={tooltip}>
+  on:click={showPosition} data-tooltip={tooltip} bind:this={clickpos}>
 
 
   <svg version="1.1" id="Layer_1" width={width} xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
   	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-  <g>
+
   	<g>
   		<path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M256,478.609
   			C133.25,478.609,33.391,378.75,33.391,256S133.25,33.391,256,33.391S478.609,133.25,478.609,256S378.75,478.609,256,478.609z"/>
   	</g>
-  </g>
   <g>
-  	<g>
   		<path d="M411.826,256c0-9.217,7.479-16.696,16.696-16.696h15.85c-8.008-91.021-80.654-163.667-171.676-171.676v15.85
   			c0,9.217-7.479,16.696-16.696,16.696c-9.217,0-16.696-7.479-16.696-16.696v-15.85c-91.021,8.008-163.667,80.654-171.676,171.676
   			h15.85c9.217,0,16.696,7.479,16.696,16.696c0,9.217-7.479,16.696-16.696,16.696h-15.85
@@ -32,3 +30,5 @@
     </svg>
 
 </button>
+
+{/if}
