@@ -35,7 +35,7 @@ export default {
 		sourcemap: true,
 		format: 'iife',
 		name: 'ONSCensusAtlas',
-		file: 'public/build/bundle.js'
+		file: 'docs/build/bundle.js'
 	},
 	plugins: [
 
@@ -66,7 +66,7 @@ export default {
 
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
-		!production && livereload('public'),
+		!production && livereload('docs'),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
@@ -76,16 +76,3 @@ export default {
 		clearScreen: false
 	}
 };
-
-
-
-
-// export default {
-//   entry: 'src/index.js',
-//   dest: 'bundle.min.js',
-//   format: 'iife',
-//   plugins: [
-//     svelte(),
-//     uglify()
-//   ]
-// };
