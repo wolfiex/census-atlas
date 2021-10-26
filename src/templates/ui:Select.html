@@ -2,10 +2,10 @@
 	{#if selected}
 	<a id="toggle" class="selected" on:click={toggle}>
 		<span>{name}</span>
-		<span class="button close" on:click={unSelect}>&nbsp;</span>
+		<span class="button close" on:click={unSelect} tabindex="0" on:keyup={(e)=> (e.key === 'Enter' || e.keyCode === 13)?  toggle(selected=!selected) :null }>&nbsp;</span>
 	</a>
 	{:else}
-	<a id="toggle" on:click={toggle}>
+	<a id="toggle" on:click={toggle} tabindex="0">
 		<span>{placeholder ? placeholder : 'Select one'}</span>
 		{#if search}
 		<span class="button search">&nbsp;</span>
@@ -19,12 +19,12 @@
 	{#if expanded}
 	<div id="dropdown" bind:this={el}>
 		{#if search == true}
-		<input type="text" placeholder="" bind:value={filter} autocomplete="false" bind:this={input} on:keyup={submit} />
+		<input type="text" placeholder="" tabindex="0" bind:value={filter} autocomplete="true" bind:this={input} on:keyup={submit} />
 		{/if}
 		<ul>
 			{#if filtered[0]}
 			{#each filtered as option}
-			<li on:click="{() => select(option)}">{option.AREANM}</li>
+			<li tabindex="0" on:click="{() => select(option)}" on:keyup={(e)=> (e.key === 'Enter' || e.keyCode === 13)?  select(option):null }>{option.AREANM}</li>
 			{/each}
 			{:else}
 			<li>No results</li>

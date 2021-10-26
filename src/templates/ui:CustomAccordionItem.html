@@ -1,11 +1,11 @@
 <li class='accordion-item' aria-expanded={params.open}>
 
-    <div class='accordion-item-header' on:click={handleToggle}>
+    <div class='accordion-item-header' on:click={handleToggle} tabindex="0" on:keyup={(e)=> (e.key === 'Enter' || e.keyCode === 13)?  handleToggle():null }>
         <slot name='header' />
     </div>
 
     <div class='accordion-item-body' use:collapse={params}>
-        <slot name='body' />
+        <slot name='body'  />
     </div>
 
     <slot/>

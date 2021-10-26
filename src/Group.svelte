@@ -5,64 +5,48 @@
 
 
 <main>
-    
-
-<div class="container">
+    <div class="container">
     <span class="choose">{props.name}</span>
-  
-  <br>
-  
-      <div class="dropdown {expanded[props.menu] ? 'active': ''}" >
+
+    <br>
+
+    <div class="dropdown {expanded[props.menu] ? 'active': ''}">
         <div class="select" on:click='{toggle(props)}'>
-          <span
-           >{prp?prp.name:props.children[props.menu].name}</span>
-          <i class="fa fa-chevron-left"></i>
+            <span>{prp?prp.name:props.children[props.menu].name}</span>
+            <i class="fa fa-chevron-left"></i>
         </div>
-        <ul class="dropdown-menu  {expanded[props.menu] ? 'active': ''}"  >
-            
-        {#each props.children as child}
-          <li id="{child.name}" children={child.children} on:click='{select(props.name,child.children,props.menu,child.name)}'>{child.name}</li>
-          {/each}
+        <ul class="dropdown-menu  {expanded[props.menu] ? 'active': ''}">
+
+            {#each props.children as child}
+            <li id="{child.name}" children={child.children} on:click='{select(props.name,child.children,props.menu,child.name)}'>{child.name}</li>
+            {/each}
         </ul>
-      </div>
-      
-      <!-- secondary menue  -->
-{#if prp}
+    </div>
+
+    <!-- secondary menue  -->
+    {#if prp}
     <p> a {prp.name}</p>
-	<svelte:self props={prp} bind:selected={selected}/>
-{/if}
-      
-  
-
-
-{#if props.type == 'group-radio'}
-<span class:expanded on:click={toggle} style="padding-left: 2.3em">
+    <svelte:self props={prp} bind:selected={selected}/> {/if} {#if props.type == 'group-radio'}
+    <span class:expanded on:click={toggle} style="padding-left: 2.3em">
 	<input type="radio" bind:group={selected} value={props} on:click={radioClick} />
 	{props.name}
-</span>
-{:else}
-<span on:click={toggle}>
+</span> {:else}
+    <span on:click={toggle}>
 	<span class='expanded'>'\e875'</span>{props.name}
-</span>
-{/if}
-{#if props.code && props.type != 'group-radio'}<small>({props.code})</small>{/if}
+    </span>
+    {/if} {#if props.code && props.type != 'group-radio'}<small>({props.code})</small>{/if} {#if expanded}
+    <ul>
+        {#each props.children as child}
+        <li>
+            {#if child.type === 'group' || child.type === 'group-radio'}
+            <svelte:self props={child} bind:selected={selected}/> {:else}
+            <Radio props={child} bind:selected={selected}/> {/if}
+        </li>
+        {/each}
+    </ul>
+    {/if}
 
-  
-      {#if expanded}
-      	<ul>
-      		{#each props.children as child}
-      			<li>
-      				{#if child.type === 'group' || child.type === 'group-radio'}
-      					<svelte:self props={child} bind:selected={selected}/>
-      				{:else}
-      					<Radio props={child} bind:selected={selected}/>
-      				{/if}
-      			</li>
-      		{/each}
-      	</ul>
-      {/if}
-  
- 
+
 </div>
 </main>
 
@@ -73,7 +57,7 @@
 export let expanded;
 export let props;
 export let selected;
-export let prp;
+// export let prp;
 
 expanded = false
 prp = undefined
@@ -102,23 +86,6 @@ function select(name, info, num, infoname){
 }
 
 
-/*Dropdown Menu*/
-// $('.dropdown').click(function () {
-//         $(this).attr('tabindex', 1).focus();
-//         $(this).toggleClass('active');
-//         $(this).find('.dropdown-menu').slideToggle(300);
-//     });
-    // $('.dropdown').focusout(function () {
-    //     $(this).removeClass('active');
-    //     $(this).find('.dropdown-menu').slideUp(300);
-    // });
-
-
-    // $('.dropdown .dropdown-menu li').click(function () {
-    //     $(this).parents('.dropdown').find('span').text($(this).text());
-    //     $(this).parents('.dropdown').find('input').attr('value', 
-    //     $(this).attr('id'));
-    // });r
 </script>
 
 

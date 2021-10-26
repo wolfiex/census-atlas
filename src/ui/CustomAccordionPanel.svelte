@@ -20,8 +20,9 @@
 				<h4 class='title' >{selected}  </h4>
 				{:else}
         <h4 class='title' >{item.title}  </h4>
+        
 				{/if}
-				<div class='icon' >{item.active?'^':'>'}</div>
+				<div class='icon'>{item.active?'^':'>'}  </div>
 
 			</div>
 
@@ -89,6 +90,7 @@ let item = all[key]
 	:global(.accordion-item) {
 		border-bottom: 1px solid rgb(100, 120, 140);
         /* border-top: 1px solid rgb(100, 120, 140); */
+        /* height:auto; */
 
 	}
 
@@ -104,6 +106,7 @@ let item = all[key]
 		padding: 0.5em;
 		margin: 0;
 		font-size: 18px;
+        /* height:auto; */
 	}
 
 
@@ -128,7 +131,7 @@ let item = all[key]
 	bottom: 100%;
 	right: 80%;
 	margin-bottom: 5px;
-	margin-left:10px;
+	margin-left:20px;
 	padding: 7px;
 	width: 100%;
 	min-width: 70px;

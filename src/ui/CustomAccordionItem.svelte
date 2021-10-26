@@ -7,12 +7,12 @@
 <main>
     <li class='accordion-item' aria-expanded={params.open}>
 
-    <div class='accordion-item-header' on:click={handleToggle}>
+    <div class='accordion-item-header' on:click={handleToggle} tabindex="0" on:keyup={(e)=> (e.key === 'Enter' || e.keyCode === 13)?  handleToggle():null }>
         <slot name='header' />
     </div>
 
     <div class='accordion-item-body' use:collapse={params}>
-        <slot name='body' />
+        <slot name='body'  />
     </div>
 
     <slot/>
@@ -52,5 +52,19 @@ function handleToggle () {
     .accordion-item-header {
     user-select: none;
     cursor: pointer;
+    /* height:100%; */
+    display: block;
+}
+
+.accordion-item-body:focus input{
+    min-height:300px;max-height:200%;
+
+}
+
+/* .parent:hover .child */
+
+.accordion-item-body:hover input{
+    min-height:300px;max-height:200%;
+
 }
 </style>

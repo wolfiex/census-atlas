@@ -1,4 +1,18 @@
 .accordion-item-header {
     user-select: none;
     cursor: pointer;
+    /* height:100%; */
+    display: block;
+}
+
+.accordion-item-body:focus input{
+    min-height:300px;max-height:200%;
+
+}
+
+/* .parent:hover .child */
+
+.accordion-item-body:hover input{
+    min-height:300px;max-height:200%;
+
 }

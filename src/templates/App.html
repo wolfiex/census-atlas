@@ -80,7 +80,7 @@
 
 <!-- wrapper html to shrink select -->
       <Select options={[...lad_dta.values()]} bind:name={active.lad.name} bind:selected={active.lad.selected} search={true} placeholder="Find a district..."  on:select={()=> active.lsoa.selected = null} >
-        <Geolocate width='30px' bind:position={latlon}/>
+        <Geolocate width='30px' bind:position={latlon} />
 
         </Select>
 
@@ -92,10 +92,12 @@
 
 <PanelSection bind:all={panels} key='data'>
 
-        <Group
+        <!-- <Group
 			props={{ name: '2011 Census Tables', children: indicators, menu:0 }}
 			bind:selected={selectItem}
-			expanded />
+			expanded /> -->
+            
+        <Indicate2L />
 
 </PanelSection>
 

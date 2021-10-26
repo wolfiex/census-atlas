@@ -2,12 +2,13 @@
 
 </main>
 <svelte:options accessors/>
-<main>
 
-{#if navigator.geolocation}
+<main width={width} tabindex="0" on:keyup={(e)=> (e.key === 'Enter' || e.keyCode === 13)?  showPosition():null }>
+
+{#if show}
 
 <button
-  on:click={showPosition} data-tooltip={tooltip} bind:this={clickpos}>
+  on:click={showPosition} data-tooltip={tooltip} bind:this={clickpos} >
 
 
   <svg version="1.1" id="Layer_1" width={width} xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

@@ -29,6 +29,7 @@
 	:global(.accordion-item) {
 		border-bottom: 1px solid rgb(100, 120, 140);
         /* border-top: 1px solid rgb(100, 120, 140); */
+        /* height:auto; */
 
 	}
 
@@ -44,6 +45,7 @@
 		padding: 0.5em;
 		margin: 0;
 		font-size: 18px;
+        /* height:auto; */
 	}
 
 
@@ -68,7 +70,7 @@
 	bottom: 100%;
 	right: 80%;
 	margin-bottom: 5px;
-	margin-left:10px;
+	margin-left:20px;
 	padding: 7px;
 	width: 100%;
 	min-width: 70px;

@@ -11,7 +11,6 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
-    "@turf/turf": "latest",
     "d3-dsv": "latest",
     "gh-pages": "^3.1.0",
     "layercake": "^4.0.3",
@@ -26,6 +25,7 @@
     "topojson-client": "^3.1.0"
   },
   "dependencies": {
+    "d3-array": "^3.1.1",
     "d3-fetch": "^3.0.1",
     "d3-interpolate": "^2.0.1",
     "d3-scale": "^3.2.3",
@@ -33,6 +33,7 @@
     "rollup-plugin-uglify": "^6.0.4",
     "simple-statistics": "^7.4.0",
     "svelte-collapse": "^0.0.4",
-    "svelte-collapsible": "^0.2.1"
+    "svelte-collapsible": "^0.2.1",
+    "svelte-select": "^4.4.3"
   }
 }

@@ -7,6 +7,8 @@ import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 
 const production = !process.env.ROLLUP_WATCH;
+const public_loc = 'public'
+
 
 function serve() {
 	let server;
@@ -35,7 +37,7 @@ export default {
 		sourcemap: true,
 		format: 'iife',
 		name: 'ONSCensusAtlas',
-		file: 'docs/build/bundle.js'
+		file: public_loc+'/build/bundle.js'
 	},
 	plugins: [
 
@@ -66,7 +68,7 @@ export default {
 
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
-		!production && livereload('docs'),
+		!production && livereload(public_loc),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
