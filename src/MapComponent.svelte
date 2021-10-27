@@ -9,16 +9,16 @@
 	export let style;
 	export let minzoom = 0;
 	export let maxzoom = 14;
-	
+
 	export let zoom;
-	
+
 	let container;
 	let options;
-	
+
 	setContext('map', {
 		getMap: () => map
 	});
-	
+
 	if (location.bounds) {
 		options = { bounds: location.bounds };
 	} else if (location.lon && location.lat) {
@@ -44,13 +44,13 @@
 				...options
 			});
 
-			map.addControl(new NavigationControl());
-			
+			map.addControl(new NavigationControl(),'bottom-right');
+
 			// Get initial zoom level
 			map.on('load', () => {
 				zoom = map.getZoom();
 			})
-		
+
 			// Update zoom level when the view zooms
 			map.on('zoom', () => {
 				zoom = map.getZoom();
@@ -67,10 +67,14 @@
 </script>
 
 <style>
+main{
+height:30vh;
+}
 	div {
-		width: 60%;
+		width: 100%;
 		height: 100%;
 		position: fixed;
+		display:flex;
 		right: 0;
 	}
 	@media (max-width: 900px) {

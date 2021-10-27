@@ -61,3 +61,16 @@ button:not(:disabled):active {
 button:focus {
 	border-color: #666;
 }
+
+
+
+body {
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #323132;
+		background-color: whitesmoke;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

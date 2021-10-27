@@ -11,10 +11,15 @@
  {#if loading}
 <Loader height="100vh" width="100vw" position="fixed" bgcolor="rgba(255, 255, 255, 0.7)" /> {/if}
 
-<Panel>
+<Panel id='chart_panel' desc='summary panel'>
+  <!-- <a id="logo-link" href="/"> -->
+
+  <div slot='head'>
+	<img class="logo" style='width:50%' src="https://cdn.ons.gov.uk/assets/images/ons-logo/v2/ons-logo.svg" alt="Office for National Statistics logo - Homepage">
+	<!-- </a> -->
     <h1 >2011 Census Atlas Demo</h1>
     <!-- <h1 style='border-bottom: 1px solid rgb(100, 120, 140);'/> -->
-
+</div>
     {#if indicators && selectItem}
 
     {#if selectData}
@@ -81,40 +86,44 @@
 
 
 
-    {#if lad_dta}
-
-    <PanelSection bind:all={panels} key='area' bind:selected={active.lad.name}>
-
-<!-- wrapper html to shrink select -->
-      <Select options={[...lad_dta.values()]} bind:name={active.lad.name} bind:selected={active.lad.selected} search={true} placeholder="Find a district..."  on:select={()=> active.lsoa.selected = null} >
-        <Geolocate width='30px' bind:position={latlon} />
-
-        </Select>
-
-
-    </PanelSection>
-		{/if}
-
-
-
-<PanelSection bind:all={panels} key='data'>
-
-        <!-- <Group
-			props={{ name: '2011 Census Tables', children: indicators, menu:0 }}
-			bind:selected={selectItem}
-			expanded /> -->
-            
-        <Indicate2L />
-
-</PanelSection>
 
 	{/if}
+</Panel>
+
+<Panel id='options_panel' side='right' desc='selection panel'>
+
+      {#if lad_dta}
+
+      <PanelSection bind:all={panels} key='area' bind:selected={active.lad.name}>
+
+  <!-- wrapper html to shrink select -->
+        <Select options={[...lad_dta.values()]} bind:name={active.lad.name} bind:selected={active.lad.selected} search={true} placeholder="Find a district..."  on:select={()=> active.lsoa.selected = null} >
+          <Geolocate width='30px' bind:position={latlon} />
+
+          </Select>
+
+
+      </PanelSection>
+  		{/if}
+
+
+
+  <PanelSection bind:all={panels} key='data'>
+
+          <!-- <Group
+  			props={{ name: '2011 Census Tables', children: indicators, menu:0 }}
+  			bind:selected={selectItem}
+  			expanded /> -->
+
+          <Indicate2L />
+
+  </PanelSection>
 </Panel>
 
 
 
 
-
+{#if showmap}
 
 {#if mapLocation}
 <MapComponent bind:map style={mapstyle} minzoom={4} maxzoom={14} bind:zoom={mapZoom} location={mapLocation}>
@@ -234,13 +243,15 @@
 </MapComponent>
 {/if}
 
+{/if}
+
 </main>
 
 
 <script>
     import { onMount } from "svelte";
 import { ckmeans } from "simple-statistics";
-import Panel from "./Panel.svelte";
+
 import Group from "./Group.svelte";
 import MapComponent from "./MapComponent.svelte";
 import MapSource from "./MapSource.svelte";
@@ -251,9 +262,12 @@ import Select from "./ui/Select.svelte";
 import { getData, getNomis, getBreaks, getTopo, processData } from "./utils.js";
 import { csv, json } from "d3-fetch";
 
+import Panel from "./ui/Panel.svelte";
 import { default as PanelSection } from "./ui/CustomAccordionPanel.svelte";
 import { default as Indicate2L } from "./ui/groupselect_2layer.svelte";
 import { default as Geolocate } from "./geolocate.svelte";
+
+const showmap = true;
 
 // console.warn(Object.getOwnPropertyNames(Geolocate.prototype),Geolocate.prototype.initgeo().then(console.warn)
 // )
@@ -268,7 +282,8 @@ var panels = {
     area: {
         key: "area",
         title: "Pick an area",
-        text: `This is where you select an area`
+        text: `This is where you select an area`,
+        active:true,
     },
     infobox: {
         key: "Info",
@@ -602,7 +617,7 @@ function hashChange() {
         return None;
     }
 
-    
+
     let hash = location.hash.split("/");
 
     if (selectCode != hash[1]) {
@@ -735,6 +750,10 @@ hr {
 .next {
     height: 24px;
     cursor: pointer;
+}
+
+:global(.mapboxgl-map){
+  width:100%;
 }
 
 </style>

@@ -91,8 +91,11 @@ let item = all[key]
 		border-bottom: 1px solid rgb(100, 120, 140);
         /* border-top: 1px solid rgb(100, 120, 140); */
         /* height:auto; */
+				box-sizing: border-box;
 
 	}
+main{box-sizing: border-box;}
+
 
 	.header {
 		display: flex;

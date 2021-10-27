@@ -33,3 +33,7 @@ hr {
     height: 24px;
     cursor: pointer;
 }
+
+:global(.mapboxgl-map){
+  width:100%;
+}

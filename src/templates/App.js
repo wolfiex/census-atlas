@@ -1,6 +1,6 @@
 import { onMount } from "svelte";
 import { ckmeans } from "simple-statistics";
-import Panel from "./Panel.svelte";
+
 import Group from "./Group.svelte";
 import MapComponent from "./MapComponent.svelte";
 import MapSource from "./MapSource.svelte";
@@ -11,9 +11,12 @@ import Select from "./ui/Select.svelte";
 import { getData, getNomis, getBreaks, getTopo, processData } from "./utils.js";
 import { csv, json } from "d3-fetch";
 
+import Panel from "./ui/Panel.svelte";
 import { default as PanelSection } from "./ui/CustomAccordionPanel.svelte";
 import { default as Indicate2L } from "./ui/groupselect_2layer.svelte";
 import { default as Geolocate } from "./geolocate.svelte";
+
+const showmap = true;
 
 // console.warn(Object.getOwnPropertyNames(Geolocate.prototype),Geolocate.prototype.initgeo().then(console.warn)
 // )
@@ -28,7 +31,8 @@ var panels = {
     area: {
         key: "area",
         title: "Pick an area",
-        text: `This is where you select an area`
+        text: `This is where you select an area`,
+        active:true,
     },
     infobox: {
         key: "Info",
@@ -362,7 +366,7 @@ function hashChange() {
         return None;
     }
 
-    
+
     let hash = location.hash.split("/");
 
     if (selectCode != hash[1]) {

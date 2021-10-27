@@ -1,0 +1,14 @@
+
+
+  <main transition:fly={{x: '100%', opacity: 1}}>
+  <nav style="{side==='left'?'left':'right'}:0;">
+    <div>
+    <slot name='head' style='left:0'>  </slot>
+    <button style='position:absolute;right:0' on:click={() => show = !show} >{show? `hide ${desc} ` : ` show ${desc}x` }</button>
+    </div>
+
+    {#if show}
+    <slot></slot>
+    {/if}
+  </nav>
+  </main>

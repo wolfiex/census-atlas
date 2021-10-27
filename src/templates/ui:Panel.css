@@ -1,45 +1,44 @@
-<script>
-import { fly } from 'svelte/transition';
-export let show = true;
 
-</script>
+main{height:40%;}
 
-<style>
 	main nav{
 		box-sizing: border-box;
 		padding: 24px;
+		height:auto;
 		z-index: 2;
-		width: 40%;
+		width: auto;
 		position: absolute;
 	}
 	@media (max-width: 900px) {
 		main nav{
 			width: 50%;
+
 		}
 	}
 	@media (max-width: 670px) {
 		main nav {
-			width: 100%;
+			width: auto;
 			top: 70%;
 		}
 	}
-    
+
     nav {
+      border-radius:8px;
       position: fixed;
       top: 0;
-      left: 0;
-      height: 100%;
+      height: auto;
       padding: 2rem 1rem 0.6rem;
-      border-left: 1px solid #aaa;
+      /* border-left: 1px solid #aaa; */
       background: #fff;
       overflow-y: auto;
       display: inline-block;
-      
+
 	     /* width: 10rem; */
 }
 
 button{
-    width:25px;
+    width:auto;
+    color:steelblue;
     height:25px;
     border:1px black;
     position:relative;
@@ -49,19 +48,3 @@ button{
     /* left:auto; */
     /* right:0px; */
 }
-
-</style>
-
-<!-- <main>
-	<slot></slot>
-</main> -->
-
-
-{#if show}
-  <main>
-  <nav transition:fly={{x: '100%', opacity: 1}}>
-    <slot></slot>
-  </nav>
-  </main>
-{/if}
-<button on:click={() => show = !show} >{show? '<' : '>' }</button>

@@ -31,12 +31,23 @@ function serve() {
 	};
 }
 
+// get author names
+const { exec } = require("child_process");
+var author = '';
+exec("git for-each-ref --format='%(authorname)' | sort -k5n -k2M -k3n -k4n", (error, stdout, stderr) => {
+    var set = new Set(stdout.split('\n'))
+		author = [...set].join(',')
+    console.log(`Commit Authors:\n  ${author}`);
+});
+
+
 export default {
 	input: 'src/main.js',
 	output: {
 		sourcemap: true,
 		format: 'iife',
 		name: 'ONSCensusAtlas',
+		authors: author,
 		file: public_loc+'/build/bundle.js'
 	},
 	plugins: [
