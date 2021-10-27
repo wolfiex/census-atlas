@@ -11,7 +11,7 @@
   <nav style="{side==='left'?'left':'right'}:0;">
     <div>
     <slot name='head' style='left:0'>  </slot>
-    <button style='position:absolute;right:0' on:click={() => show = !show} >{show? `hide ${desc} ` : ` show ${desc}x` }</button>
+    <button style='position:absolute;right:0' on:click={() => show = !show} >{show? `hide ${desc} ` : ` show ${desc}` }</button>
     </div>
 
     {#if show}
@@ -42,11 +42,12 @@ main{height:40%;}
 		height:auto;
 		z-index: 2;
 		width: auto;
+    max-width:30%;
 		position: absolute;
 	}
-	@media (max-width: 900px) {
+	@media (max-width: 970px) {
 		main nav{
-			width: 50%;
+			/* width: 30%; */
 
 		}
 	}
@@ -54,6 +55,7 @@ main{height:40%;}
 		main nav {
 			width: auto;
 			top: 70%;
+      display:block;
 		}
 	}
 

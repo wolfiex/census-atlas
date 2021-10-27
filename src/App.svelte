@@ -42,7 +42,7 @@
             <div>
                 <hr style="border-top-color: #871A5B" />
                 <strong>England & Wales</strong><br />
-                <strong class="text-lrg">{selectData.ew.data.perc.toFixed(1)}%</strong><br />
+                <h1 class="text-lrg">{selectData.ew.data.perc.toFixed(1)}%</h1><br />
                 <small>{selectData.ew.data.value.toLocaleString()}
 							of
 							{selectData.ew.data.count.toLocaleString()}
@@ -91,6 +91,10 @@
 </Panel>
 
 <Panel id='options_panel' side='right' desc='selection panel'>
+<div slot='head'>
+  <h2> Data Portal </h2>
+
+</div>
 
       {#if lad_dta}
 
@@ -267,7 +271,7 @@ import { default as PanelSection } from "./ui/CustomAccordionPanel.svelte";
 import { default as Indicate2L } from "./ui/groupselect_2layer.svelte";
 import { default as Geolocate } from "./geolocate.svelte";
 
-const showmap = true;
+const showmap = false;
 
 // console.warn(Object.getOwnPropertyNames(Geolocate.prototype),Geolocate.prototype.initgeo().then(console.warn)
 // )
@@ -292,7 +296,7 @@ var panels = {
         active: true
     },
     chart: {
-        key: "Comparison Chart",
+        key: "Chart",
         title: "",
         text: `A comparison chart of your inicator with the avarage.`,
         active: true
@@ -732,7 +736,8 @@ hr {
     padding-bottom: 18px;
 }
 .text-med {
-    font-size: 1.5em;
+    font-size:inherit;
+    /* font-size: 1.5em; */
     font-weight: bold;
 }
 .text-lrg {
@@ -754,6 +759,11 @@ hr {
 
 :global(.mapboxgl-map){
   width:100%;
+}
+
+:global(main){
+  font-size-adjust:.10;
+  font-size:10px;
 }
 
 </style>

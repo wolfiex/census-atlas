@@ -16,7 +16,7 @@ import { default as PanelSection } from "./ui/CustomAccordionPanel.svelte";
 import { default as Indicate2L } from "./ui/groupselect_2layer.svelte";
 import { default as Geolocate } from "./geolocate.svelte";
 
-const showmap = true;
+const showmap = false;
 
 // console.warn(Object.getOwnPropertyNames(Geolocate.prototype),Geolocate.prototype.initgeo().then(console.warn)
 // )
@@ -41,7 +41,7 @@ var panels = {
         active: true
     },
     chart: {
-        key: "Comparison Chart",
+        key: "Chart",
         title: "",
         text: `A comparison chart of your inicator with the avarage.`,
         active: true

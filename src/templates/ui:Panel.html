@@ -4,7 +4,7 @@
   <nav style="{side==='left'?'left':'right'}:0;">
     <div>
     <slot name='head' style='left:0'>  </slot>
-    <button style='position:absolute;right:0' on:click={() => show = !show} >{show? `hide ${desc} ` : ` show ${desc}x` }</button>
+    <button style='position:absolute;right:0' on:click={() => show = !show} >{show? `hide ${desc} ` : ` show ${desc}` }</button>
     </div>
 
     {#if show}

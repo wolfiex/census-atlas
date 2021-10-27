@@ -1,4 +1,6 @@
-<div id="select" class:active={expanded}>
+<div id="select" class:active={expanded} style='height:{expanded?50*filtered.length:30}px'>
+
+
 	{#if selected}
 	<a id="toggle" class="selected" on:click={toggle}>
 		<span>{name}</span>

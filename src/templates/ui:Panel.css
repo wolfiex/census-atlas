@@ -7,11 +7,12 @@ main{height:40%;}
 		height:auto;
 		z-index: 2;
 		width: auto;
+    max-width:30%;
 		position: absolute;
 	}
-	@media (max-width: 900px) {
+	@media (max-width: 970px) {
 		main nav{
-			width: 50%;
+			/* width: 30%; */
 
 		}
 	}
@@ -19,6 +20,7 @@ main{height:40%;}
 		main nav {
 			width: auto;
 			top: 70%;
+      display:block;
 		}
 	}
 

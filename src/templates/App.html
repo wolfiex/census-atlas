@@ -35,7 +35,7 @@
             <div>
                 <hr style="border-top-color: #871A5B" />
                 <strong>England & Wales</strong><br />
-                <strong class="text-lrg">{selectData.ew.data.perc.toFixed(1)}%</strong><br />
+                <h1 class="text-lrg">{selectData.ew.data.perc.toFixed(1)}%</h1><br />
                 <small>{selectData.ew.data.value.toLocaleString()}
 							of
 							{selectData.ew.data.count.toLocaleString()}
@@ -84,6 +84,10 @@
 </Panel>
 
 <Panel id='options_panel' side='right' desc='selection panel'>
+<div slot='head'>
+  <h2> Data Portal </h2>
+
+</div>
 
       {#if lad_dta}
 

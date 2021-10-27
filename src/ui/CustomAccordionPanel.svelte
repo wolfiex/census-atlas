@@ -116,7 +116,7 @@ main{box-sizing: border-box;}
 
 	[data-tooltip] {
 	position: relative;
-	z-index: 2;
+	z-index: 20;
 	display: block;
 	}
 
@@ -132,7 +132,7 @@ main{box-sizing: border-box;}
 	[data-tooltip]:before {
 	position: absolute;
 	bottom: 100%;
-	right: 80%;
+	right: 10%;
 	margin-bottom: 5px;
 	margin-left:20px;
 	padding: 7px;

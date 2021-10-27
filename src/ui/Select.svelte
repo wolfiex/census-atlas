@@ -5,7 +5,9 @@
 
 
 <main>
-    <div id="select" class:active={expanded}>
+    <div id="select" class:active={expanded} style='height:{expanded?50*filtered.length:30}px'>
+
+
 	{#if selected}
 	<a id="toggle" class="selected" on:click={toggle}>
 		<span>{name}</span>
@@ -138,7 +140,7 @@ a span {
   min-height: 60px;
   margin: 0;
   padding: 0;
-  max-height: 200px;
+  /* max-height: 200px; */
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -152,8 +154,13 @@ a span {
   font-weight: 500;
 }
 /* normalize the input elements, make them look like everything else */
-#select input {
+
+input {
   width: calc(100% - 40px);
+}
+
+#select input {
+  /* width: calc(100% - 40px); */
   background: transparent;
   font-family: inherit;
   font-size: inherit;
@@ -196,6 +203,7 @@ a span {
   top: 0;
   left: 0;
   opacity: 1;
+  box-sizing: border-box;
 }
 .selected {
   color: #fff !important;
