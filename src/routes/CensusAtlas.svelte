@@ -401,7 +401,7 @@
         data={selectData.lsoa.data}
         dataIndex={selectData.lsoa.index}
         breaks={selectData.lsoa.breaks}
-        avg={selectData.ew.data}
+        avg={selectData.englandAndWales.data}
         selected={active.lsoa.hovered
           ? active.lsoa.hovered
           : active.lsoa.selected}
@@ -428,12 +428,12 @@
             <hr style="border-top-color: #871A5B" />
             <strong>England & Wales</strong><br />
             <strong class="text-lrg"
-              >{selectData.ew.data.perc.toFixed(1)}%</strong
+              >{selectData.englandAndWales.data.perc.toFixed(1)}%</strong
             ><br />
             <small
-              >{selectData.ew.data.value.toLocaleString()}
+              >{selectData.englandAndWales.data.value.toLocaleString()}
               of
-              {selectData.ew.data.count.toLocaleString()}
+              {selectData.englandAndWales.data.count.toLocaleString()}
               {selectItem.unit.toLowerCase()}s</small
             >
           </div>

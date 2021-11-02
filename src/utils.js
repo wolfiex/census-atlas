@@ -1,6 +1,11 @@
 import { feature } from "topojson-client";
 import { csvParse, autoType } from "d3-dsv";
+<<<<<<< HEAD
 import { get } from 'svelte/store';
+=======
+import { get } from "svelte/store";
+import { bbox } from "@turf/turf";
+>>>>>>> 881cd6a... refactors processData function
 
 export async function getLsoaData(url) {
   let response = await fetch(url);
@@ -24,7 +29,13 @@ export async function getNomis(url, geographicCodesStore, indicatorCode) {
 	}
 	return await dataService.getNomisData(url, geographicCodesStore, selectedCategoryTotals, indicatorCode)
   }
-
+  return await dataService.getNomisData(
+    url,
+    geographicCodesStore,
+    selectedCategoryTotals,
+    indicatorCode
+  );
+}
 
 export function processData(data, lookup) {
   let lsoa = {
@@ -34,50 +45,61 @@ export function processData(data, lookup) {
     data: [],
     index: {},
   };
-  let ew = {
+  let englandAndWales = {
     data: {
       value: 0,
       count: 0,
     },
   };
-  let lad_temp = {};
+  let ladTemp = {};
 
-  data.forEach((d) => {
-    lsoa.index[d.code] = d;
-
-    let parent = lookup[d.code].parent;
-    if (!lad.index[parent]) {
-      lad.index[parent] = {
-        code: parent,
-        value: d.value,
-        count: d.count,
-      };
-      lad_temp[parent] = [d];
-    } else {
-      lad.index[parent].value += d.value;
-      lad.index[parent].count += d.count;
-      lad_temp[parent].push(d);
-    }
-  });
-
+  data.forEach((d) =>
+    calculateAggregateData(d, lsoa, lookup, lad, ladTemp, englandAndWales)
+  );
   let keys = Object.keys(lad.index);
-  keys.forEach((key) => {
-    lad.index[key].perc = (lad.index[key].value / lad.index[key].count) * 100;
-    lad.index[key].median = lad_temp[key][Math.floor(lad_temp[key].length / 2)];
-    lad.data.push(lad.index[key]);
-
-    ew.data.value += lad.index[key].value;
-    ew.data.count += lad.index[key].count;
-  });
+  keys.forEach((key) => calculateLadPercentages(lad, ladTemp, key));
   lad.data.sort((a, b) => a.perc - b.perc);
 
-  ew.data.perc = (ew.data.value / ew.data.count) * 100;
+  englandAndWales.data.perc =
+    (englandAndWales.data.value / englandAndWales.data.count) * 100;
 
   return {
     lsoa: lsoa,
     lad: lad,
-    ew: ew,
+    englandAndWales: englandAndWales,
   };
+}
+
+function calculateAggregateData(
+  lsoaData,
+  lsoa,
+  lookup,
+  lad,
+  ladTemp,
+  englandAndWales
+) {
+  lsoa.index[lsoaData.code] = lsoaData;
+  let parent = lookup[lsoaData.code].parent;
+  if (!lad.index[parent]) {
+    lad.index[parent] = {
+      code: parent,
+      value: lsoaData.value,
+      count: lsoaData.count,
+    };
+    ladTemp[parent] = [lsoaData];
+  } else {
+    lad.index[parent].value += lsoaData.value;
+    lad.index[parent].count += lsoaData.count;
+    ladTemp[parent].push(lsoaData);
+  }
+  englandAndWales.data.value += lsoaData.value;
+  englandAndWales.data.count += lsoaData.count;
+}
+
+function calculateLadPercentages(lad, ladTemp, key) {
+  lad.index[key].perc = (lad.index[key].value / lad.index[key].count) * 100;
+  lad.index[key].median = ladTemp[key][Math.floor(ladTemp[key].length / 2)];
+  lad.data.push(lad.index[key]);
 }
 
 export function getBreaks(chunks) {
@@ -105,3 +127,10 @@ export function getThresholds(domain, exp, count = 32) {
   }
   return breaks;
 }
+<<<<<<< HEAD
+=======
+
+export function testFunction() {
+  return true;
+}
+>>>>>>> 881cd6a... refactors processData function
