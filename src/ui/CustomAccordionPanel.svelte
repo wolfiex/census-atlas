@@ -5,40 +5,38 @@
 
 
 <main>
-    
-<Accordion>
+    <Accordion>
 	<!--
 	{ #each items as item }
 	 -->
-		<AccordionItem key={item.key} bind:active={item.active} >
+	<AccordionItem key={item.key} bind:active={item.active}>
 
-			<div slot='header' class='header'  >
+		<div slot='header' class='header'>
 
-				<span class='name' data-tooltip={ item.text || false }>{item.key}  </span>
+			<span class='name' data-tooltip={ item.text || false }>{item.key} </span>
 
-				{#if selected}
-				<h4 class='title' >{selected}  </h4>
-				{:else}
-        <h4 class='title' >{item.title}  </h4>
-        
-				{/if}
-				<div class='icon'>{item.active?'^':'>'}  </div>
+			{#if selected}
+			<h4 class='title'>{selected} </h4>
+			{:else}
+			<h4 class='title'>{item.title} </h4>
 
-			</div>
+			{/if}
+			<div class='icon'>{item.active?'^':'>'} </div>
 
-			<p slot='body' class='body'>
+		</div>
 
-            <slot>
-                Content Pending.
-            </slot>
-			</p>
+		<p slot='body' class='body'>
 
-		</AccordionItem>
+			<slot>
+				Content Pending.
+			</slot>
+		</p>
+
+	</AccordionItem>
 
 	<!-- { /each } -->
 
 </Accordion>
-
 </main>
 
 
@@ -46,14 +44,15 @@
     
 import { Accordion } from 'svelte-collapsible'
 import { default as AccordionItem } from './CustomAccordionItem.svelte'
-
+import { panels } from '../constants.js'
 
 // export let items
 export let key
-export let all
-export let selected=null;
 
-let item = all[key]
+export let selected = null;
+
+let item = $panels[key]
+
 
 </script>
 

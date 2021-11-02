@@ -4,6 +4,7 @@ from jinja2 import Template
 import glob,os,time,sys
 from pathlib import Path
 
+
 files = glob.glob(__file__.replace('gen_template.py','')+'*.html')
 apps = [Path(path).stem for path in files]
 
@@ -47,6 +48,8 @@ while True:
         new = max([int(os.popen('date -r %s +%s'%(x,'%s')).read()) for x in watch])
 
         if new != updated[count]:
+
+
             print('Updating',app,new)
             code = tm.render(globals=open(app+'.js','r').read(), body = open(app+'.html','r').read(),stylesheet=open(app+'.css','r').read())
             # print(app,code)

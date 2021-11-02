@@ -45,16 +45,19 @@
 
 
 <script>
-    export let position = undefined;
+    import { latlon } from "./MapComponent.svelte";
 export let width = "20px";
 export let tooltip =
     "Use Current Location. Note - this feature may require you to allow location access from your device.";
 let clickpos;
 let show = true && navigator.geolocation;
 
+
+
+
 import { onMount } from "svelte";
 onMount(() => {
-    if (initgeo() & (window.location.hash.split('/')[2] === '' )) {
+    if (initgeo() & (window.location.hash.split('/')[2] === '')) {
         if (clickpos) clickpos.click();
     }
 });
@@ -105,9 +108,9 @@ function showPosition() {
     if (navigator.geolocation) {
         initgeo();
 
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            position = pos.coords;
-            console.warn(position);
+        navigator.geolocation.getCurrentPosition(function (pos) {
+            $latlon = pos.coords;
+            console.warn('Location Change:', $latlon);
         });
     } else {
         alert("Sorry, your browser does not support HTML5 geolocation.");

@@ -24,7 +24,7 @@ export let filter = null;
 export let layout = {};
 export let paint = {};
 export let data = null;
-export let colors = null;
+// export let colors = null;
 export let selected = null;
 export let highlighted = null;
 export let hovered = null;
@@ -36,16 +36,22 @@ export let order = null;
 export let maxzoom = undefined;
 export let minzoom = undefined;
 
-const { getMap } = getContext('map');
-const map = getMap();
+// const { getmap } = getContext('map');
+// const map = getmap();
+
+
+import { map } from "./mapComponent.svelte";
 
 let selectedPrev = null;
 let highlightedPrev = null;
 let selectedGeo = null;
 
-if (map.getLayer(id)) {
-  map.removeLayer(id);
+if ($map.getLayer(id)) {
+  $map.removeLayer(id);
 }
+
+console.warn('awooo',selected)
+
 
 let options = {
   'id': id,
@@ -69,13 +75,13 @@ if (minzoom) {
   options['minzoom'] = minzoom;
 }
 
-map.addLayer(options, order);
+$map.addLayer(options, order);
 
 function updateData() {
   console.log('updating colours...');
 
   data.lsoa.data.forEach(d => {
-    map.setFeatureState({
+    $map.setFeatureState({
       source: source,
       sourceLayer: sourceLayer,
       id: d.code
@@ -89,13 +95,13 @@ $: data && updateData();
 
 $: if (click && selected != selectedPrev) {
   if (selectedPrev) {
-    map.setFeatureState(
+    $map.setFeatureState(
       { source: source, sourceLayer: sourceLayer, id: selectedPrev },
       { selected: false }
     );
   }
   if (selected) {
-    map.setFeatureState(
+    $map.setFeatureState(
       { source: source, sourceLayer: sourceLayer, id: selected },
       { selected: true }
     );
@@ -105,13 +111,13 @@ $: if (click && selected != selectedPrev) {
 
 $: if (highlight && highlighted != highlightedPrev) {
   if (highlightedPrev) {
-    map.setFeatureState(
+    $map.setFeatureState(
       { source: source, sourceLayer: sourceLayer, id: highlightedPrev },
       { highlighted: false }
     );
   }
   if (highlighted) {
-    map.setFeatureState(
+    $map.setFeatureState(
       { source: source, sourceLayer: sourceLayer, id: highlighted },
       { highlighted: true }
     );
@@ -120,7 +126,7 @@ $: if (highlight && highlighted != highlightedPrev) {
 }
 
 if (click) {
-  map.on('click', id, (e) => {
+  $map.on('click', id, (e) => {
     if (e.features.length > 0) {
       selected = e.features[0].id;
 
@@ -129,13 +135,13 @@ if (click) {
       });
 
       if (selectedPrev) {
-        map.setFeatureState(
+        $map.setFeatureState(
           { source: source, sourceLayer: sourceLayer, id: selectedPrev },
           { selected: false }
         );
       }
 
-      map.setFeatureState(
+      $map.setFeatureState(
         { source: source, sourceLayer: sourceLayer, id: selected },
         { selected: true }
       );
@@ -144,7 +150,7 @@ if (click) {
         //let center = centroid(e.features[0].toJSON().geometry);
 
 
-        map.flyTo({
+        $map.flyTo({
           center: centroid(e.features[0].toJSON().geometry.coordinates)
           //center.geometry.coordinates
         });
@@ -161,29 +167,29 @@ if (click) {
 }
 
 if (hover) {
-  map.on('mousemove', id, (e) => {
+  $map.on('mousemove', id, (e) => {
     if (e.features.length > 0) {
       if (hovered) {
-        map.setFeatureState(
+        $map.setFeatureState(
           { source: source, sourceLayer: sourceLayer, id: hovered },
           { hovered: false }
         );
       }
       hovered = e.features[0].id;
 
-      map.setFeatureState(
+      $map.setFeatureState(
         { source: source, sourceLayer: sourceLayer, id: hovered },
         { hovered: true }
       );
 
       // Change the cursor style as a UI indicator.
-      map.getCanvas().style.cursor = 'pointer';
+      $map.getCanvas().style.cursor = 'pointer';
     }
   });
 
-  map.on('mouseleave', id, (e) => {
+  $map.on('mouseleave', id, (e) => {
     if (hovered) {
-      map.setFeatureState(
+      $map.setFeatureState(
         { source: source, sourceLayer: sourceLayer, id: hovered },
         { hovered: false }
       );

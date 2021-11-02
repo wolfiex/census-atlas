@@ -7,6 +7,7 @@ export let selected;
 export let search = false;
 export let placeholder = 'Select an option';
 
+// var filtered=[]
 
 let expanded = false;
 let filter = '';

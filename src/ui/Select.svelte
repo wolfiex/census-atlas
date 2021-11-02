@@ -5,7 +5,7 @@
 
 
 <main>
-    <div id="select" class:active={expanded} style='height:{expanded?50*filtered.length:30}px'>
+    <div id="select" class:active={expanded} style='display:inline-block;height:{50 +(expanded?40*(filtered.length):0)}px'>
 
 
 	{#if selected}
@@ -42,7 +42,8 @@
 	</div>
 	{/if}
 
-	<slot/>
+	<slot style='top:0;right:0'/>
+
 </div>
 
 </main>
@@ -58,6 +59,7 @@ export let selected;
 export let search = false;
 export let placeholder = 'Select an option';
 
+// var filtered=[]
 
 let expanded = false;
 let filter = '';

@@ -43,6 +43,7 @@ main{height:40%;}
 		z-index: 2;
 		width: auto;
     max-width:30%;
+    min-width: 150px;
 		position: absolute;
 	}
 	@media (max-width: 970px) {
