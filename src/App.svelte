@@ -344,6 +344,7 @@ let mapLocation = null;
 
 
 
+import {timer,timer_as,connect} from './debug_ws.js'
 
 
 
@@ -381,12 +382,14 @@ function setIndicator(indicators, code) {
         }
     });
 }
-
+ 
 
 
 async function initialise() {
+    await connect()
 
-    await get_data()
+    timer_as(get_data)
+    // await get_data()
     console.warn('eee', $lad_dta)
 
     mapLocation = {
@@ -396,15 +399,8 @@ async function initialise() {
     };
 
     // no need to be blocking
-    json(tabledata).then(json => {
-        indicators = json;
-
-        setIndicator(indicators, selectCode);
-
-        if (!selectItem) {
-            selectItem = indicators[0].children[0].children[0];
-        }
-    });
+    
+})
 
     json(lsoaurl).then(data => {
         lsoalookup = data;
