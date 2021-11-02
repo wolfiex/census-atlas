@@ -9,5 +9,6 @@ A prototype for exploring neighbourhood level Census data tables on a map.
  - Causes an append styles issue with the navigator:
 https://github.com/sveltejs/svelte/issues/6829
 
+# Note on how to update files
 ##### Changes of new files:
- - To be done in corresponding templates file, and run with `python get_template.py`  to glue everything together
+ - *To be done in corresponding templates file, and run with `python get_template.py`  to glue everything together*
