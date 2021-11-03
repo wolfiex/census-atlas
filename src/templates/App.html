@@ -13,7 +13,7 @@
     <h1 >2011 Census Atlas Demo</h1>
     <!-- <h1 style='border-bottom: 1px solid rgb(100, 120, 140);'/> -->
 </div>
-    {#if indicators && selectItem}
+    {#if indicators && $selectItem}
 
     {#if $selectData}
 
@@ -29,7 +29,7 @@
     <div id="infobox">
         {selectMeta.table.name}
         <small>({selectMeta.table.code})</small><br />
-        <strong class="text-med">{selectItem.name}</strong>
+        <strong class="text-med">{$selectItem.name}</strong>
         <div class="grid">
             {#if $selectData}
             <div>
@@ -39,7 +39,7 @@
                 <small>{$selectData.ew.data.value.toLocaleString()}
 							of
 							{$selectData.ew.data.count.toLocaleString()}
-							{selectItem.unit.toLowerCase()}s</small>
+							{$selectItem.unit.toLowerCase()}s</small>
             </div>
             {#if $lad.hovered || $lad.highlighted || $lad.selected}
             <div>
@@ -53,7 +53,7 @@
                 <small>{$lad.hovered ? $selectData.lad.index[$lad.hovered].value.toLocaleString() : $lad.highlighted ? $selectData.lad.index[$lad.highlighted].value.toLocaleString() : $selectData.lad.index[$lad.selected].value.toLocaleString()}
 								of
 								{$lad.hovered ? $selectData.lad.index[$lad.hovered].count.toLocaleString() : $lad.highlighted ? $selectData.lad.index[$lad.highlighted].count.toLocaleString() : $selectData.lad.index[$lad.selected].count.toLocaleString()}
-								{selectItem.unit.toLowerCase()}s</small>
+								{$selectItem.unit.toLowerCase()}s</small>
             </div>
             {:else}
             <div /> {/if} {#if $lsoa.hovered || $lsoa.selected}
@@ -123,7 +123,7 @@
 {#if showmap}
 
 {#if mapLocation}
-<MapComponent bind:zoom={mapZoom} >
+<MapComponent bind:zoom={$mapZoom} >
 <!-- maplocation remove> -->
 
 	{#if $selectData }

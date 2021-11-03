@@ -1,3 +1,8 @@
+/* Debug module 
+Lazy mans perf wrapper for functions
+Sends the results over a websocket to the complementary python program in ./templates.
+*/
+
 const ws = new WebSocket('ws://localhost:5001')
 
 let connection_resolvers = [];
