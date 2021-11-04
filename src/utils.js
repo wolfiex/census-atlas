@@ -1,6 +1,7 @@
 import { feature } from "topojson-client";
 import { csvParse, autoType } from "d3-dsv";
-import { get } from 'svelte/store';
+import { get } from "svelte/store";
+import { bbox } from "@turf/turf";
 import { ckmeans } from "simple-statistics";
 
 export async function getLsoaData(url) {
@@ -17,14 +18,25 @@ export async function getTopo(url, layer) {
   return geojson;
 }
 
-export async function getNomis(url, geographicCodesStore, indicatorCode) {
-	let geoCodesStore = get(geographicCodesStore)
-	if (geoCodesStore.length == 0) {
-		let geoCodes = await dataService.getGeographicCodes(url)
-		geographicCodesStore.set(geoCodes)
-	}
-	return await dataService.getNomisData(url, geographicCodesStore, selectedCategoryTotals, indicatorCode)
+export async function getNomis(
+  url,
+  dataService,
+  geographicCodesStore,
+  selectedCategoryTotals,
+  indicatorCode
+) {
+  let geoCodesStore = get(geographicCodesStore);
+  if (geoCodesStore.length == 0) {
+    let geoCodes = await dataService.getGeographicCodes(url);
+    geographicCodesStore.set(geoCodes);
   }
+  return await dataService.getNomisData(
+    url,
+    geographicCodesStore,
+    selectedCategoryTotals,
+    indicatorCode
+  );
+}
 
 export function processAggregateData(dataset, lookup) {
   let lsoa = {
@@ -209,7 +221,9 @@ export function setColors(data, active, lsoalookup, ladbounds, selectData, selec
     }
   }
   selectData = newdata;
-  
+
+}
+
 export function updateURL(location,selectCode,active,mapLocation,history) {
   let hash = location.hash;
   let newhash = `#/${selectCode}/${
