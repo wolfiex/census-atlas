@@ -28,7 +28,14 @@ function serve() {
 	};
 }
 
-export default {
+export default [
+  {
+    input: "./node_modules/@ons/design-system/scripts/main.js",
+    output: {
+      file: "public/build/ons-design-system.js",
+    },
+  },
+  {
 	input: 'src/main.js',
 	output: {
 		sourcemap: true,
@@ -74,4 +81,5 @@ export default {
 	watch: {
 		clearScreen: false
 	}
-};
+  }
+];
