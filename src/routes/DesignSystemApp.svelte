@@ -1,5 +1,4 @@
 <script>
-    import "../../node_modules/@ons/design-system/css/census.css"
     import ONSCensusApp from "../ui/ons/ONSCensusApp.svelte"
     import ONSAccordion from "../ui/ons/ONSAccordion.svelte";
     import ONSBacklink from "../ui/ons/ONSBacklink.svelte";
@@ -17,6 +16,13 @@
 
     let hint = "This is a hint"
 </script>
+
+<style lang="scss" global>
+    /* @import '../../node_modules/@ons/design-system/scss/main.scss';
+     * XXX: This fails for many reasons. Sticking to global CSS for now with only variables exposed via SCSS. */
+    @import '../../node_modules/@ons/design-system/css/census';
+    @import '../../node_modules/@ons/design-system/scss/vars/_index.scss';
+</style>
 
 <ONSCensusApp>
 
