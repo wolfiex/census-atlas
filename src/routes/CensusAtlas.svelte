@@ -313,6 +313,8 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
 // $: indicators, console.warn('indicator change',indicators);
 // $: selectItem, console.warn('selectItem',selectItem);
 // $: selectData, console.warn('selectData',selectData);
+$: ladvector, console.warn('ladvector',ladvector);
+$: active.lad, console.warn('active.lad',active.lad);
 
   $: selectItem && setSelectedDataset(); // Update meta when selection updates
   $: active.lad.highlighted =
