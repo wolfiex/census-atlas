@@ -1,9 +1,11 @@
 import svelte from 'rollup-plugin-svelte';
+import sveltePreprocess from 'svelte-preprocess';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import css from 'rollup-plugin-css-only';
+import scss from 'rollup-plugin-scss'
+
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -28,7 +30,14 @@ function serve() {
 	};
 }
 
-export default {
+export default [
+  {
+    input: "./node_modules/@ons/design-system/scripts/main.js",
+    output: {
+      file: "public/build/ons-design-system.js",
+    },
+  },
+  {
 	input: 'src/main.js',
 	output: {
 		sourcemap: true,
@@ -38,6 +47,9 @@ export default {
 	},
 	plugins: [
 		svelte({
+			preprocess: sveltePreprocess({
+				scss: { includePaths: ['/node_modules/@ons/design-system', './node_modules/normalize-scss/sass'] },
+			}),
 			compilerOptions: {
 				hydratable: true,
 				// enable run-time checks when not in production
@@ -46,7 +58,7 @@ export default {
 		}),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
-		css({ output: 'bundle.css' }),
+		scss({ output: 'public/build/bundle.css' }),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
@@ -74,4 +86,5 @@ export default {
 	watch: {
 		clearScreen: false
 	}
-};
+  }
+];
