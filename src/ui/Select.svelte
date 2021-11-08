@@ -13,13 +13,15 @@
 	let el;
 	let input;
 	
+	// $: options, console.error(options)
+
 	$: regex = filter ? new RegExp(filter, 'i') : null;
-	$: filtered = regex ? options.filter(option => regex.test(option.name)) : options;
+	$: filtered = regex ? options.filter(option => regex.test(option.AREANM)) : options;
 	$: (selected || selected == null) && setName();
 
 	function setName() {
 		if (selected) {
-			name = options.find(d => d.code == selected).name;
+			name = options.find(d => d.AREACD == selected).AREANM;
 		} else {
 			name = null;
 		}
@@ -53,9 +55,9 @@
 	
 	function select(option) {
 		dispatch('select', {
-			code: option.code
+			code: option.AREACD
 		});
-		selected = option.code;
+		selected = option.AREACD;
 		expanded = false;
 	}
 	
@@ -194,7 +196,7 @@
 		<ul>
 			{#if filtered[0]}
 			{#each filtered as option}
-			<li on:click="{() => select(option)}">{option.name}</li>
+			<li on:click="{() => select(option)}">{option.AREANM}</li>
 			{/each}
 			{:else}
 			<li>No results</li>

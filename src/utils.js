@@ -164,27 +164,19 @@ export function populateColors(nomisData, colors) {
 }
 
 function assignMapColors(d, colors, breaks) {
+  var n = 4;
   if (d.perc <= breaks[1]) {
-    d.color = colors.base[0];
-    d.muted = colors.muted[0];
-    d.fill = colors.base[0];
+    n = 0;
   } else if (d.perc <= breaks[2]) {
-    d.color = colors.base[1];
-    d.muted = colors.muted[1];
-    d.fill = colors.base[1];
+    n = 1;
   } else if (d.perc <= breaks[3]) {
-    d.color = colors.base[2];
-    d.muted = colors.muted[2];
-    d.fill = colors.base[2];
+    n = 2;
   } else if (d.perc <= breaks[4]) {
-    d.color = colors.base[3];
-    d.muted = colors.muted[3];
-    d.fill = colors.base[3];
-  } else {
-    d.color = colors.base[4];
-    d.muted = colors.muted[4];
-    d.fill = colors.base[4];
+    n = 3;
   }
+  d.color = colors.base[n];
+  d.muted = colors.muted[n];
+  d.fill = colors.base[n];
 }
 
 export function addLadDataToDataset(dataset, lsoalookup, nomisData) {
@@ -198,7 +190,7 @@ export function addLadDataToDataset(dataset, lsoalookup, nomisData) {
   dataset.englandAndWales.data = proc.englandAndWales.data;
 }
 
-export function setColors(data, active, lsoalookup, ladbounds, selectData, selectItem, ladtopo, map) {
+export function setColors(data, active, lsoalookup, ladbounds, selectData, selectItem, ladtopo, map, lad_dta) {
   let newdata = JSON.parse(JSON.stringify(data[selectItem.code]));
   if (active.lad.selected) {
     // re-color dataset
@@ -212,10 +204,12 @@ export function setColors(data, active, lsoalookup, ladbounds, selectData, selec
       }
     });
     // zoom to district on map
-    let geometry = ladbounds.features.find(
-      (f) => f.properties[ladtopo.code] == active.lad.selected
-    ).geometry;
-    let bounds = bbox(geometry);
+    // let geometry = ladbounds.features.find(
+    //   (f) => f.properties[ladtopo.code] == active.lad.selected
+    // ).geometry;
+    let b = lad_dta.get(active.lad.selected);
+    let bounds = [b.minx, b.miny, b.maxx, b.maxy];
+
     if (!active.lsoa.selected) {
       map.fitBounds(bounds, { padding: 20 });
     }
@@ -224,27 +218,23 @@ export function setColors(data, active, lsoalookup, ladbounds, selectData, selec
 
 }
 
-export function updateURL(location,selectCode,active,mapLocation,history) {
+export function updateURL(location, selectCode, active, mapLocation, history) {
   let hash = location.hash;
-  let newhash = `#/${selectCode}/${
-    active.lad.selected ? active.lad.selected : ""
-  }/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom},${
-    mapLocation.lon
-  },${mapLocation.lat}`;
+  let newhash = `#/${selectCode}/${active.lad.selected ? active.lad.selected : ""
+    }/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom},${mapLocation.lon
+    },${mapLocation.lat}`;
   if (hash != newhash) {
     history.pushState(undefined, undefined, newhash);
   }
 }
 
 
-export function replaceURL(selectCode,active,mapLocation,history) {
-  let hash = `#/${selectCode}/${
-    active.lad.selected ? active.lad.selected : ""
-  }/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom},${
-    mapLocation.lon
-  },${mapLocation.lat}`;
-  history.replaceState(undefined, undefined, hash);
-}
+// export function replaceURL(selectCode, active, mapLocation, history) {
+//   let hash = `#/${selectCode}/${active.lad.selected ? active.lad.selected : ""
+//     }/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom||14},${mapLocation.lon
+//     },${mapLocation.lat}`;
+//   history.replaceState(undefined, undefined, hash);
+// }
 
 export function testFunction() {
   return true;
