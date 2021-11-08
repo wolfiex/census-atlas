@@ -7,7 +7,7 @@
     </label>
     <select id="select" name="select" class="ons-input ons-input--select">
         {#each options as option}
-            <option value="{option.value}" {#if option.selected}selected{/if} {#if option.disabled}disabled{/if}>{option.label}</option>
+            <option value={option.value} selected={option.selected} disabled={option.disabled}>{option.label}</option>
         {/each}
     </select>
 </div>
