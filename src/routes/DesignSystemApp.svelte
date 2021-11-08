@@ -13,6 +13,7 @@
     import ONSRadios from "../ui/ons/ONSRadios.svelte";
     import ONSRadio from "../ui/ons/partials/ONSRadio.svelte";
     import ONSTextArea from "../ui/ons/ONSTextArea.svelte";
+    import ONSShare from "../ui/ons/ONSShare.svelte"
 
     let hint = "This is a hint"
 </script>
@@ -79,4 +80,7 @@
         <ONSRadio id="other">Other</ONSRadio>
         <p>anything</p>
     </ONSRadios>
+
+    <h2>Share</h2>
+    <ONSShare>Share this page</ONSShare>
 </ONSCensusApp>
