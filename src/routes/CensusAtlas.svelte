@@ -22,7 +22,7 @@
     addLadDataToDataset,
     setColors,
     updateURL,
-    replaceURL,
+    // replaceURL,
   } from "../utils.js";
   import MapComponent from "../MapComponent.svelte";
   import { get } from "svelte/store";
@@ -124,12 +124,8 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
   async function initialise() {
 
     var location = await get_data(boundurl)
-    console.warn(location,$lad_dta)
-    mapLocation = {
-        zoom: 11,
-        lon: +location.lon,
-        lat: +location.lat
-    };
+
+    
 
     // no need to be blocking
     json(tabledata).then(jsn => {
@@ -150,8 +146,19 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
             
     
 
-
+    
     })
+
+    console.warn(location,$lad_dta)
+    mapLocation = {
+        zoom: 11,
+        lon: +location.lon,
+        lat: +location.lat
+    };
+    changeURL()
+    // replaceURL(selectCode,active,mapLocation,history);
+    // if (map) map.flyTo(mapLocation);
+    
   }
 
   
@@ -231,21 +238,21 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
   function getSib(type, diff) {
     if (type == "lad") {
       let index =
-        selectData.lad.data.findIndex((d) => d.code == active.lad.selected) +
+        selectData.lad.data.findIndex((d) => d.AREACD == active.lad.selected) +
         diff;
       if (index >= 0 && index < selectData.lad.data.length) {
         active.lsoa.selected = null;
-        active.lad.selected = selectData.lad.data[index].code;
+        active.lad.selected = selectData.lad.data[index].AREACD;
       }
     } else if (type == "lsoa") {
       let filtered = selectData.lsoa.data.filter((d) =>
         // ladlookup[active.lad.selected].children.includes(d.code)
-        $lad_dta.get(active.lad.selected).children.includes(d.code)
+        $lad_dta.get(active.lad.selected).children.includes(d.AREACD)
       );
       let index =
         filtered.findIndex((d) => d.code == active.lsoa.selected) + diff;
       if (index >= 0 && index < filtered.length) {
-        active.lsoa.selected = filtered[index].code;
+        active.lsoa.selected = filtered[index].AREACD;
 
         // Fit to parent LAD
         let b = $lad_dta.get(active.lad.selected);
@@ -271,31 +278,41 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
   }
 
   // Respond to URL change
-  window.onpopstate = () => {
-    let hash = location.hash == "" ? "" : location.hash.split("/");
+  window.onpopstate = changeURL
+  // replaceURL(selectCode,active,mapLocation,history);
+  
 
-    if (selectCode != hash[1]) {
-      selectCode = hash[1];
-      setIndicator(indicators, selectCode);
+  function changeURL() {
+    let hash = `#/${selectCode||''}/${active.lad.selected ? active.lad.selected : ""}/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom},${mapLocation.lon},${mapLocation.lat}`;
+    if (hash != window.location.hash) {
+        history.pushState(undefined, undefined, hash);
     }
-    if (active.lsoa.selected != hash[3]) {
-      active.lsoa.selected = hash[3] != "" ? hash[3] : null;
-    } else if (active.lad.selected != hash[2]) {
-      active.lad.selected = hash[2] != "" ? hash[2] : null;
-    }
-    if (
-      `${mapLocation.zoom},${mapLocation.lon},${mapLocation.lat}` != hash[4]
-    ) {
-      let loc = hash[4].split(",");
-      mapLocation = { zoom: loc[0], center: [loc[1], loc[2]] };
-      map.jumpTo(mapLocation);
-    }
-  };
+}
+  // function changeURL() => {
+  //   let hash = location.hash == "" ? "" : location.hash.split("/");
+
+  //   if (selectCode != hash[1]) {
+  //     selectCode = hash[1];
+  //     setIndicator(indicators, selectCode);
+  //   }
+  //   if (active.lsoa.selected != hash[3]) {
+  //     active.lsoa.selected = hash[3] != "" ? hash[3] : null;
+  //   } else if (active.lad.selected != hash[2]) {
+  //     active.lad.selected = hash[2] != "" ? hash[2] : null;
+  //   }
+  //   if (
+  //     `${mapLocation.zoom},${mapLocation.lon},${mapLocation.lat}` != hash[4]
+  //   ) {
+  //     let loc = hash[4].split(",");
+  //     mapLocation = { zoom: loc[0], center: [loc[1], loc[2]] };
+  //     map.jumpTo(mapLocation);
+  //   }
+  // };
 
 
-$: indicators, console.warn('indicator change',indicators);
-$: selectItem, console.warn('selectItem',selectItem);
-$: selectData, console.warn('selectData',selectData);
+// $: indicators, console.warn('indicator change',indicators);
+// $: selectItem, console.warn('selectItem',selectItem);
+// $: selectData, console.warn('selectData',selectData);
 
   $: selectItem && setSelectedDataset(); // Update meta when selection updates
   $: active.lad.highlighted =
@@ -320,12 +337,13 @@ $: selectData, console.warn('selectData',selectData);
         lon: center.lng.toFixed(5),
         lat: center.lat.toFixed(5),
       };
-      replaceURL(selectCode,active,mapLocation,history);
+      changeURL()
+      // replaceURL(selectCode,active,mapLocation,history);
     });
   }
 
  
-onMount((async () => await initialise()));
+onMount(async () => await initialise());
 
 </script>
 

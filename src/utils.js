@@ -229,12 +229,12 @@ export function updateURL(location, selectCode, active, mapLocation, history) {
 }
 
 
-export function replaceURL(selectCode, active, mapLocation, history) {
-  let hash = `#/${selectCode}/${active.lad.selected ? active.lad.selected : ""
-    }/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom},${mapLocation.lon
-    },${mapLocation.lat}`;
-  history.replaceState(undefined, undefined, hash);
-}
+// export function replaceURL(selectCode, active, mapLocation, history) {
+//   let hash = `#/${selectCode}/${active.lad.selected ? active.lad.selected : ""
+//     }/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom||14},${mapLocation.lon
+//     },${mapLocation.lat}`;
+//   history.replaceState(undefined, undefined, hash);
+// }
 
 export function testFunction() {
   return true;

@@ -1,7 +1,7 @@
 <script>
 	import { onMount, setContext } from 'svelte';
 	import { Map, NavigationControl } from 'mapbox-gl';
-
+	import {bounds} from './stores.js';
 
 	export let map;
 
@@ -42,9 +42,13 @@
 				maxZoom: maxzoom,
 				...options
 			});
-
+			
 			map.addControl(new NavigationControl());
 			
+			// bounds.subscribe((b) => { if (map) map.fitBounds(b, { padding: 20 }); })// move map on bbox change
+			map.fitBounds($bounds, { padding: 20 });
+
+
 			// Get initial zoom level
 			map.on('load', () => {
 				zoom = map.getZoom();

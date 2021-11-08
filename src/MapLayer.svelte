@@ -150,9 +150,8 @@
 				);
 
 				if (clickCenter) {
-					let center = centroid(e.features[0].toJSON().geometry);
 					map.flyTo({
-						center: center.geometry.coordinates,
+						center:  centroid(e.features[0].toJSON().geometry.coordinates)
 					});
 				}
 
