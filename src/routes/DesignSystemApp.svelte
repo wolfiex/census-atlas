@@ -24,6 +24,10 @@
     @import '../../node_modules/@ons/design-system/scss/vars/_index.scss';
 </style>
 
+<svelte:head>
+	<script defer src="/build/ons-design-system.js"></script>
+</svelte:head>
+
 <ONSCensusApp>
 
     <h2>Backlink</h2>
