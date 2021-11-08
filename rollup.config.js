@@ -39,7 +39,6 @@ exec("git for-each-ref --format='%(authorname)' | sort -k5n -k2M -k3n -k4n", (er
     console.log(`Commit Authors:\n  ${author}`);
 });
 
-export default {
 export default [
   {
     input: "./node_modules/@ons/design-system/scripts/main.js",
