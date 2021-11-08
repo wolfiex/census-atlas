@@ -1,7 +1,7 @@
 {
   "name": "census-atlas",
-  "version": "0.0.1",
-  "homepage": "http://onsvisual.github.io/census-atlas",
+  "version": "0.1.0",
+  "homepage": "http://onsdigital.github.io/census-atlas",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -11,6 +11,7 @@
     "build-storybook": "build-storybook",
     "test": "jest"
   },
+  "type": "module",
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
@@ -37,7 +38,7 @@
     "rollup-plugin-terser": "^7.0.0",
     "sass": "^1.43.4",
     "sirv-cli": "^1.0.0",
-    "svelte": "3.31.2",
+    "svelte": "^3.44.1",
     "svelte-jester": "^2.1.5",
     "svelte-loader": "^3.1.2",
     "svelte-preprocess": "^4.9.8",
