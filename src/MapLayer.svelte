@@ -1,10 +1,7 @@
 <script>
 	import { getContext } from "svelte";
 	import { createEventDispatcher } from "svelte";
-	// import { centroid } from "@turf/turf";
-
 	const dispatch = createEventDispatcher();
-
 	export let id;
 	export let source;
 	export let sourceLayer = null;
@@ -13,7 +10,6 @@
 	export let layout = {};
 	export let paint = {};
 	export let data = null;
-	export let colors = null;
 	export let selected = null;
 	export let highlighted = null;
 	export let hovered = null;
@@ -44,7 +40,6 @@
 
 	let selectedPrev = null;
 	let highlightedPrev = null;
-	let selectedGeo = null;
 
 	if (map.getLayer(id)) {
 		map.removeLayer(id);

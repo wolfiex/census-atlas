@@ -5,7 +5,7 @@
     selectedCategory,
   } from "../stores.js";
   import { onMount } from "svelte";
-  import { bbox } from "@turf/turf";
+  // import { bbox } from "@turf/turf";
   import Panel from "../Panel.svelte";
   import Group from "../Group.svelte";
   import MapSource from "../MapSource.svelte";
@@ -24,13 +24,18 @@
     updateURL,
     replaceURL,
   } from "../utils.js";
-  import Map from "../Map.svelte";
+  import MapComponent from "../MapComponent.svelte";
   import { get } from "svelte/store";
   import LocalDataService from "../dataService";
-
+  import { json } from "d3-fetch";
+ 
+  import {bounds,lad_dta,get_data} from '../stores.js';
   // CONFIG
   // const apiurl = "https://www.nomisweb.co.uk/api/v01/dataset/";
   // const apikey = "0x3cfb19ead752b37bb90da0eb3a0fe78baa9fa055";
+
+
+
   const geography = "TYPE298";
   const mapstyle =
     "https://bothness.github.io/ons-basemaps/data/style-omt.json";
@@ -64,6 +69,11 @@
     muted: ["#f5fce2", "#d7ede8", "#cbe2e5", "#c2d7e3", "#bdccd9", "#f0f0f0"],
   };
 
+  export const boundurl = "https://raw.githubusercontent.com/wolfiex/TopoStat/main/ladb_20.csv";
+export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/lsoa11_20.json";
+
+  
+
   // OBJECTS
   let map = null;
 
@@ -71,7 +81,6 @@
   let indicators;
   let ladbounds;
   let ladlookup;
-  let ladlist;
   let lsoalookup;
   let data = {};
   let active = {
@@ -103,80 +112,52 @@
   const localDataService = new LocalDataService();
 
   function setIndicator(indicators, code) {
-		indicators.forEach(indicator => {
-			if (indicator.code && indicator.code == code) {
-				selectItem = indicator;
-			} else if (indicator.children) {
-				setIndicator(indicator.children, code);
-			}
-		});
-	}
+        indicators.forEach(indicator => {
+            if (indicator.code && indicator.code == code) {
+                selectItem = indicator;
+            } else if (indicator.children) {
+                setIndicator(indicator.children, code);
+            }
+        });
+    }
 
-  function initialise() {
-		getTopo(ladtopo.url, ladtopo.layer)
-			.then((geo) => {
-				ladbounds = geo;
+  async function initialise() {
 
-				let lookup = {};
-				let list = [];
-				geo.features.forEach((f) => {
-					lookup[f.properties[ladtopo.code]] = {
-						code: f.properties[ladtopo.code],
-						name: f.properties[ladtopo.name]
-					};
-					list.push(lookup[f.properties[ladtopo.code]]);
-				});
+    var location = await get_data(boundurl)
+    console.warn(location,$lad_dta)
+    mapLocation = {
+        zoom: 11,
+        lon: +location.lon,
+        lat: +location.lat
+    };
 
-				list.sort((a, b) => a.name.localeCompare(b.name));
-				ladlist = list;
+    // no need to be blocking
+    json(tabledata).then(jsn => {
+        indicators = jsn;
+        setIndicator(indicators, selectCode);
 
-				let location = geo.features[Math.floor(Math.random() * geo.features.length)];
-				let bounds = bbox(location);
-				mapLocation = {
-					zoom: 11,
-					lon: +((bounds[0] + bounds[2]) / 2).toFixed(5),
-					lat: +((bounds[1] + bounds[3]) / 2).toFixed(5)
-				};
-				return lookup;
-			})
-			.then((lookup) => {
-				ladlookup = lookup;
-				getLsoaData(lsoadata)
-					.then((data) => {
-						let lookup = {};
-						data.forEach((d) => {
-							lookup[d.code] = {
-								name: d.name,
-								parent: d.parent,
-							};
+        if (!selectItem) {
+            selectItem = indicators[0].children[0].children[0];
+        }
 
-							if (!ladlookup[d.parent].children) {
-								ladlookup[d.parent].children = [d.code];
-							} else {
-								ladlookup[d.parent].children.push(d.code);
-							}
-						});
-						return lookup;
-					})
-					.then((lookup) => {
-						lsoalookup = lookup;
+        setIndicator(indicators, selectCode);
+  
 
-						fetch(tabledata)
-							.then((res) => res.json())
-							.then((json) => {
-								indicators = json;
 
-								setIndicator(indicators, selectCode);
+    json(lsoaurl).then(data => {
+        lsoalookup = data;
+    });
+            
+    
 
-								if (!selectItem) {
-									selectItem = indicators[0].children[0].children[0];
-								}
-							});
-					});
-			});
-	}
+
+    })
+  }
+
+  
 
   // FUNCTIONS
+
 
   function setSelectedDataset() {
     if (!(selectMeta && selectItem && selectMeta.code == selectItem.code)) {
@@ -224,7 +205,7 @@
     data[selectItem.code] = dataset;
     selectData = dataset;
     if (active.lad.selected) {
-      setColors(data, active, lsoalookup, ladbounds, selectData, selectItem, ladtopo, map);
+      setColors(data, active, lsoalookup, ladbounds, selectData, selectItem, ladtopo, map,$lad_dta);
     }
     loading = false;
   }
@@ -235,12 +216,15 @@
       if (
         active.lad.selected &&
         active.lsoa.selected &&
-        !ladlookup[active.lad.selected].children.includes(active.lsoa.selected)
+        // !ladlookup[active.lad.selected].children.includes(active.lsoa.selected)
+        !$lad_dta
+                .get(active.lad.selected)
+                .children.includes(active.lsoa.selected)
       ) {
         active.lsoa.selected = null;
       }
-      setColors(data, active, lsoalookup, ladbounds, selectData, selectItem, ladtopo, map);
-      updateURL(location,selectCode,active,mapLocation,history);
+      setColors(data, active, lsoalookup, ladbounds, selectData, selectItem, ladtopo, map,$lad_dta);
+      updateURL(window.location,selectCode,active,mapLocation,history);
     }
   }
 
@@ -255,7 +239,8 @@
       }
     } else if (type == "lsoa") {
       let filtered = selectData.lsoa.data.filter((d) =>
-        ladlookup[active.lad.selected].children.includes(d.code)
+        // ladlookup[active.lad.selected].children.includes(d.code)
+        $lad_dta.get(active.lad.selected).children.includes(d.code)
       );
       let index =
         filtered.findIndex((d) => d.code == active.lsoa.selected) + diff;
@@ -263,17 +248,15 @@
         active.lsoa.selected = filtered[index].code;
 
         // Fit to parent LAD
-        let geometry = ladbounds.features.find(
-          (f) => f.properties[ladtopo.code] == active.lad.selected
-        ).geometry;
-        let bounds = bbox(geometry);
-        map.fitBounds(bounds, { padding: 20 });
+        let b = $lad_dta.get(active.lad.selected);
+        map.fitBounds([b.minx, b.miny, b.maxx, b.maxy], { padding: 20 });
       }
     }
   }
 
   // CODE
   // Update state based on URL
+  console.warn(window.location.hash);
   let hash = location.hash == "" ? "" : location.hash.split("/");
   if (hash.length == 5) {
     selectCode = hash[1];
@@ -309,6 +292,11 @@
     }
   };
 
+
+$: indicators, console.warn('indicator change',indicators);
+$: selectItem, console.warn('selectItem',selectItem);
+$: selectData, console.warn('selectData',selectData);
+
   $: selectItem && setSelectedDataset(); // Update meta when selection updates
   $: active.lad.highlighted =
     lsoalookup && active.lsoa.hovered
@@ -336,7 +324,9 @@
     });
   }
 
-  onMount(() => initialise());
+ 
+onMount((async () => await initialise()));
+
 </script>
 
 {#if loading}
@@ -368,7 +358,7 @@
           ? selectData.lad.index[active.lad.selected].median.code
           : null}
         siblings={active.lad.selected
-          ? ladlookup[active.lad.selected].children
+          ? $lad_dta.get(active.lad.selected).children
           : null}
         key="perc"
       />
@@ -397,10 +387,10 @@
               <hr style="border-top-color: #27A0CC" />
               <strong
                 >{active.lad.hovered
-                  ? ladlookup[active.lad.hovered].name
+                  ? $lad_dta.get(active.lad.hovered).name
                   : active.lad.highlighted
-                  ? ladlookup[active.lad.highlighted].name
-                  : ladlookup[active.lad.selected].name}</strong
+                  ? $lad_dta.get(active.lad.highlighted).name
+                  : $lad_dta.get(active.lad.selected).name}</strong
               ><br />
               <strong class="text-lrg">
                 {#if active.lad.selected}<img
@@ -453,9 +443,11 @@
             <div>
               <hr style="border-top-color: #000000" />
               <strong
-                >{active.lsoa.hovered
-                  ? lsoalookup[active.lsoa.hovered].name.slice(-4)
-                  : lsoalookup[active.lsoa.selected].name.slice(-4)}</strong
+                >{active.lad.hovered
+                  ? $lad_dta.get(active.lad.hovered).name
+                  : active.lad.highlighted
+                  ? $lad_dta.get(active.lad.highlighted).name
+                  : $lad_dta.get(active.lad.selected).name}</strong
               ><br />
               <strong class="text-lrg">
                 {#if active.lsoa.selected}<img
@@ -500,9 +492,9 @@
       </div>
     </div>
 
-    {#if ladlist}
+    {#if $lad_dta}
       <Select
-        options={ladlist}
+        options={[...$lad_dta.values()]}
         bind:selected={active.lad.selected}
         search={true}
         placeholder="Find a district..."
@@ -519,7 +511,7 @@
 </Panel>
 
 {#if mapLocation}
-  <Map
+  <MapComponent
     bind:map
     style={mapstyle}
     minzoom={4}
@@ -656,7 +648,7 @@
         />
       </MapSource>
     {/if}
-  </Map>
+  </MapComponent>
 {/if}
 
 <style>

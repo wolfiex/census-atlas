@@ -2,10 +2,9 @@
 	import { onMount, setContext } from 'svelte';
 	import { Map, NavigationControl } from 'mapbox-gl';
 
+
 	export let map;
-	export let location = {
-		bounds: [[-5.737, 49.882], [2.166, 56.014]] // England & Wales bounding box
-	};
+
 	export let style;
 	export let minzoom = 0;
 	export let maxzoom = 14;
