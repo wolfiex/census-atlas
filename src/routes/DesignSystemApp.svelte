@@ -69,6 +69,15 @@
     <h2>Input</h2>
     <ONSTextField id="text-field">Text field</ONSTextField>
 
+    <h2>Select</h2>
+    <ONSSelect
+      label="Select city"
+      options={[
+        { value: "london", label: "London" },
+        { value: "bristol", label: "Bristol", selected: true },
+        { value: "oxford", label: "Oxford", disabled: true },
+      ]}
+    />
 
     <h2>Text area</h2>
     <ONSTextArea id="text-area" hint="this is a hint for text area">Text area</ONSTextArea>
