@@ -15,6 +15,7 @@
     import ONSTextArea from "../ui/ons/ONSTextArea.svelte";
 
     let hint = "This is a hint"
+    // let dataToConsume=[{categoryTitle:"Population Basics",subcategory:[{subcategoryTitle:"Residence Type",subcategoryList:["Lives in a household","Lives in a communal establishment","Communal establishments with persons sleeping rough identified"]},]},{categoryTitle:"Health",subcategory:[{subcategoryTitle:"General health",subcategoryList:["Very good","Good","Fair","Bad","Very bad"]},{subcategoryTitle:"Effect of long-term ill health...",subcategoryList:["Not limited","Limited a little","Limited a lot",]}]}]
 </script>
 
 <style lang="scss" global>
@@ -79,4 +80,6 @@
         <ONSRadio id="other">Other</ONSRadio>
         <p>anything</p>
     </ONSRadios>
+
+    <ONSAccordion />
 </ONSCensusApp>
