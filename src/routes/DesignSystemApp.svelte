@@ -16,6 +16,7 @@
   import ONSShare from "../ui/ons/ONSShare.svelte";
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
   import ONSSelect from "../ui/ons/ONSSelect.svelte"
+  import ExploreByTopic from "../ui/ExploreByTopic.svelte"
 
   let hint = "This is a hint";
   let dataToConsume = [
@@ -114,6 +115,7 @@
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
+  <ExploreByTopic></ExploreByTopic>
 </ONSCensusApp>
 
 <style lang="scss" global>
