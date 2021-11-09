@@ -82,5 +82,5 @@
     </ONSRadios>
 
     <h2>Share</h2>
-    <ONSShare>Share this page</ONSShare>
+    <ONSShare url="https://www.google.com/" >Share this page</ONSShare>
 </ONSCensusApp>
