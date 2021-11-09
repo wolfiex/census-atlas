@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from "svelte";
   /**
    * Is this the principal call to action on the page?
    */
@@ -12,15 +12,15 @@
   /**
    * How large should the button be?
    */
-  export let size = 'medium';
+  export let size = "medium";
   /**
    * Button contents
    */
-  export let label = '';
+  export let label = "";
 
-  let mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+  let mode = primary ? "storybook-button--primary" : "storybook-button--secondary";
 
-  let style = backgroundColor ? `background-color: ${backgroundColor}` : '';
+  let style = backgroundColor ? `background-color: ${backgroundColor}` : "";
 
   const dispatch = createEventDispatcher();
 
@@ -28,21 +28,22 @@
    * Optional click handler
    */
   function onClick(event) {
-    dispatch('click', event);
+    dispatch("click", event);
   }
 </script>
 
 <button
   type="button"
-  class={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
+  class={["storybook-button", `storybook-button--${size}`, mode].join(" ")}
   {style}
-  on:click={onClick}>
+  on:click={onClick}
+>
   {label}
 </button>
 
 <style>
   .storybook-button {
-    font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     border: 0;
     border-radius: 3em;

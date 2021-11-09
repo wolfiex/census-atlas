@@ -14,12 +14,7 @@
 />
 
 <Template let:args>
-  <Page
-    {...args}
-    on:login={args.onLogin}
-    on:logout={args.onLogout}
-    on:createAccount={args.onCreateAccount}
-  />
+  <Page {...args} on:login={args.onLogin} on:logout={args.onLogout} on:createAccount={args.onCreateAccount} />
 </Template>
 
 <Story

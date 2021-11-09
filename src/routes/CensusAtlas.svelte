@@ -1,9 +1,5 @@
 <script>
-  import {
-    geographicCodes,
-    selectedCategoryTotals,
-    selectedCategory,
-  } from "../stores.js";
+  import { geographicCodes, selectedCategoryTotals, selectedCategory } from "../stores.js";
   import { onMount } from "svelte";
   // import { bbox } from "@turf/turf";
   import Panel from "../Panel.svelte";
@@ -28,19 +24,15 @@
   import { get } from "svelte/store";
   import LocalDataService from "../dataService";
   import { json } from "d3-fetch";
- 
-  import {bounds,lad_dta,get_data} from '../stores.js';
+
+  import { bounds, lad_dta, get_data } from "../stores.js";
   // CONFIG
   // const apiurl = "https://www.nomisweb.co.uk/api/v01/dataset/";
   // const apikey = "0x3cfb19ead752b37bb90da0eb3a0fe78baa9fa055";
 
-
-
   const geography = "TYPE298";
-  const mapstyle =
-    "https://bothness.github.io/ons-basemaps/data/style-omt.json";
-  const tabledata =
-    "https://bothness.github.io/census-atlas/data/indicators.json";
+  const mapstyle = "https://bothness.github.io/ons-basemaps/data/style-omt.json";
+  const tabledata = "https://bothness.github.io/census-atlas/data/indicators.json";
   const ladtopo = {
     url: "https://bothness.github.io/census-atlas/data/lad_boundaries_2020.json",
     layer: "LA2020EW",
@@ -62,17 +54,14 @@
     layer: "authority",
     code: "areacd",
   };
-  const lsoadata =
-    "https://bothness.github.io/census-atlas/data/lsoa2011_lad2020.csv";
+  const lsoadata = "https://bothness.github.io/census-atlas/data/lsoa2011_lad2020.csv";
   const colors = {
     base: ["#d5f690", "#5bc4b1", "#2e9daa", "#0079a2", "#005583", "#cccccc"],
     muted: ["#f5fce2", "#d7ede8", "#cbe2e5", "#c2d7e3", "#bdccd9", "#f0f0f0"],
   };
 
   export const boundurl = "https://raw.githubusercontent.com/wolfiex/TopoStat/main/ladb_20.csv";
-export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/lsoa11_20.json";
-
-  
+  export const lsoaurl = "https://raw.githubusercontent.com/wolfiex/TopoStat/main/lsoa11_20.json";
 
   // OBJECTS
   let map = null;
@@ -112,59 +101,46 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
   const localDataService = new LocalDataService();
 
   function setIndicator(indicators, code) {
-        indicators.forEach(indicator => {
-            if (indicator.code && indicator.code == code) {
-                selectItem = indicator;
-            } else if (indicator.children) {
-                setIndicator(indicator.children, code);
-            }
-        });
-    }
-
-  async function initialise() {
-
-    var location = await get_data(boundurl)
-
-    
-
-    // no need to be blocking
-    json(tabledata).then(jsn => {
-        indicators = jsn;
-        setIndicator(indicators, selectCode);
-
-        if (!selectItem) {
-            selectItem = indicators[0].children[0].children[0];
-        }
-
-        setIndicator(indicators, selectCode);
-  
-
-
-    json(lsoaurl).then(data => {
-        lsoalookup = data;
+    indicators.forEach((indicator) => {
+      if (indicator.code && indicator.code == code) {
+        selectItem = indicator;
+      } else if (indicator.children) {
+        setIndicator(indicator.children, code);
+      }
     });
-            
-    
-
-    
-    })
-
-    console.warn(location,$lad_dta)
-    mapLocation = {
-        zoom: 11,
-        lon: +location.lon,
-        lat: +location.lat
-    };
-    changeURL()
-    // replaceURL(selectCode,active,mapLocation,history);
-    // if (map) map.flyTo(mapLocation);
-    
   }
 
-  
+  async function initialise() {
+    var location = await get_data(boundurl);
+
+    // no need to be blocking
+    json(tabledata).then((jsn) => {
+      indicators = jsn;
+      setIndicator(indicators, selectCode);
+
+      if (!selectItem) {
+        selectItem = indicators[0].children[0].children[0];
+      }
+
+      setIndicator(indicators, selectCode);
+
+      json(lsoaurl).then((data) => {
+        lsoalookup = data;
+      });
+    });
+
+    console.warn(location, $lad_dta);
+    mapLocation = {
+      zoom: 11,
+      lon: +location.lon,
+      lat: +location.lat,
+    };
+    changeURL();
+    // replaceURL(selectCode,active,mapLocation,history);
+    // if (map) map.flyTo(mapLocation);
+  }
 
   // FUNCTIONS
-
 
   function setSelectedDataset() {
     if (!(selectMeta && selectItem && selectMeta.code == selectItem.code)) {
@@ -182,7 +158,7 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
         cell: cell,
       };
       loadData();
-      updateURL(location,selectCode,active,mapLocation,history);
+      updateURL(location, selectCode, active, mapLocation, history);
     }
   }
 
@@ -192,27 +168,15 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
     let url = `https://bothness.github.io/census-atlas/data/lsoa/${selectMeta.code}.csv`;
     let currentCategoryCode = get(selectedCategory);
     if (currentCategoryCode != selectMeta.code) {
-      storeNewCategoryAndTotals(
-        selectedCategory,
-        selectedCategoryTotals,
-        selectMeta,
-        localDataService,
-        url
-      );
+      storeNewCategoryAndTotals(selectedCategory, selectedCategoryTotals, selectMeta, localDataService, url);
     }
-    let nomisData = await getNomis(
-      url,
-      localDataService,
-      geographicCodes,
-      selectedCategoryTotals,
-      selectMeta.cell
-    );
+    let nomisData = await getNomis(url, localDataService, geographicCodes, selectedCategoryTotals, selectMeta.cell);
     let dataset = populateColors(nomisData, colors);
     addLadDataToDataset(dataset, lsoalookup, nomisData);
     data[selectItem.code] = dataset;
     selectData = dataset;
     if (active.lad.selected) {
-      setColors(data, active, lsoalookup, ladbounds, selectData, selectItem, ladtopo, map,$lad_dta);
+      setColors(data, active, lsoalookup, ladbounds, selectData, selectItem, ladtopo, map, $lad_dta);
     }
     loading = false;
   }
@@ -224,22 +188,18 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
         active.lad.selected &&
         active.lsoa.selected &&
         // !ladlookup[active.lad.selected].children.includes(active.lsoa.selected)
-        !$lad_dta
-                .get(active.lad.selected)
-                .children.includes(active.lsoa.selected)
+        !$lad_dta.get(active.lad.selected).children.includes(active.lsoa.selected)
       ) {
         active.lsoa.selected = null;
       }
-      setColors(data, active, lsoalookup, ladbounds, selectData, selectItem, ladtopo, map,$lad_dta);
-      updateURL(window.location,selectCode,active,mapLocation,history);
+      setColors(data, active, lsoalookup, ladbounds, selectData, selectItem, ladtopo, map, $lad_dta);
+      updateURL(window.location, selectCode, active, mapLocation, history);
     }
   }
 
   function getSib(type, diff) {
     if (type == "lad") {
-      let index =
-        selectData.lad.data.findIndex((d) => d.AREACD == active.lad.selected) +
-        diff;
+      let index = selectData.lad.data.findIndex((d) => d.AREACD == active.lad.selected) + diff;
       if (index >= 0 && index < selectData.lad.data.length) {
         active.lsoa.selected = null;
         active.lad.selected = selectData.lad.data[index].AREACD;
@@ -247,10 +207,9 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
     } else if (type == "lsoa") {
       let filtered = selectData.lsoa.data.filter((d) =>
         // ladlookup[active.lad.selected].children.includes(d.code)
-        $lad_dta.get(active.lad.selected).children.includes(d.AREACD)
+        $lad_dta.get(active.lad.selected).children.includes(d.AREACD),
       );
-      let index =
-        filtered.findIndex((d) => d.code == active.lsoa.selected) + diff;
+      let index = filtered.findIndex((d) => d.code == active.lsoa.selected) + diff;
       if (index >= 0 && index < filtered.length) {
         active.lsoa.selected = filtered[index].AREACD;
 
@@ -278,16 +237,17 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
   }
 
   // Respond to URL change
-  window.onpopstate = changeURL
+  window.onpopstate = changeURL;
   // replaceURL(selectCode,active,mapLocation,history);
-  
 
   function changeURL() {
-    let hash = `#/${selectCode||''}/${active.lad.selected ? active.lad.selected : ""}/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom},${mapLocation.lon},${mapLocation.lat}`;
+    let hash = `#/${selectCode || ""}/${active.lad.selected ? active.lad.selected : ""}/${
+      active.lsoa.selected ? active.lsoa.selected : ""
+    }/${mapLocation.zoom},${mapLocation.lon},${mapLocation.lat}`;
     if (hash != window.location.hash) {
-        history.pushState(undefined, undefined, hash);
+      history.pushState(undefined, undefined, hash);
     }
-}
+  }
   // function changeURL() => {
   //   let hash = location.hash == "" ? "" : location.hash.split("/");
 
@@ -309,25 +269,17 @@ export const lsoaurl ="https://raw.githubusercontent.com/wolfiex/TopoStat/main/l
   //   }
   // };
 
-
-// $: indicators, console.warn('indicator change',indicators);
-// $: selectItem, console.warn('selectItem',selectItem);
-// $: selectData, console.warn('selectData',selectData);
-$: ladvector, console.warn('ladvector',ladvector);
-$: active.lad, console.warn('active.lad',active.lad);
+  // $: indicators, console.warn('indicator change',indicators);
+  // $: selectItem, console.warn('selectItem',selectItem);
+  // $: selectData, console.warn('selectData',selectData);
+  $: ladvector, console.warn("ladvector", ladvector);
+  $: active.lad, console.warn("active.lad", active.lad);
 
   $: selectItem && setSelectedDataset(); // Update meta when selection updates
-  $: active.lad.highlighted =
-    lsoalookup && active.lsoa.hovered
-      ? lsoalookup[active.lsoa.hovered].parent
-      : null;
+  $: active.lad.highlighted = lsoalookup && active.lsoa.hovered ? lsoalookup[active.lsoa.hovered].parent : null;
   $: active.lad.selected =
-    lsoalookup && active.lsoa.selected
-      ? lsoalookup[active.lsoa.selected].parent
-      : active.lad.selected;
-  $: data[selectCode] &&
-    (active.lad.selected || active.lad.selected == null) &&
-    doSelect();
+    lsoalookup && active.lsoa.selected ? lsoalookup[active.lsoa.selected].parent : active.lad.selected;
+  $: data[selectCode] && (active.lad.selected || active.lad.selected == null) && doSelect();
 
   $: if (!mapLoaded && map) {
     mapLoaded = true;
@@ -339,23 +291,16 @@ $: active.lad, console.warn('active.lad',active.lad);
         lon: center.lng.toFixed(5),
         lat: center.lat.toFixed(5),
       };
-      changeURL()
+      changeURL();
       // replaceURL(selectCode,active,mapLocation,history);
     });
   }
 
- 
-onMount(async () => await initialise());
-
+  onMount(async () => await initialise());
 </script>
 
 {#if loading}
-  <Loader
-    height="100vh"
-    width="100vw"
-    position="fixed"
-    bgcolor="rgba(255, 255, 255, 0.7)"
-  />
+  <Loader height="100vh" width="100vw" position="fixed" bgcolor="rgba(255, 255, 255, 0.7)" />
 {/if}
 
 <Panel>
@@ -367,9 +312,7 @@ onMount(async () => await initialise());
         dataIndex={selectData.lsoa.index}
         breaks={selectData.lsoa.breaks}
         avg={selectData.englandAndWales.data}
-        selected={active.lsoa.hovered
-          ? active.lsoa.hovered
-          : active.lsoa.selected}
+        selected={active.lsoa.hovered ? active.lsoa.hovered : active.lsoa.selected}
         parent={active.lad.hovered
           ? selectData.lad.index[active.lad.hovered].median.code
           : active.lad.highlighted
@@ -377,9 +320,7 @@ onMount(async () => await initialise());
           : active.lad.selected
           ? selectData.lad.index[active.lad.selected].median.code
           : null}
-        siblings={active.lad.selected
-          ? $lad_dta.get(active.lad.selected).children
-          : null}
+        siblings={active.lad.selected ? $lad_dta.get(active.lad.selected).children : null}
         key="perc"
       />
     {/if}
@@ -392,9 +333,7 @@ onMount(async () => await initialise());
           <div>
             <hr style="border-top-color: #871A5B" />
             <strong>England & Wales</strong><br />
-            <strong class="text-lrg"
-              >{selectData.englandAndWales.data.perc.toFixed(1)}%</strong
-            ><br />
+            <strong class="text-lrg">{selectData.englandAndWales.data.perc.toFixed(1)}%</strong><br />
             <small
               >{selectData.englandAndWales.data.value.toLocaleString()}
               of
@@ -431,28 +370,16 @@ onMount(async () => await initialise());
               </strong><br />
               <small
                 >{active.lad.hovered
-                  ? selectData.lad.index[
-                      active.lad.hovered
-                    ].value.toLocaleString()
+                  ? selectData.lad.index[active.lad.hovered].value.toLocaleString()
                   : active.lad.highlighted
-                  ? selectData.lad.index[
-                      active.lad.highlighted
-                    ].value.toLocaleString()
-                  : selectData.lad.index[
-                      active.lad.selected
-                    ].value.toLocaleString()}
+                  ? selectData.lad.index[active.lad.highlighted].value.toLocaleString()
+                  : selectData.lad.index[active.lad.selected].value.toLocaleString()}
                 of
                 {active.lad.hovered
-                  ? selectData.lad.index[
-                      active.lad.hovered
-                    ].count.toLocaleString()
+                  ? selectData.lad.index[active.lad.hovered].count.toLocaleString()
                   : active.lad.highlighted
-                  ? selectData.lad.index[
-                      active.lad.highlighted
-                    ].count.toLocaleString()
-                  : selectData.lad.index[
-                      active.lad.selected
-                    ].count.toLocaleString()}
+                  ? selectData.lad.index[active.lad.highlighted].count.toLocaleString()
+                  : selectData.lad.index[active.lad.selected].count.toLocaleString()}
                 {selectItem.unit.toLowerCase()}s</small
               >
             </div>
@@ -477,9 +404,7 @@ onMount(async () => await initialise());
                   />{/if}
                 {active.lsoa.hovered
                   ? selectData.lsoa.index[active.lsoa.hovered].perc.toFixed(1)
-                  : selectData.lsoa.index[active.lsoa.selected].perc.toFixed(
-                      1
-                    )}%
+                  : selectData.lsoa.index[active.lsoa.selected].perc.toFixed(1)}%
                 {#if active.lsoa.selected}<img
                     src="./icons/chevron-right.svg"
                     class="next"
@@ -488,20 +413,12 @@ onMount(async () => await initialise());
               </strong><br />
               <small
                 >{active.lsoa.hovered
-                  ? selectData.lsoa.index[
-                      active.lsoa.hovered
-                    ].value.toLocaleString()
-                  : selectData.lsoa.index[
-                      active.lsoa.selected
-                    ].value.toLocaleString()}
+                  ? selectData.lsoa.index[active.lsoa.hovered].value.toLocaleString()
+                  : selectData.lsoa.index[active.lsoa.selected].value.toLocaleString()}
                 of
                 {active.lsoa.hovered
-                  ? selectData.lsoa.index[
-                      active.lsoa.hovered
-                    ].count.toLocaleString()
-                  : selectData.lsoa.index[
-                      active.lsoa.selected
-                    ].count.toLocaleString()}
+                  ? selectData.lsoa.index[active.lsoa.hovered].count.toLocaleString()
+                  : selectData.lsoa.index[active.lsoa.selected].count.toLocaleString()}
                 {selectItem.unit.toLowerCase()}s</small
               >
             </div>
@@ -531,14 +448,7 @@ onMount(async () => await initialise());
 </Panel>
 
 {#if mapLocation}
-  <MapComponent
-    bind:map
-    style={mapstyle}
-    minzoom={4}
-    maxzoom={14}
-    bind:zoom={mapZoom}
-    location={mapLocation}
-  >
+  <MapComponent bind:map style={mapstyle} minzoom={4} maxzoom={14} bind:zoom={mapZoom} location={mapLocation}>
     {#if selectData}
       <MapSource
         id="lsoa"
@@ -613,13 +523,7 @@ onMount(async () => await initialise());
       </MapSource>
     {/if}
     {#if ladbounds}
-      <MapSource
-        id="lad"
-        type="vector"
-        url={ladvector.url}
-        layer={ladvector.layer}
-        promoteId={ladvector.code}
-      >
+      <MapSource id="lad" type="vector" url={ladvector.url} layer={ladvector.layer} promoteId={ladvector.code}>
         <MapLayer
           id="lad"
           source="lad"
