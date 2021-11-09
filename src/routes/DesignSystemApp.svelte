@@ -15,7 +15,8 @@
   import ONSTextArea from "../ui/ons/ONSTextArea.svelte";
   import ONSShare from "../ui/ons/ONSShare.svelte";
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
-  import ONSSelect from "../ui/ons/ONSSelect.svelte"
+  import ONSSelect from "../ui/ons/ONSSelect.svelte";
+  import ExploreByAreaComponent from "../ui/ExploreByAreaComponent.svelte";
 
   let hint = "This is a hint";
   let dataToConsume = [
@@ -114,6 +115,9 @@
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
+
+  <h2>ONS search component</h2>
+  <ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>
 </ONSCensusApp>
 
 <style lang="scss" global>
