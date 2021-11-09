@@ -15,6 +15,7 @@
   import ONSTextArea from "../ui/ons/ONSTextArea.svelte";
   import ONSShare from "../ui/ons/ONSShare.svelte";
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
+  import ONSSelect from "../ui/ons/ONSSelect.svelte"
 
   let hint = "This is a hint";
   let dataToConsume = [
