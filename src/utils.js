@@ -18,24 +18,13 @@ export async function getTopo(url, layer) {
   return geojson;
 }
 
-export async function getNomis(
-  url,
-  dataService,
-  geographicCodesStore,
-  selectedCategoryTotals,
-  indicatorCode
-) {
+export async function getNomis(url, dataService, geographicCodesStore, selectedCategoryTotals, indicatorCode) {
   let geoCodesStore = get(geographicCodesStore);
   if (geoCodesStore.length == 0) {
     let geoCodes = await dataService.getGeographicCodes(url);
     geographicCodesStore.set(geoCodes);
   }
-  return await dataService.getNomisData(
-    url,
-    geographicCodesStore,
-    selectedCategoryTotals,
-    indicatorCode
-  );
+  return await dataService.getNomisData(url, geographicCodesStore, selectedCategoryTotals, indicatorCode);
 }
 
 export function processAggregateData(dataset, lookup) {
@@ -53,12 +42,9 @@ export function processAggregateData(dataset, lookup) {
     },
   };
   let ladTemp = {};
-  dataset.forEach((d) =>
-    calculateAggregateData(d, lsoa, lookup, lad, ladTemp, englandAndWales)
-  );
+  dataset.forEach((d) => calculateAggregateData(d, lsoa, lookup, lad, ladTemp, englandAndWales));
   sortLadsByPercentage(lad, ladTemp);
-  englandAndWales.data.perc =
-    (englandAndWales.data.value / englandAndWales.data.count) * 100;
+  englandAndWales.data.perc = (englandAndWales.data.value / englandAndWales.data.count) * 100;
   return {
     lsoa: lsoa,
     lad: lad,
@@ -66,14 +52,7 @@ export function processAggregateData(dataset, lookup) {
   };
 }
 
-function calculateAggregateData(
-  lsoaData,
-  lsoa,
-  lookup,
-  lad,
-  ladTemp,
-  englandAndWales
-) {
+function calculateAggregateData(lsoaData, lsoa, lookup, lad, ladTemp, englandAndWales) {
   lsoa.index[lsoaData.code] = lsoaData;
   let parent = lookup[lsoaData.code].parent;
   if (!lad.index[parent]) {
@@ -99,10 +78,8 @@ function sortLadsByPercentage(lad, ladTemp) {
 }
 
 function calculateLadPercentages(ladCode, lad, ladTemp) {
-  lad.index[ladCode].perc =
-    (lad.index[ladCode].value / lad.index[ladCode].count) * 100;
-  lad.index[ladCode].median =
-    ladTemp[ladCode][Math.floor(ladTemp[ladCode].length / 2)];
+  lad.index[ladCode].perc = (lad.index[ladCode].value / lad.index[ladCode].count) * 100;
+  lad.index[ladCode].median = ladTemp[ladCode][Math.floor(ladTemp[ladCode].length / 2)];
   lad.data.push(lad.index[ladCode]);
 }
 
@@ -136,7 +113,7 @@ export async function storeNewCategoryAndTotals(
   selectedCategoryTotals,
   selectMeta,
   localDataService,
-  url
+  url,
 ) {
   selectedCategory.set(selectMeta.code);
   let categoryTotals = await localDataService.getCategoryTotals(url);
@@ -215,19 +192,17 @@ export function setColors(data, active, lsoalookup, ladbounds, selectData, selec
     }
   }
   selectData = newdata;
-
 }
 
 export function updateURL(location, selectCode, active, mapLocation, history) {
   let hash = location.hash;
-  let newhash = `#/${selectCode}/${active.lad.selected ? active.lad.selected : ""
-    }/${active.lsoa.selected ? active.lsoa.selected : ""}/${mapLocation.zoom},${mapLocation.lon
-    },${mapLocation.lat}`;
+  let newhash = `#/${selectCode}/${active.lad.selected ? active.lad.selected : ""}/${
+    active.lsoa.selected ? active.lsoa.selected : ""
+  }/${mapLocation.zoom},${mapLocation.lon},${mapLocation.lat}`;
   if (hash != newhash) {
     history.pushState(undefined, undefined, newhash);
   }
 }
-
 
 // export function replaceURL(selectCode, active, mapLocation, history) {
 //   let hash = `#/${selectCode}/${active.lad.selected ? active.lad.selected : ""
