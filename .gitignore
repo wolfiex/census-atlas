@@ -1,6 +1,11 @@
-/node_modules/
-/public/build/
-/data/
-.idea
 .DS_Store
-/coverage/
+.env
+.idea
+/.svelte-kit
+/coverage
+/coverage
+/data
+/data
+/package
+build
+node_modules
