@@ -14,6 +14,7 @@
     import ONSRadio from "../ui/ons/partials/ONSRadio.svelte";
     import ONSTextArea from "../ui/ons/ONSTextArea.svelte";
     import ONSShare from "../ui/ons/ONSShare.svelte"
+    import ONSHeader from "../ui/ons/ONSHeader.svelte"
 
     let hint = "This is a hint"
 </script>
@@ -29,6 +30,7 @@
 	<script defer src="/build/ons-design-system.js"></script>
 </svelte:head>
 
+<ONSHeader></ONSHeader>
 <ONSCensusApp>
 
     <h2>Backlink</h2>
