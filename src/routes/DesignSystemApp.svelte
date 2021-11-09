@@ -13,6 +13,8 @@
     import ONSRadios from "../ui/ons/ONSRadios.svelte";
     import ONSRadio from "../ui/ons/partials/ONSRadio.svelte";
     import ONSTextArea from "../ui/ons/ONSTextArea.svelte";
+    import ONSShare from "../ui/ons/ONSShare.svelte"
+    import ONSHeader from "../ui/ons/ONSHeader.svelte"
 
     let hint = "This is a hint"
     let dataToConsume=[{categoryTitle:"Population Basics",subcategory:[{subcategoryTitle:"Residence Type",subcategoryList:["Lives in a household","Lives in a communal establishment","Communal establishments with persons sleeping rough identified"]},]},{categoryTitle:"Health",subcategory:[{subcategoryTitle:"General health",subcategoryList:["Very good","Good","Fair","Bad","Very bad"]},{subcategoryTitle:"Effect of long-term ill health...",subcategoryList:["Not limited","Limited a little","Limited a lot",]}]}]
@@ -29,6 +31,7 @@
 	<script defer src="/build/ons-design-system.js"></script>
 </svelte:head>
 
+<ONSHeader></ONSHeader>
 <ONSCensusApp>
 
     <h2>Backlink</h2>
@@ -81,5 +84,9 @@
         <p>anything</p>
     </ONSRadios>
 
+
     <ONSAccordion dataToConsume={dataToConsume}/>
+
+    <h2>Share</h2>
+    <ONSShare url="https://www.google.com/" >Share this page</ONSShare>
 </ONSCensusApp>
