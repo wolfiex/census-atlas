@@ -15,7 +15,8 @@
   import ONSTextArea from "../ui/ons/ONSTextArea.svelte";
   import ONSShare from "../ui/ons/ONSShare.svelte";
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
-  import ONSSelect from "../ui/ons/ONSSelect.svelte"
+  import ONSSelect from "../ui/ons/ONSSelect.svelte";
+  import Feedback from "../ui/Feedback.svelte";
 
   let hint = "This is a hint";
   let dataToConsume = [
@@ -50,6 +51,7 @@
 </svelte:head>
 
 <ONSHeader />
+
 <ONSCensusApp>
   <h2>Backlink</h2>
   <ONSBacklink href="/monkeys" />
@@ -114,7 +116,10 @@
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
+    <Feedback></Feedback>
 </ONSCensusApp>
+  <Feedback></Feedback>
+
 
 <style lang="scss" global>
   /* @import '../../node_modules/@ons/design-system/scss/main.scss';
