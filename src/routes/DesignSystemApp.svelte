@@ -65,41 +65,21 @@
     </ONSBreadcrumbs>
   </DesignSystemPanel>
 
-  <DesignSystemPanel
-    title="Button"
-    code={`<p>
+  <DesignSystemPanel title="Button" code={`<ONSButton onClick={() => alert("Custom on click handler")}>Custom onclick handler</ONSButton>`}>
     <ONSButton onClick={() => alert("Custom on click handler")}>Custom onclick handler</ONSButton>
-  </p>
-  <p>
-    <ONSButton secondary>Secondary</ONSButton>
-  </p>
-  <p>
-    <ONSButton small>Small</ONSButton>
-  </p>
-  <p>
-    <ONSButton secondary small>Secondary small</ONSButton>
-  </p>
-  <p>
-    <ONSButton disabled>Disabled</ONSButton>
-  </p>`}
-  >
-    <p>
-      <ONSButton onClick={() => alert("Custom on click handler")}>Custom onclick handler</ONSButton>
-    </p>
-    <p>
-      <ONSButton secondary>Secondary</ONSButton>
-    </p>
-    <p>
-      <ONSButton small>Small</ONSButton>
-    </p>
-    <p>
-      <ONSButton secondary small>Secondary small</ONSButton>
-    </p>
-    <p>
-      <ONSButton disabled>Disabled</ONSButton>
-    </p>
   </DesignSystemPanel>
-
+    <DesignSystemPanel title="Secondary button" code={`<ONSButton secondary>Secondary</ONSButton>`}>
+    <ONSButton secondary>Secondary</ONSButton>
+  </DesignSystemPanel>
+    <DesignSystemPanel title="Small button" code={`<ONSButton small>Small</ONSButton>`}>
+    <ONSButton small>Small</ONSButton>
+  </DesignSystemPanel>
+    <DesignSystemPanel title="Secondary small button" code={`<ONSButton secondary small>Secondary small</ONSButton>`}>
+    <ONSButton secondary small>Secondary small</ONSButton>
+  </DesignSystemPanel>
+      <DesignSystemPanel title="Disabled button" code={`<ONSButton disabled>Disabled</ONSButton>`}>
+    <ONSButton disabled>Disabled</ONSButton>
+  </DesignSystemPanel>
   <DesignSystemPanel title="Card" code={`<ONSCard title="ONS Card" href="/home">Card</ONSCard>`}>
     <ONSCard title="ONS Card" href="/home">Card</ONSCard>
   </DesignSystemPanel>
@@ -207,71 +187,12 @@
     </ONSAccordion>
   </DesignSystemPanel>
 
-  <DesignSystemPanel title="Category selector" code={`<CategorySelector />`}>
-    <CategorySelector />
-  </DesignSystemPanel>
-
   <DesignSystemPanel title="Share" code={`<ONSShare url="https://www.google.com/">Share this page</ONSShare>`}>
     <ONSShare url="https://www.google.com/">Share this page</ONSShare>
   </DesignSystemPanel>
 
-  <DesignSystemPanel
-    title="Topic Component-1"
-    code={`<Topic topicList={topicList1} cardTitle="Health - Census 2021">
-  The 2021 Census tells us a lot about the health of people living in England and Wales live and. 
-  <a href="#">Choose a data option from the full list</a> or explore one of these suggestions.
-</Topic>`}
-  >
-    <Topic topicList={topicList1} cardTitle="Health - Census 2021"
-      >The 2021 Census tells us a lot about the health of people living in England and Wales live and. <a href="#">
-        Choose a data option from the full list</a
-      > or explore one of these suggestions.
-    </Topic>
-  </DesignSystemPanel>
-
-  <DesignSystemPanel
-    title="Topic Component-2"
-    code={`<Topic topicList={topicList2} cardTitle="Need something specific from Census?">
-    Explore correlations between two indicators in <a href="#">advanced mode</a>.
-  </Topic>`}
-  >
-    <Topic topicList={topicList2} cardTitle="Need something specific from Census?"
-      >Explore correlations between two indicators in <a href="#">advanced mode</a>.
-    </Topic>
-  </DesignSystemPanel>
-
-  <DesignSystemPanel
-    title="Topic Component-3"
-    code={`<Topic cardTitle="General health with other indicators"
-    >Explore correlations between two indicators in <a href="#">advanced mode</a>.</Topic
-  >`}
-  >
-    <Topic cardTitle="General health with other indicators"
-      >Explore correlations between two indicators in <a href="#">advanced mode</a>.
-    </Topic>
-  </DesignSystemPanel>
-
-  <DesignSystemPanel title="Use Census Data" code={`<UseCensusData location="Crewe" />`}>
-    <UseCensusData />
-  </DesignSystemPanel>
-
-  <DesignSystemPanel title="Explore by Topic" code={`<ExploreByTopic />`}>
-    <ExploreByTopic />
-  </DesignSystemPanel>
-
   <DesignSystemPanel title="Feedback" code={`<Feedback />`}>
     <Feedback />
-  </DesignSystemPanel>
-
-  <DesignSystemPanel
-    title="ONS search component"
-    code={`<ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>`}
-  >
-    <ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>
-  </DesignSystemPanel>
-
-  <DesignSystemPanel title="Design system code block">
-    <DesignSystemCode code={`<DesignSystemCode code={\`<App />\`} />`} />
   </DesignSystemPanel>
 </ONSCensusApp>
 
