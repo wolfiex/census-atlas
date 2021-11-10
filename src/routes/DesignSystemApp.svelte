@@ -15,7 +15,8 @@
   import ONSTextArea from "../ui/ons/ONSTextArea.svelte";
   import ONSShare from "../ui/ons/ONSShare.svelte";
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
-  import ONSSelect from "../ui/ons/ONSSelect.svelte";
+  import ONSSelect from "../ui/ons/ONSSelect.svelte"
+  import ExploreByTopic from "../ui/ExploreByTopic.svelte"
   import Feedback from "../ui/Feedback.svelte";
   import ExploreByAreaComponent from "../ui/ExploreByAreaComponent.svelte";
 
@@ -117,6 +118,11 @@
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
+  
+  <h2>Explore by Topic</h2>
+  
+    <ExploreByTopic></ExploreByTopic>
+  <h2>Feedback</h2>
     <Feedback></Feedback>
 
   <h2>ONS search component</h2>
