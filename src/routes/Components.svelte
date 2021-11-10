@@ -24,16 +24,16 @@
   <h1>Census Atlas Components</h1>
 
   <h2>Component</h2>
-  <DesignSystemPanel title="Category selector">
+  <DesignSystemPanel title="Category selector" code={`<CategorySelector />`}>
     <CategorySelector />
   </DesignSystemPanel>
-  <DesignSystemPanel title="Explore by area">
+  <DesignSystemPanel title="Explore by area" code={`<ExploreByAreaComponent />`}>
     <ExploreByAreaComponent />
   </DesignSystemPanel>
-  <DesignSystemPanel title="Explore by topic">
+  <DesignSystemPanel title="Explore by topic" code={`<ExploreByTopic />`}>
     <ExploreByTopic />
   </DesignSystemPanel>
-  <DesignSystemPanel title="Feedback">
+  <DesignSystemPanel title="Feedback" code={`<Feedback />`}>
     <Feedback />
   </DesignSystemPanel>
 
@@ -72,7 +72,7 @@
         >Explore correlations between two indicators in <a href="#">advanced mode</a>.
       </Topic>
     </DesignSystemPanel>
-  <DesignSystemPanel title="Use census data">
+  <DesignSystemPanel title="Use census data" code={`<UseCensusData />`}>
     <UseCensusData />
-  </DesignSystemPanel>
+  </DesignSystemPanel >
 </BasePage>
