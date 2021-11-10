@@ -1,17 +1,9 @@
 <script>
-  export let dataToConsume;
+  import censusData from "../../data/simpleTopicTableCategoryData.js";
 </script>
 
 <div id="accordion" class="ons-accordion">
-  <button
-    type="button"
-    class="ons-btn ons-js-collapsible-all ons-u-mb-s ons-u-d-no ons-btn--secondary ons-btn--small"
-    data-close-all="Hide all"
-    data-group="accordion"
-  >
-    <span class="ons-btn__inner ons-js-collapsible-all-inner">Show all</span>
-  </button>
-  {#each dataToConsume as indicator}
+  {#each censusData as data}
     <div
       id="accordion-1"
       class="ons-collapsible ons-js-collapsible ons-collapsible--accordion"
@@ -20,7 +12,7 @@
     >
       <div class="ons-collapsible__heading ons-js-collapsible-heading">
         <div class="ons-collapsible__controls">
-          <h2 class="ons-collapsible__title">{indicator.categoryTitle}</h2>
+          <h2 class="ons-collapsible__title">{data.name}</h2>
           <span class="ons-collapsible__icon">
             <svg
               class="ons-svg-icon "
@@ -44,12 +36,12 @@
         </div>
       </div>
       <div id="accordion-1-content" class="ons-collapsible__content ons-js-collapsible-content">
-        {#each indicator.subcategory as subcategory}
-          <h3 class="ons-related-links__title ons-u-fs-r--b ons-u-mb-xs">{subcategory.subcategoryTitle}</h3>
+        {#each data.tables as tableEntry}
+          <h3 class="ons-related-links__title ons-u-fs-r--b ons-u-mb-xs">{tableEntry.name}</h3>
           <ul class="ons-list ons-list--bare">
-            {#each subcategory.subcategoryList as finalIndicator}
+            {#each tableEntry.categories as category}
               <li class="ons-list__item">
-                <a href="#" class="ons-list__link  ">{finalIndicator}</a>
+                <a href="#" class="ons-list__link  ">{category.name}</a>
               </li>
             {/each}
           </ul>
