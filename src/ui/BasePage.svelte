@@ -25,7 +25,7 @@
         </div>
       </div>
     </slot>
-    <ONSExternalHeaderWithDescription {serviceTitle} {description}/>
+    <ONSExternalHeaderWithDescription {serviceTitle} {description} />
     <div class="ons-page__container ons-container ">
       <div class="ons-grid">
         <div class="ons-grid__col ons-col-8@m">
