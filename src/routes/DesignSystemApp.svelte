@@ -23,9 +23,9 @@
   import ExploreByTopic from "../ui/ExploreByTopic.svelte";
   import Feedback from "../ui/Feedback.svelte";
   import ExploreByAreaComponent from "../ui/ExploreByAreaComponent.svelte";
+  import ONSExternalHeaderWithDescription from "../ui/ons/ONSExternalHeaderWithDescription.svelte"
   import DesignSystemCode from "../ui/DesignSystemCode.svelte";
   import DesignSystemPanel from "../ui/DesignSystemPanel.svelte";
-
   let hint = "This is a hint";
   let dataToConsume = [
     {
@@ -59,6 +59,9 @@
     {title: "What can we learn about long-term health issues and/or disability?", href: "#"},
   ];
 
+  let topicList2 = [{ title: "Get Census datasests", href: "#" }];
+  let serviceTitle = "Design System";
+  let serviceDescription = "Components implemented with Svelte";
   let topicList2 = [{title: "Get Census datasests", href: "#"}];
 </script>
 
@@ -66,6 +69,8 @@
   <script defer src="/build/ons-design-system.js"></script>
 </svelte:head>
 
+<ONSSkipLink />
+<ONSExternalHeaderWithDescription serviceTitle={serviceTitle} description={serviceDescription}/>
 <ONSSkipLink/>
 <ONSHeader/>
 
