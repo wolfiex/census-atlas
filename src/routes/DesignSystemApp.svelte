@@ -16,6 +16,7 @@
   import ONSShare from "../ui/ons/ONSShare.svelte";
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
   import ONSSelect from "../ui/ons/ONSSelect.svelte";
+  import CategorySelector from "../ui/CategorySelector.svelte";
   import Topic from "../ui/Topic.svelte";
   import ONSSkipLink from "../ui/ons/ONSSkipLink.svelte";
   import UseCensusData from "../ui/UseCensusData.svelte";
@@ -129,6 +130,9 @@
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
+
+  <h2>Category selector</h2>
+  <CategorySelector />
 
   <h2>Topic Component-1</h2>
 
