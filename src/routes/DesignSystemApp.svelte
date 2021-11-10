@@ -19,7 +19,6 @@
   import Topic from "../ui/Topic.svelte";
   import ONSSkipLink from "../ui/ons/ONSSkipLink.svelte";
   import UseCensusData from "../ui/UseCensusData.svelte";
-  import ONSSelect from "../ui/ons/ONSSelect.svelte";
   import ExploreByTopic from "../ui/ExploreByTopic.svelte";
   import Feedback from "../ui/Feedback.svelte";
   import ExploreByAreaComponent from "../ui/ExploreByAreaComponent.svelte";
