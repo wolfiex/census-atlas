@@ -17,7 +17,7 @@
     <Route path="/design-system" component={DesignSystemApp} />
     <Route path="/select-area" component={SelectAreaOrVariable} />
   </div>
-  <nav>
+  <nav style="position: relative; z-index: 99999">
     <Link to="/">Census Atlas (Legacy)</Link>
     <Link to="/census-atlas">Census Atlas (V2)</Link>
     <Link to="/components">Components</Link>
