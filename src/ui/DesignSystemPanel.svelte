@@ -1,7 +1,7 @@
 <script>
   import DesignSystemCode from "./DesignSystemCode.svelte";
-  export let title
-  export let code
+  export let title;
+  export let code;
 </script>
 
 <div class="design-system-panel">
@@ -14,9 +14,9 @@
 
 <style>
   .design-system-panel {
-    background-color: #f3f3f3;
-    border-radius: .5rem;
-    padding: .5rem .5rem;
+    background-color: #f8f8f8;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.5rem;
     margin-bottom: 2rem;
   }
 
@@ -26,8 +26,8 @@
   }
   .design-system-component-panel {
     background-color: #fff;
-    border-radius: .2rem;
-    padding: .5rem;
+    border-radius: 0.2rem;
+    padding: 0.5rem;
     margin-bottom: 1rem;
   }
 </style>
