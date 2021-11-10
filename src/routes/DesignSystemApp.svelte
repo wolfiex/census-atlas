@@ -99,7 +99,7 @@
   </ONSRadios>
 
   <h2>Accordion</h2>
-  <ONSAccordion {dataToConsume} />
+  <ONSAccordion/>
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
