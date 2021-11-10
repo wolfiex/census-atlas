@@ -165,10 +165,9 @@
 
 <Feedback />
 
-<style lang="scss" global>
+<style lang="scss">
   /* @import '../../node_modules/@ons/design-system/scss/main.scss';
-     * XXX: This fails for many reasons. Sticking to global CSS for now with only variables exposed via SCSS. */
-  @import "../../node_modules/@ons/design-system/css/census";
+   * XXX: This fails for many reasons. Sticking to global CSS for now with only variables exposed via SCSS. */
   @import "../../node_modules/@ons/design-system/scss/vars/_index.scss";
 
   h2 {

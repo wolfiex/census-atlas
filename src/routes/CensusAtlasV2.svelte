@@ -12,7 +12,7 @@
 
 <style lang="scss" global>
   /* @import '../../node_modules/@ons/design-system/scss/main.scss';
-     * XXX: This fails for many reasons. Sticking to global CSS for now with only variables exposed via SCSS. */
+   * XXX: This fails for many reasons. Sticking to global CSS for now with only variables exposed via SCSS. */
   @import "../../node_modules/@ons/design-system/css/census";
   @import "../../node_modules/@ons/design-system/scss/vars/_index.scss";
 
