@@ -23,6 +23,9 @@
   import ExploreByTopic from "../ui/ExploreByTopic.svelte";
   import Feedback from "../ui/Feedback.svelte";
   import ExploreByAreaComponent from "../ui/ExploreByAreaComponent.svelte";
+  import DesignSystemCode from "../ui/DesignSystemCode.svelte";
+  import DesignSystemPanel from "../ui/DesignSystemPanel.svelte";
+
   let hint = "This is a hint";
   let dataToConsume = [
     {
@@ -41,7 +44,7 @@
     {
       categoryTitle: "Health",
       subcategory: [
-        { subcategoryTitle: "General health", subcategoryList: ["Very good", "Good", "Fair", "Bad", "Very bad"] },
+        {subcategoryTitle: "General health", subcategoryList: ["Very good", "Good", "Fair", "Bad", "Very bad"]},
         {
           subcategoryTitle: "Effect of long-term ill health...",
           subcategoryList: ["Not limited", "Limited a little", "Limited a lot"],
@@ -51,12 +54,12 @@
   ];
 
   let topicList1 = [
-    { title: "How does general health differ across England and Wales?", href: "#" },
-    { title: "Which areas are home to peoplle who provide the most unpaid care?", href: "#" },
-    { title: "What can we learn about long-term health issues and/or disability?", href: "#" },
+    {title: "How does general health differ across England and Wales?", href: "#"},
+    {title: "Which areas are home to peoplle who provide the most unpaid care?", href: "#"},
+    {title: "What can we learn about long-term health issues and/or disability?", href: "#"},
   ];
 
-  let topicList2 = [{ title: "Get Census datasests", href: "#" }];
+  let topicList2 = [{title: "Get Census datasests", href: "#"}];
 </script>
 
 <svelte:head>
@@ -164,10 +167,18 @@
   <Feedback />
 
   <h2>ONS search component</h2>
-  <ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>
+  <DesignSystemPanel title="ONS search component" 
+                     code={`<ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>`}>
+      <ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>
+  </DesignSystemPanel>
+  
+  <DesignSystemPanel title="Design system code block">
+    <DesignSystemCode code={`<DesignSystemCode code={\`<App />\`} />`} />
+  </DesignSystemPanel>
 </ONSCensusApp>
 
 <Feedback />
+
 
 <style lang="scss">
   /* @import '../../node_modules/@ons/design-system/scss/main.scss';
