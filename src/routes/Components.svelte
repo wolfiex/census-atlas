@@ -1,4 +1,5 @@
 <script>
+  import Map from "../ui/Map.svelte";
   import TopicExplorer from "../ui/TopicExplorer.svelte";
   import BasePage from "../ui/BasePage.svelte";
   import DesignSystemPanel from "../ui/DesignSystemPanel.svelte";
@@ -76,6 +77,7 @@
   <DesignSystemPanel title="Use census data" code={`<UseCensusData />`}>
     <UseCensusData />
   </DesignSystemPanel >
+  <DesignSystemPanel title="Map placeholder" code={`<Map />`}><Map /></DesignSystemPanel>
   <DesignSystemPanel title="Topic explorer" code={`<TopicExplorer />`}><TopicExplorer /></DesignSystemPanel>
     <DesignSystemPanel title="Design system code block">
     <DesignSystemCode code={`<DesignSystemCode code={\`<App />\`} />`} />

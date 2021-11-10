@@ -7,7 +7,14 @@
   import Feedback from "../ui/Feedback.svelte";
 </script>
 
-<BasePage>
+<svelte:head>
+  <script defer src="/build/ons-design-system.js"></script>
+</svelte:head>
+
+<BasePage
+  serviceTitle="Explore Census"
+  description="Here’s a place where we tell users what the Census Atlas is and what it can do for them."
+>
   <span slot="phase-banner">
     <div class="ons-phase-banner">
       <div class="ons-container">
