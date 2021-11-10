@@ -15,7 +15,8 @@
   import ONSTextArea from "../ui/ons/ONSTextArea.svelte";
   import ONSShare from "../ui/ons/ONSShare.svelte";
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
-  import ONSSelect from "../ui/ons/ONSSelect.svelte"
+  import ONSSelect from "../ui/ons/ONSSelect.svelte";
+  import CategorySelector from "../ui/CategorySelector.svelte";
 
   let hint = "This is a hint";
   let dataToConsume = [
@@ -114,6 +115,7 @@
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
+  <CategorySelector />
 </ONSCensusApp>
 
 <style lang="scss" global>
