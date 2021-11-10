@@ -1,4 +1,4 @@
-<div class="improve-this-page__prompt">
+<div class="improve-this-page__prompt ons-grid--flex ons-grid--vertical-center">
   <div class="ons-grid__col ons-col-4@m selector-col ">
     <div class="ons-pl-grid-col ons-grid--flex" style="justify-content:left">
       <span>&#60;&#160;</span>
@@ -23,7 +23,6 @@
     background-color: #003c57;
     color: #fff;
     padding: 10px 15px 10px;
-    white-space: nowrap;
   }
   .improve-this-page__prompt a {
     color: #fff;
@@ -38,8 +37,12 @@
   .selector-col {
       max-width: 33.33333%;
       width: 33.33333%;
+      padding-left: 0;
   }
   p {
       text-align: center;
+      margin-bottom: 0;
+      font-size: 1.3em;
+      font-weight: bold;
   }
 </style>
