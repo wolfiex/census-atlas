@@ -17,6 +17,7 @@
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
   import ONSSelect from "../ui/ons/ONSSelect.svelte";
   import Feedback from "../ui/Feedback.svelte";
+  import ExploreByAreaComponent from "../ui/ExploreByAreaComponent.svelte";
 
   let hint = "This is a hint";
   let dataToConsume = [
@@ -117,6 +118,10 @@
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
     <Feedback></Feedback>
+
+  <h2>ONS search component</h2>
+  <ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>
+
 </ONSCensusApp>
   <Feedback></Feedback>
 
