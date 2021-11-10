@@ -17,6 +17,11 @@
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
   import ONSSelect from "../ui/ons/ONSSelect.svelte";
   import Topic from "../ui/Topic.svelte";
+  import ONSSkipLink from "../ui/ons/ONSSkipLink.svelte";
+  import UseCensusData from "../ui/UseCensusData.svelte";
+  import ExploreByTopic from "../ui/ExploreByTopic.svelte"
+  import Feedback from "../ui/Feedback.svelte";
+  import ExploreByAreaComponent from "../ui/ExploreByAreaComponent.svelte";
   let hint = "This is a hint";
   let dataToConsume = [
     {
@@ -57,7 +62,9 @@
   <script defer src="/build/ons-design-system.js"></script>
 </svelte:head>
 
+<ONSSkipLink />
 <ONSHeader />
+
 <ONSCensusApp>
   <h2>Backlink</h2>
   <ONSBacklink href="/monkeys" />
@@ -115,13 +122,14 @@
     <ONSRadio id="mixed">Mixed</ONSRadio>
     <ONSRadio id="white">White</ONSRadio>
     <ONSRadio id="other">Other</ONSRadio>
-    <p>anything</p>
   </ONSRadios>
 
+  <h2>Accordion</h2>
   <ONSAccordion {dataToConsume} />
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
+
 
   <h2>Topic Component-1</h2>
 
@@ -142,11 +150,30 @@
   <Topic cardTitle="General health with other indicators"
     >Explore correlations between two indicators in <a href="#">advanced mode</a>.</Topic
   >
+
+  <h2>Use Census Data</h2>
+  <UseCensusData location="Crewe"/>
+  
+  <h2>Explore by Topic</h2>
+  
+    <ExploreByTopic></ExploreByTopic>
+  <h2>Feedback</h2>
+    <Feedback></Feedback>
+
+  <h2>ONS search component</h2>
+  <ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>
+
 </ONSCensusApp>
+  <Feedback></Feedback>
+
 
 <style lang="scss" global>
   /* @import '../../node_modules/@ons/design-system/scss/main.scss';
      * XXX: This fails for many reasons. Sticking to global CSS for now with only variables exposed via SCSS. */
   @import "../../node_modules/@ons/design-system/css/census";
   @import "../../node_modules/@ons/design-system/scss/vars/_index.scss";
+
+  h2 {
+    margin-top: 32px;
+  }
 </style>
