@@ -17,6 +17,8 @@
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
   import ONSSelect from "../ui/ons/ONSSelect.svelte"
   import ExploreByTopic from "../ui/ExploreByTopic.svelte"
+  import Feedback from "../ui/Feedback.svelte";
+  import ExploreByAreaComponent from "../ui/ExploreByAreaComponent.svelte";
 
   let hint = "This is a hint";
   let dataToConsume = [
@@ -51,6 +53,7 @@
 </svelte:head>
 
 <ONSHeader />
+
 <ONSCensusApp>
   <h2>Backlink</h2>
   <ONSBacklink href="/monkeys" />
@@ -115,8 +118,19 @@
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
-  <ExploreByTopic></ExploreByTopic>
+  
+  <h2>Explore by Topic</h2>
+  
+    <ExploreByTopic></ExploreByTopic>
+  <h2>Feedback</h2>
+    <Feedback></Feedback>
+
+  <h2>ONS search component</h2>
+  <ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>
+
 </ONSCensusApp>
+  <Feedback></Feedback>
+
 
 <style lang="scss" global>
   /* @import '../../node_modules/@ons/design-system/scss/main.scss';
