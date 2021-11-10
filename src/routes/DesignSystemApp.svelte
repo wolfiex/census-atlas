@@ -17,20 +17,26 @@
   import ONSShare from "../ui/ons/ONSShare.svelte";
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
   import ONSSelect from "../ui/ons/ONSSelect.svelte";
+  import CategorySelector from "../ui/CategorySelector.svelte";
   import Topic from "../ui/Topic.svelte";
   import ONSSkipLink from "../ui/ons/ONSSkipLink.svelte";
   import UseCensusData from "../ui/UseCensusData.svelte";
   import ExploreByTopic from "../ui/ExploreByTopic.svelte";
   import Feedback from "../ui/Feedback.svelte";
   import ExploreByAreaComponent from "../ui/ExploreByAreaComponent.svelte";
+  import ONSExternalHeaderWithDescription from "../ui/ons/ONSExternalHeaderWithDescription.svelte";
+  import DesignSystemCode from "../ui/DesignSystemCode.svelte";
+  import DesignSystemPanel from "../ui/DesignSystemPanel.svelte";
   let hint = "This is a hint";
   let topicList1 = [
     { title: "How does general health differ across England and Wales?", href: "#" },
-    { title: "Which areas are home to peoplle who provide the most unpaid care?", href: "#" },
+    { title: "Which areas are home to people who provide the most unpaid care?", href: "#" },
     { title: "What can we learn about long-term health issues and/or disability?", href: "#" },
   ];
 
   let topicList2 = [{ title: "Get Census datasests", href: "#" }];
+  let serviceTitle = "Design System";
+  let serviceDescription = "Components implemented with Svelte";
 </script>
 
 <svelte:head>
@@ -38,69 +44,146 @@
 </svelte:head>
 
 <ONSSkipLink />
+<ONSExternalHeaderWithDescription {serviceTitle} description={serviceDescription} />
+<ONSSkipLink />
 <ONSHeader />
 
 <ONSCensusApp>
-  <h2>Backlink</h2>
-  <ONSBacklink href="/monkeys" />
+  <DesignSystemPanel title="Backlink" code={`<ONSBacklink href="/home"/>`}>
+    <ONSBacklink href="/home" />
+  </DesignSystemPanel>
 
-  <h2>Breadcrumbs</h2>
-  <ONSBreadcrumbs>
-    <ONSBreadcrumb href="/home">Home</ONSBreadcrumb>
-    <ONSBreadcrumb href="/home/layer-1">Layer 1</ONSBreadcrumb>
-  </ONSBreadcrumbs>
+  <DesignSystemPanel
+    title="Breadcrumbs"
+    code={`<ONSBreadcrumbs>
+  <ONSBreadcrumb href="/home">Home</ONSBreadcrumb>
+  <ONSBreadcrumb href="/home/layer-1">Layer 1</ONSBreadcrumb>
+</ONSBreadcrumbs>`}
+  >
+    <ONSBreadcrumbs>
+      <ONSBreadcrumb href="/home">Home</ONSBreadcrumb>
+      <ONSBreadcrumb href="/home/layer-1">Layer 1</ONSBreadcrumb>
+    </ONSBreadcrumbs>
+  </DesignSystemPanel>
 
-  <h2>Button</h2>
+  <DesignSystemPanel
+    title="Button"
+    code={`<p>
+    <ONSButton onClick={() => alert("Custom on click handler")}>Custom onclick handler</ONSButton>
+  </p>
+  <p>
+    <ONSButton secondary>Secondary</ONSButton>
+  </p>
+  <p>
+    <ONSButton small>Small</ONSButton>
+  </p>
+  <p>
+    <ONSButton secondary small>Secondary small</ONSButton>
+  </p>
+  <p>
+    <ONSButton disabled>Disabled</ONSButton>
+  </p>`}
+  >
+    <p>
+      <ONSButton onClick={() => alert("Custom on click handler")}>Custom onclick handler</ONSButton>
+    </p>
+    <p>
+      <ONSButton secondary>Secondary</ONSButton>
+    </p>
+    <p>
+      <ONSButton small>Small</ONSButton>
+    </p>
+    <p>
+      <ONSButton secondary small>Secondary small</ONSButton>
+    </p>
+    <p>
+      <ONSButton disabled>Disabled</ONSButton>
+    </p>
+  </DesignSystemPanel>
 
-  <p><ONSButton onClick={() => alert("Custom on click handler")}>Custom onclick handler</ONSButton></p>
-  <p><ONSButton secondary>Secondary</ONSButton></p>
-  <p><ONSButton small>Small</ONSButton></p>
-  <p><ONSButton secondary small>Secondary small</ONSButton></p>
-  <p><ONSButton disabled>Disabled</ONSButton></p>
+  <DesignSystemPanel title="Card" code={`<ONSCard title="ONS Card" href="/home">Card</ONSCard>`}>
+    <ONSCard title="ONS Card" href="/home">Card</ONSCard>
+  </DesignSystemPanel>
 
-  <h2>Card</h2>
+  <DesignSystemPanel
+    title="Checkboxes"
+    code={`<ONSCheckboxes>
+  <ONSCheckbox id="mobile">Mobile</ONSCheckbox>
+  <ONSCheckbox id="laptop">Laptop</ONSCheckbox>
+  <ONSCheckbox id="tablet">Tablet</ONSCheckbox>
+</ONSCheckboxes>`}
+  >
+    <ONSCheckboxes>
+      <ONSCheckbox id="mobile">Mobile</ONSCheckbox>
+      <ONSCheckbox id="laptop">Laptop</ONSCheckbox>
+      <ONSCheckbox id="tablet">Tablet</ONSCheckbox>
+    </ONSCheckboxes>
+  </DesignSystemPanel>
 
-  <ONSCard title="ONS Card" href="/home">Card</ONSCard>
+  <DesignSystemPanel
+    title="Collapsible"
+    code={`<ONSCollapsible title="Collapsible">
+  <span>here is the collapsible content</span>
+</ONSCollapsible>`}
+  >
+    <ONSCollapsible title="Collapsible">
+      <span>here is the collapsible content</span>
+    </ONSCollapsible>
+  </DesignSystemPanel>
 
-  <h2>Checkboxes</h2>
+  <DesignSystemPanel title="Input" code={`<ONSTextField id="text-field">Text field</ONSTextField>`}>
+    <ONSTextField id="text-field">Text field</ONSTextField>
+  </DesignSystemPanel>
 
-  <ONSCheckboxes>
-    <ONSCheckbox id="mobile">Mobile</ONSCheckbox>
-    <ONSCheckbox id="laptop">Laptop</ONSCheckbox>
-    <ONSCheckbox id="tablet">Tablet</ONSCheckbox>
-  </ONSCheckboxes>
-
-  <ONSCollapsible title="Collapsible">
-    <span>here is the collapsible content</span>
-  </ONSCollapsible>
-
-  <h2>Input</h2>
-  <ONSTextField id="text-field">Text field</ONSTextField>
-
-  <h2>Select</h2>
-  <ONSSelect
+  <DesignSystemPanel
+    title="Select"
+    code={`<ONSSelect
     label="Select city"
     options={[
       { value: "london", label: "London" },
       { value: "bristol", label: "Bristol", selected: true },
       { value: "oxford", label: "Oxford", disabled: true },
     ]}
-  />
+  />`}
+  >
+    <ONSSelect
+      label="Select city"
+      options={[
+        { value: "london", label: "London" },
+        { value: "bristol", label: "Bristol", selected: true },
+        { value: "oxford", label: "Oxford", disabled: true },
+      ]}
+    />
+  </DesignSystemPanel>
 
-  <h2>Text area</h2>
-  <ONSTextArea id="text-area" hint="this is a hint for text area">Text area</ONSTextArea>
+  <DesignSystemPanel
+    title="Text area"
+    code={`<ONSTextArea id="text-area" hint="this is a hint for text area">Text area</ONSTextArea>`}
+  >
+    <ONSTextArea id="text-area" hint="this is a hint for text area">Text area</ONSTextArea>
+  </DesignSystemPanel>
 
-  <h2>Radios</h2>
-  <ONSRadios name="ethnicity">
+  <DesignSystemPanel
+    title="Radios"
+    code={`  <ONSRadios name="ethnicity">
     <ONSRadio id="asian">Asian</ONSRadio>
     <ONSRadio id="black">Black</ONSRadio>
     <ONSRadio id="mixed">Mixed</ONSRadio>
     <ONSRadio id="white">White</ONSRadio>
-    <ONSRadio id="other">Other</ONSRadio>
-  </ONSRadios>
-
-  <h2>Accordion</h2>
-  <ONSAccordion showAll={false}>
+    <ONSRadio id="other">Other</ONSRadio> 
+    </ONSRadios>`}
+  >
+    <ONSRadios name="ethnicity">
+      <ONSRadio id="asian">Asian</ONSRadio>
+      <ONSRadio id="black">Black</ONSRadio>
+      <ONSRadio id="mixed">Mixed</ONSRadio>
+      <ONSRadio id="white">White</ONSRadio>
+      <ONSRadio id="other">Other</ONSRadio>
+    </ONSRadios>
+  </DesignSystemPanel>
+  <DesignSystemPanel
+    title="Accordion"
+    code={` <ONSAccordion showAll={false}>
     <ONSAccordionPanel id="panel-1" title="Total retail turnover"
       >Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio aliquid facere vel facilis in necessitatibus
       magni sequi unde, ad rerum praesentium, deserunt quo saepe dolore, accusantium fuga quia tenetur sed.</ONSAccordionPanel
@@ -109,42 +192,88 @@
       >Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio aliquid facere vel facilis in necessitatibus
       magni sequi unde, ad rerum praesentium, deserunt quo saepe dolore, accusantium fuga quia tenetur sed.</ONSAccordionPanel
     >
-  </ONSAccordion>
-
-  <h2>Share</h2>
-  <ONSShare url="https://www.google.com/">Share this page</ONSShare>
-
-  <h2>Topic Component-1</h2>
-
-  <Topic topicList={topicList1} cardTitle="Health - Census 2021"
-    >The 2021 Census tells us a lot about the health of people living in England and Wales live and. <a href="#">
-      Choose a data option from the full list</a
-    > or explore one of these suggestions.</Topic
+  </ONSAccordion>/>`}
   >
+    <ONSAccordion showAll={false}>
+      <ONSAccordionPanel id="panel-1" title="Total retail turnover"
+        >Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio aliquid facere vel facilis in
+        necessitatibus magni sequi unde, ad rerum praesentium, deserunt quo saepe dolore, accusantium fuga quia tenetur
+        sed.</ONSAccordionPanel
+      >
+      <ONSAccordionPanel id="panel-2" title="Food sales"
+        >Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio aliquid facere vel facilis in
+        necessitatibus magni sequi unde, ad rerum praesentium, deserunt quo saepe dolore, accusantium fuga quia tenetur
+        sed.</ONSAccordionPanel
+      >
+    </ONSAccordion>
+  </DesignSystemPanel>
 
-  <h2>Topic Component-2</h2>
+  <DesignSystemPanel title="Category selector" code={`<CategorySelector />`}>
+    <CategorySelector />
+  </DesignSystemPanel>
 
-  <Topic topicList={topicList2} cardTitle="Need something specific from Census?"
+  <DesignSystemPanel title="Share" code={`<ONSShare url="https://www.google.com/">Share this page</ONSShare>`}>
+    <ONSShare url="https://www.google.com/">Share this page</ONSShare>
+  </DesignSystemPanel>
+
+  <DesignSystemPanel
+    title="Topic Component-1"
+    code={`<Topic topicList={topicList1} cardTitle="Health - Census 2021">
+  The 2021 Census tells us a lot about the health of people living in England and Wales live and. 
+  <a href="#">Choose a data option from the full list</a> or explore one of these suggestions.
+</Topic>`}
+  >
+    <Topic topicList={topicList1} cardTitle="Health - Census 2021"
+      >The 2021 Census tells us a lot about the health of people living in England and Wales live and. <a href="#">
+        Choose a data option from the full list</a
+      > or explore one of these suggestions.
+    </Topic>
+  </DesignSystemPanel>
+
+  <DesignSystemPanel
+    title="Topic Component-2"
+    code={`<Topic topicList={topicList2} cardTitle="Need something specific from Census?">
+    Explore correlations between two indicators in <a href="#">advanced mode</a>.
+  </Topic>`}
+  >
+    <Topic topicList={topicList2} cardTitle="Need something specific from Census?"
+      >Explore correlations between two indicators in <a href="#">advanced mode</a>.
+    </Topic>
+  </DesignSystemPanel>
+
+  <DesignSystemPanel
+    title="Topic Component-3"
+    code={`<Topic cardTitle="General health with other indicators"
     >Explore correlations between two indicators in <a href="#">advanced mode</a>.</Topic
+  >`}
   >
+    <Topic cardTitle="General health with other indicators"
+      >Explore correlations between two indicators in <a href="#">advanced mode</a>.
+    </Topic>
+  </DesignSystemPanel>
 
-  <h2>Topic Component-3</h2>
+  <DesignSystemPanel title="Use Census Data" code={`<UseCensusData location="Crewe" />`}>
+    <UseCensusData />
+  </DesignSystemPanel>
 
-  <Topic cardTitle="General health with other indicators"
-    >Explore correlations between two indicators in <a href="#">advanced mode</a>.</Topic
+  <DesignSystemPanel title="Explore by Topic" code={`<ExploreByTopic />`}>
+    <ExploreByTopic />
+  </DesignSystemPanel>
+
+  <DesignSystemPanel title="Feedback" code={`<Feedback />`}>
+    <Feedback />
+  </DesignSystemPanel>
+
+  <DesignSystemPanel
+    title="ONS search component"
+    code={`<ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>`}
   >
+    <ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>
+  </DesignSystemPanel>
 
-  <h2>Use Census Data</h2>
-  <UseCensusData location="Crewe" />
-
-  <h2>Explore by Topic</h2>
-  <ExploreByTopic />
-
-  <h2>Feedback</h2>
-  <Feedback />
-
-  <h2>ONS search component</h2>
-  <ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>
+  <DesignSystemPanel title="Design system code block">
+    <DesignSystemCode code={`<DesignSystemCode code={\`<App />\`} />`} />
+  </DesignSystemPanel>
 </ONSCensusApp>
 
 <Feedback />
