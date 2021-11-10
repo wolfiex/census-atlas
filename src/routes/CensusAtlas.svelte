@@ -299,6 +299,10 @@
   onMount(async () => await initialise());
 </script>
 
+<svelte:head>
+  <link rel="stylesheet" href="./global-innovate.css" />
+</svelte:head>
+
 {#if loading}
   <Loader height="100vh" width="100vw" position="fixed" bgcolor="rgba(255, 255, 255, 0.7)" />
 {/if}
