@@ -46,7 +46,6 @@
 <ONSSkipLink />
 <ONSExternalHeaderWithDescription {serviceTitle} description={serviceDescription} />
 <ONSSkipLink />
-<ONSHeader />
 
 <ONSCensusApp>
   <DesignSystemPanel title="Backlink" code={`<ONSBacklink href="/home"/>`}>
