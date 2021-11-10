@@ -107,13 +107,14 @@
     <ONSRadio id="mixed">Mixed</ONSRadio>
     <ONSRadio id="white">White</ONSRadio>
     <ONSRadio id="other">Other</ONSRadio>
-    <p>anything</p>
   </ONSRadios>
 
+  <h2>Accordion</h2>
   <ONSAccordion {dataToConsume} />
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
+  
 </ONSCensusApp>
 
 <style lang="scss" global>
