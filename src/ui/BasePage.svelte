@@ -1,6 +1,9 @@
 <script>
   import ONSHeaderLogoLarge from "./ons/svg/ONSHeaderLogoLarge.svelte";
   import ONSHeaderLogoSmall from "./ons/svg/ONSHeaderLogoSmall.svelte";
+  import ONSExternalHeaderWithDescription from "./ons/ONSExternalHeaderWithDescription.svelte";
+  export let serviceTitle = "";
+  export let description = "";
 </script>
 
 <div class="ons-page">
@@ -22,42 +25,7 @@
         </div>
       </div>
     </slot>
-    <header class="ons-header " role="banner">
-      <div class="ons-header__top">
-        <div class="ons-container">
-          <div
-            class="ons-header__grid-top ons-grid ons-grid--gutterless ons-grid--flex ons-grid--between ons-grid--vertical-center ons-grid--no-wrap "
-          >
-            <div class="ons-grid__col ons-col-auto">
-              <div class="ons-header__logo--large">
-                <ONSHeaderLogoLarge />
-              </div>
-              <div class="ons-header__logo--small">
-                <ONSHeaderLogoSmall />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <slot name="header__main">
-        <div class="ons-header__main ons-header__main--with-description">
-          <div class="ons-container">
-            <div
-              class="ons-grid ons-grid--gutterless ons-grid--flex ons-grid--between ons-grid--vertical-center ons-grid--no-wrap"
-            >
-              <div class="ons-grid__col ons-col-auto ons-u-flex-shrink">
-                <a class="ons-header__title-link" href="#0">
-                  <div class="ons-header__title header__title--with-description">Explore Census</div>
-                </a>
-              </div>
-            </div>
-            <p class="ons-header__desc">
-              Explore Census Here’s a place where we tell users what the Census Atlas is and what it can do for them.
-            </p>
-          </div>
-        </div>
-      </slot>
-    </header>
+    <ONSExternalHeaderWithDescription {serviceTitle} {description}/>
     <div class="ons-page__container ons-container ">
       <div class="ons-grid">
         <div class="ons-grid__col ons-col-8@m">
