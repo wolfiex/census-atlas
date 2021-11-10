@@ -18,7 +18,7 @@
 
 <style>
 .improve-this-page__prompt {
-	 background-color: #3b7a9e;
+	 background-color: #206095;
 	 color: #fff;
 	 padding: 10px 15px 10px;
 }
@@ -29,7 +29,7 @@
  .improve-this-page__form {
 	 margin-top: 30px;
 	 padding: 15px 0;
-	 border-top: 10px solid #3b7a9e;
+	 border-top: 10px solid #206095;
 }
  .improve-this-page__form .form-control {
 	 width: 100%;
