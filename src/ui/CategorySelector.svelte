@@ -28,9 +28,10 @@
     color: #fff;
   }
   @media (max-width: 400px) {
-      a, span {
-          font-size: 0.8em;
-      }
+    a,
+    span {
+      font-size: 0.8em;
+    }
   }
   .category-selector__button {
     margin-right: 0.2em;
@@ -40,19 +41,19 @@
     text-underline-position: unset;
   }
   .selector-col {
-      max-width: 33.33333%;
-      width: 33.33333%;
-      padding-left: 0;
+    max-width: 33.33333%;
+    width: 33.33333%;
+    padding-left: 0;
   }
   p {
-      text-align: center;
-      margin-bottom: 0;
-      font-size: 1.3em;
-      font-weight: bold;
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 1.3em;
+    font-weight: bold;
   }
   @media (max-width: 400px) {
-      p {
-          font-size: 1em;
-      }
+    p {
+      font-size: 1em;
+    }
   }
 </style>
