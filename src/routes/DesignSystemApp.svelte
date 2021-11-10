@@ -22,6 +22,7 @@
   import ExploreByTopic from "../ui/ExploreByTopic.svelte";
   import Feedback from "../ui/Feedback.svelte";
   import ExploreByAreaComponent from "../ui/ExploreByAreaComponent.svelte";
+  import ONSExternalHeaderWithDescription from "../ui/ons/ONSExternalHeaderWithDescription.svelte"
   let hint = "This is a hint";
   let dataToConsume = [
     {
@@ -56,6 +57,8 @@
   ];
 
   let topicList2 = [{ title: "Get Census datasests", href: "#" }];
+  let serviceTitle = "Design System";
+  let serviceDescription = "Components implemented with Svelte";
 </script>
 
 <svelte:head>
@@ -63,7 +66,7 @@
 </svelte:head>
 
 <ONSSkipLink />
-<ONSHeader />
+<ONSExternalHeaderWithDescription serviceTitle={serviceTitle} description={serviceDescription}/>
 
 <ONSCensusApp>
   <h2>Backlink</h2>
