@@ -1,6 +1,7 @@
 <script>
   import ONSCensusApp from "../ui/ons/ONSCensusApp.svelte";
   import ONSAccordion from "../ui/ons/ONSAccordion.svelte";
+  import ONSAccordionPanel from "../ui/ons/partials/ONSAccordionPanel.svelte";
   import ONSBacklink from "../ui/ons/ONSBacklink.svelte";
   import ONSBreadcrumbs from "../ui/ons/ONSBreadcrumbs.svelte";
   import ONSBreadcrumb from "../ui/ons/partials/ONSBreadcrumb.svelte";
@@ -99,7 +100,16 @@
   </ONSRadios>
 
   <h2>Accordion</h2>
-  <ONSAccordion />
+  <ONSAccordion showAll={false}>
+    <ONSAccordionPanel id="panel-1" title="Total retail turnover"
+      >Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio aliquid facere vel facilis in necessitatibus
+      magni sequi unde, ad rerum praesentium, deserunt quo saepe dolore, accusantium fuga quia tenetur sed.</ONSAccordionPanel
+    >
+    <ONSAccordionPanel id="panel-2" title="Food sales"
+      >Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio aliquid facere vel facilis in necessitatibus
+      magni sequi unde, ad rerum praesentium, deserunt quo saepe dolore, accusantium fuga quia tenetur sed.</ONSAccordionPanel
+    >
+  </ONSAccordion>
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
