@@ -7,47 +7,6 @@
 
 <div class="ons-page">
   <div class="ons-page__content">
-    <a class="ons-skip-link" href="#main-content">Skip to main content</a>
-    <header class="ons-header " role="banner">
-      <div class="ons-header__top">
-        <div class="ons-container">
-          <div
-            class="ons-header__grid-top ons-grid ons-grid--gutterless ons-grid--flex ons-grid--between ons-grid--vertical-center ons-grid--no-wrap "
-          >
-            <div class="ons-grid__col ons-col-auto">
-              <div class="ons-header__logo--large">
-                <ONSHeaderLogoLarge />
-              </div>
-              <div class="ons-header__logo--small">
-                <ONSHeaderLogoSmall />
-              </div>
-            </div>
-            <div class="ons-header__links grid__col col-auto">
-              <div class="ons-grid__col ons-col-auto">
-                <ul class="ons-language-links">
-                  <li class="ons-language-links__item">
-                    <a href="#0" lang="cy">Cymraeg</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="ons-header__main">
-        <div class="ons-container">
-          <div
-            class="ons-grid ons-grid--gutterless ons-grid--flex ons-grid--between ons-grid--vertical-center ons-grid--no-wrap"
-          >
-            <div class="ons-grid__col ons-col-auto ons-u-flex-shrink ons-header__title-census-logo-en">
-              <a class="ons-header__title-link" href="undefined#0">
-                <ONSCensusLogo />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
     <div class="ons-page__container ons-container ">
       <div class="ons-grid">
         <div class="ons-grid__col ons-col-8@m">

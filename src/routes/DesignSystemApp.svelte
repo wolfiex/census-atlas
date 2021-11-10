@@ -15,6 +15,9 @@
   import ONSTextArea from "../ui/ons/ONSTextArea.svelte";
   import ONSShare from "../ui/ons/ONSShare.svelte";
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
+  import ONSSelect from "../ui/ons/ONSSelect.svelte";
+  import ONSSkipLink from "../ui/ons/ONSSkipLink.svelte";
+  import UseCensusData from "../ui/UseCensusData.svelte";
   import ONSSelect from "../ui/ons/ONSSelect.svelte"
   import ExploreByTopic from "../ui/ExploreByTopic.svelte"
   import Feedback from "../ui/Feedback.svelte";
@@ -52,6 +55,7 @@
   <script defer src="/build/ons-design-system.js"></script>
 </svelte:head>
 
+<ONSSkipLink />
 <ONSHeader />
 
 <ONSCensusApp>
@@ -111,13 +115,16 @@
     <ONSRadio id="mixed">Mixed</ONSRadio>
     <ONSRadio id="white">White</ONSRadio>
     <ONSRadio id="other">Other</ONSRadio>
-    <p>anything</p>
   </ONSRadios>
 
+  <h2>Accordion</h2>
   <ONSAccordion {dataToConsume} />
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
+
+  <h2>Use Census Data</h2>
+  <UseCensusData location="Crewe"/>
   
   <h2>Explore by Topic</h2>
   
@@ -137,4 +144,8 @@
      * XXX: This fails for many reasons. Sticking to global CSS for now with only variables exposed via SCSS. */
   @import "../../node_modules/@ons/design-system/css/census";
   @import "../../node_modules/@ons/design-system/scss/vars/_index.scss";
+
+  h2 {
+    margin-top: 32px;
+  }
 </style>
