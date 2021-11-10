@@ -15,8 +15,8 @@
   import ONSTextArea from "../ui/ons/ONSTextArea.svelte";
   import ONSShare from "../ui/ons/ONSShare.svelte";
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
-  import ONSSelect from "../ui/ons/ONSSelect.svelte"
-
+  import ONSSelect from "../ui/ons/ONSSelect.svelte";
+  import Topic from "../ui/Topic.svelte";
   let hint = "This is a hint";
   let dataToConsume = [
     {
@@ -43,6 +43,14 @@
       ],
     },
   ];
+
+  let topicList1 = [
+    { title: "How does general health differ across England and Wales?", href: "#" },
+    { title: "Which areas are home to peoplle who provide the most unpaid care?", href: "#" },
+    { title: "What can we learn about long-term health issues and/or disability?", href: "#" },
+  ];
+
+  let topicList2 = [{ title: "Get Census datasests", href: "#" }];
 </script>
 
 <svelte:head>
@@ -114,6 +122,26 @@
 
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
+
+  <h2>Topic Component-1</h2>
+
+  <Topic topicList={topicList1} cardTitle="Health - Census 2021"
+    >The 2021 Census tells us a lot about the health of people living in England and Wales live and. <a href="#">
+      Choose a data option from the full list</a
+    > or explore one of these suggestions.</Topic
+  >
+
+  <h2>Topic Component-2</h2>
+
+  <Topic topicList={topicList2} cardTitle="Need something specific from Census?"
+    >Explore correlations between two indicators in <a href="#">advanced mode</a>.</Topic
+  >
+
+  <h2>Topic Component-3</h2>
+
+  <Topic cardTitle="General health with other indicators"
+    >Explore correlations between two indicators in <a href="#">advanced mode</a>.</Topic
+  >
 </ONSCensusApp>
 
 <style lang="scss" global>
