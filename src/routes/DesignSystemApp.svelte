@@ -16,6 +16,7 @@
   import ONSShare from "../ui/ons/ONSShare.svelte";
   import ONSHeader from "../ui/ons/ONSHeader.svelte";
   import ONSSelect from "../ui/ons/ONSSelect.svelte"
+  import ONSSkipLink from "../ui/ons/ONSSkipLink.svelte";
 
   let hint = "This is a hint";
   let dataToConsume = [
@@ -35,7 +36,7 @@
     {
       categoryTitle: "Health",
       subcategory: [
-        { subcategoryTitle: "General health", subcategoryList: ["Very good", "Good", "Fair", "Bad", "Very bad"] },
+        {subcategoryTitle: "General health", subcategoryList: ["Very good", "Good", "Fair", "Bad", "Very bad"]},
         {
           subcategoryTitle: "Effect of long-term ill health...",
           subcategoryList: ["Not limited", "Limited a little", "Limited a lot"],
@@ -49,6 +50,7 @@
   <script defer src="/build/ons-design-system.js"></script>
 </svelte:head>
 
+<ONSSkipLink />
 <ONSHeader />
 <ONSCensusApp>
   <h2>Backlink</h2>
@@ -115,6 +117,7 @@
   <h2>Share</h2>
   <ONSShare url="https://www.google.com/">Share this page</ONSShare>
   
+  
 </ONSCensusApp>
 
 <style lang="scss" global>
@@ -122,4 +125,8 @@
      * XXX: This fails for many reasons. Sticking to global CSS for now with only variables exposed via SCSS. */
   @import "../../node_modules/@ons/design-system/css/census";
   @import "../../node_modules/@ons/design-system/scss/vars/_index.scss";
+  
+  h2 {
+    margin-top: 32px;
+  }
 </style>
