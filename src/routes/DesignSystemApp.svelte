@@ -207,71 +207,12 @@
     </ONSAccordion>
   </DesignSystemPanel>
 
-  <DesignSystemPanel title="Category selector" code={`<CategorySelector />`}>
-    <CategorySelector />
-  </DesignSystemPanel>
-
   <DesignSystemPanel title="Share" code={`<ONSShare url="https://www.google.com/">Share this page</ONSShare>`}>
     <ONSShare url="https://www.google.com/">Share this page</ONSShare>
   </DesignSystemPanel>
 
-  <DesignSystemPanel
-    title="Topic Component-1"
-    code={`<Topic topicList={topicList1} cardTitle="Health - Census 2021">
-  The 2021 Census tells us a lot about the health of people living in England and Wales live and. 
-  <a href="#">Choose a data option from the full list</a> or explore one of these suggestions.
-</Topic>`}
-  >
-    <Topic topicList={topicList1} cardTitle="Health - Census 2021"
-      >The 2021 Census tells us a lot about the health of people living in England and Wales live and. <a href="#">
-        Choose a data option from the full list</a
-      > or explore one of these suggestions.
-    </Topic>
-  </DesignSystemPanel>
-
-  <DesignSystemPanel
-    title="Topic Component-2"
-    code={`<Topic topicList={topicList2} cardTitle="Need something specific from Census?">
-    Explore correlations between two indicators in <a href="#">advanced mode</a>.
-  </Topic>`}
-  >
-    <Topic topicList={topicList2} cardTitle="Need something specific from Census?"
-      >Explore correlations between two indicators in <a href="#">advanced mode</a>.
-    </Topic>
-  </DesignSystemPanel>
-
-  <DesignSystemPanel
-    title="Topic Component-3"
-    code={`<Topic cardTitle="General health with other indicators"
-    >Explore correlations between two indicators in <a href="#">advanced mode</a>.</Topic
-  >`}
-  >
-    <Topic cardTitle="General health with other indicators"
-      >Explore correlations between two indicators in <a href="#">advanced mode</a>.
-    </Topic>
-  </DesignSystemPanel>
-
-  <DesignSystemPanel title="Use Census Data" code={`<UseCensusData location="Crewe" />`}>
-    <UseCensusData />
-  </DesignSystemPanel>
-
-  <DesignSystemPanel title="Explore by Topic" code={`<ExploreByTopic />`}>
-    <ExploreByTopic />
-  </DesignSystemPanel>
-
   <DesignSystemPanel title="Feedback" code={`<Feedback />`}>
     <Feedback />
-  </DesignSystemPanel>
-
-  <DesignSystemPanel
-    title="ONS search component"
-    code={`<ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>`}
-  >
-    <ExploreByAreaComponent>Search for an area to find out how it compares to others</ExploreByAreaComponent>
-  </DesignSystemPanel>
-
-  <DesignSystemPanel title="Design system code block">
-    <DesignSystemCode code={`<DesignSystemCode code={\`<App />\`} />`} />
   </DesignSystemPanel>
 </ONSCensusApp>
 

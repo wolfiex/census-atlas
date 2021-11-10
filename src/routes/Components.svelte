@@ -79,4 +79,7 @@
     <UseCensusData />
   </DesignSystemPanel >
   <DesignSystemPanel title="Topic explorer" code={`<TopicExplorer />`}><TopicExplorer /></DesignSystemPanel>
+    <DesignSystemPanel title="Design system code block">
+    <DesignSystemCode code={`<DesignSystemCode code={\`<App />\`} />`} />
+  </DesignSystemPanel>
 </BasePage>
