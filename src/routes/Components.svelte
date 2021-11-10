@@ -1,4 +1,5 @@
 <script>
+  import TopicExplorer from "../ui/TopicExplorer.svelte";
   import BasePage from "../ui/BasePage.svelte";
   import DesignSystemPanel from "../ui/DesignSystemPanel.svelte";
   import CategorySelector from "../ui/CategorySelector.svelte";
@@ -14,13 +15,15 @@
     { title: "What can we learn about long-term health issues and/or disability?", href: "#" },
   ];
   let topicList2 = [{ title: "Get Census datasests", href: "#" }];
+  let serviceTitle = "Census Atlas components";
+  let description = "Complex components made in Svelte with ONS Design System building blocks";
 </script>
 
 <svelte:head>
   <script defer src="/build/ons-design-system.js"></script>
 </svelte:head>
 
-<BasePage>
+<BasePage {serviceTitle} {description}>
   <h1>Census Atlas Components</h1>
 
   <h2>Component</h2>
@@ -75,4 +78,5 @@
   <DesignSystemPanel title="Use census data" code={`<UseCensusData />`}>
     <UseCensusData />
   </DesignSystemPanel >
+  <DesignSystemPanel title="Topic explorer" code={`<TopicExplorer />`}><TopicExplorer /></DesignSystemPanel>
 </BasePage>

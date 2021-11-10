@@ -1,6 +1,7 @@
 <script>
   import ONSCensusApp from "../ui/ons/ONSCensusApp.svelte";
   import ONSAccordion from "../ui/ons/ONSAccordion.svelte";
+  import ONSAccordionPanel from "../ui/ons/partials/ONSAccordionPanel.svelte";
   import ONSBacklink from "../ui/ons/ONSBacklink.svelte";
   import ONSBreadcrumbs from "../ui/ons/ONSBreadcrumbs.svelte";
   import ONSBreadcrumb from "../ui/ons/partials/ONSBreadcrumb.svelte";
@@ -27,32 +28,6 @@
   import DesignSystemCode from "../ui/DesignSystemCode.svelte";
   import DesignSystemPanel from "../ui/DesignSystemPanel.svelte";
   let hint = "This is a hint";
-  let dataToConsume = [
-    {
-      categoryTitle: "Population Basics",
-      subcategory: [
-        {
-          subcategoryTitle: "Residence Type",
-          subcategoryList: [
-            "Lives in a household",
-            "Lives in a communal establishment",
-            "Communal establishments with persons sleeping rough identified",
-          ],
-        },
-      ],
-    },
-    {
-      categoryTitle: "Health",
-      subcategory: [
-        { subcategoryTitle: "General health", subcategoryList: ["Very good", "Good", "Fair", "Bad", "Very bad"] },
-        {
-          subcategoryTitle: "Effect of long-term ill health...",
-          subcategoryList: ["Not limited", "Limited a little", "Limited a lot"],
-        },
-      ],
-    },
-  ];
-
   let topicList1 = [
     { title: "How does general health differ across England and Wales?", href: "#" },
     { title: "Which areas are home to people who provide the most unpaid care?", href: "#" },
@@ -71,7 +46,6 @@
 <ONSSkipLink />
 <ONSExternalHeaderWithDescription {serviceTitle} description={serviceDescription} />
 <ONSSkipLink />
-<ONSHeader />
 
 <ONSCensusApp>
   <DesignSystemPanel title="Backlink" code={`<ONSBacklink href="/home"/>`}>
@@ -195,8 +169,8 @@
     <ONSRadio id="black">Black</ONSRadio>
     <ONSRadio id="mixed">Mixed</ONSRadio>
     <ONSRadio id="white">White</ONSRadio>
-    <ONSRadio id="other">Other</ONSRadio>
-  </ONSRadios>`}
+    <ONSRadio id="other">Other</ONSRadio> 
+    </ONSRadios>`}
   >
     <ONSRadios name="ethnicity">
       <ONSRadio id="asian">Asian</ONSRadio>
@@ -206,9 +180,31 @@
       <ONSRadio id="other">Other</ONSRadio>
     </ONSRadios>
   </DesignSystemPanel>
-
-  <DesignSystemPanel title="Accordion" code={`<ONSAccordion {dataToConsume} />`}>
-    <ONSAccordion {dataToConsume} />
+  <DesignSystemPanel
+    title="Accordion"
+    code={` <ONSAccordion showAll={false}>
+    <ONSAccordionPanel id="panel-1" title="Total retail turnover"
+      >Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio aliquid facere vel facilis in necessitatibus
+      magni sequi unde, ad rerum praesentium, deserunt quo saepe dolore, accusantium fuga quia tenetur sed.</ONSAccordionPanel
+    >
+    <ONSAccordionPanel id="panel-2" title="Food sales"
+      >Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio aliquid facere vel facilis in necessitatibus
+      magni sequi unde, ad rerum praesentium, deserunt quo saepe dolore, accusantium fuga quia tenetur sed.</ONSAccordionPanel
+    >
+  </ONSAccordion>/>`}
+  >
+    <ONSAccordion showAll={false}>
+      <ONSAccordionPanel id="panel-1" title="Total retail turnover"
+        >Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio aliquid facere vel facilis in
+        necessitatibus magni sequi unde, ad rerum praesentium, deserunt quo saepe dolore, accusantium fuga quia tenetur
+        sed.</ONSAccordionPanel
+      >
+      <ONSAccordionPanel id="panel-2" title="Food sales"
+        >Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio aliquid facere vel facilis in
+        necessitatibus magni sequi unde, ad rerum praesentium, deserunt quo saepe dolore, accusantium fuga quia tenetur
+        sed.</ONSAccordionPanel
+      >
+    </ONSAccordion>
   </DesignSystemPanel>
 
   <DesignSystemPanel title="Category selector" code={`<CategorySelector />`}>
