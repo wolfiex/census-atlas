@@ -65,41 +65,21 @@
     </ONSBreadcrumbs>
   </DesignSystemPanel>
 
-  <DesignSystemPanel
-    title="Button"
-    code={`<p>
+  <DesignSystemPanel title="Button" code={`<ONSButton onClick={() => alert("Custom on click handler")}>Custom onclick handler</ONSButton>`}>
     <ONSButton onClick={() => alert("Custom on click handler")}>Custom onclick handler</ONSButton>
-  </p>
-  <p>
-    <ONSButton secondary>Secondary</ONSButton>
-  </p>
-  <p>
-    <ONSButton small>Small</ONSButton>
-  </p>
-  <p>
-    <ONSButton secondary small>Secondary small</ONSButton>
-  </p>
-  <p>
-    <ONSButton disabled>Disabled</ONSButton>
-  </p>`}
-  >
-    <p>
-      <ONSButton onClick={() => alert("Custom on click handler")}>Custom onclick handler</ONSButton>
-    </p>
-    <p>
-      <ONSButton secondary>Secondary</ONSButton>
-    </p>
-    <p>
-      <ONSButton small>Small</ONSButton>
-    </p>
-    <p>
-      <ONSButton secondary small>Secondary small</ONSButton>
-    </p>
-    <p>
-      <ONSButton disabled>Disabled</ONSButton>
-    </p>
   </DesignSystemPanel>
-
+    <DesignSystemPanel title="Secondary button" code={`<ONSButton secondary>Secondary</ONSButton>`}>
+    <ONSButton secondary>Secondary</ONSButton>
+  </DesignSystemPanel>
+    <DesignSystemPanel title="Small button" code={`<ONSButton small>Small</ONSButton>`}>
+    <ONSButton small>Small</ONSButton>
+  </DesignSystemPanel>
+    <DesignSystemPanel title="Secondary small button" code={`<ONSButton secondary small>Secondary small</ONSButton>`}>
+    <ONSButton secondary small>Secondary small</ONSButton>
+  </DesignSystemPanel>
+      <DesignSystemPanel title="Disabled button" code={`<ONSButton disabled>Disabled</ONSButton>`}>
+    <ONSButton disabled>Disabled</ONSButton>
+  </DesignSystemPanel>
   <DesignSystemPanel title="Card" code={`<ONSCard title="ONS Card" href="/home">Card</ONSCard>`}>
     <ONSCard title="ONS Card" href="/home">Card</ONSCard>
   </DesignSystemPanel>

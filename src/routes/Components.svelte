@@ -8,6 +8,7 @@
   import Feedback from "../ui/Feedback.svelte";
   import Topic from "../ui/Topic.svelte";
   import UseCensusData from "../ui/UseCensusData.svelte";
+  import DesignSystemCode from "../ui/DesignSystemCode.svelte";
 
   let topicList1 = [
     { title: "How does general health differ across England and Wales?", href: "#" },
@@ -24,9 +25,6 @@
 </svelte:head>
 
 <BasePage {serviceTitle} {description}>
-  <h1>Census Atlas Components</h1>
-
-  <h2>Component</h2>
   <DesignSystemPanel title="Category selector" code={`<CategorySelector />`}>
     <CategorySelector />
   </DesignSystemPanel>
