@@ -1,18 +1,20 @@
 <script>
-    import ONSHeaderLogoLarge from "./svg/ONSHeaderLogoLarge.svelte"
-    import ONSHeaderLogoSmall from "./svg/ONSHeaderLogoSmall.svelte"
-    export let serviceTitle = "";
-    export let description = "";
+  import ONSHeaderLogoLarge from "./svg/ONSHeaderLogoLarge.svelte";
+  import ONSHeaderLogoSmall from "./svg/ONSHeaderLogoSmall.svelte";
+  export let serviceTitle = "";
+  export let description = "";
 </script>
 
 <header class="ons-header ons-header--hero" role="banner">
   <div class="ons-header__top">
     <div class="ons-container">
-      <div class="ons-header__grid-top ons-grid ons-grid--gutterless ons-grid--flex ons-grid--between ons-grid--vertical-center ons-grid--no-wrap ">
+      <div
+        class="ons-header__grid-top ons-grid ons-grid--gutterless ons-grid--flex ons-grid--between ons-grid--vertical-center ons-grid--no-wrap "
+      >
         <div class="ons-grid__col ons-col-auto">
           <div class="ons-header__logo--large">
             <a class="ons-header__logo-link" href="#0">
-                <ONSHeaderLogoLarge />
+              <ONSHeaderLogoLarge />
             </a>
           </div>
           <div class="ons-header__logo--small">
@@ -35,7 +37,9 @@
   </div>
   <div class="ons-header__main ons-header__main--with-description">
     <div class="ons-container">
-      <div class="ons-grid ons-grid--gutterless ons-grid--flex ons-grid--between ons-grid--vertical-center ons-grid--no-wrap">
+      <div
+        class="ons-grid ons-grid--gutterless ons-grid--flex ons-grid--between ons-grid--vertical-center ons-grid--no-wrap"
+      >
         <div class="ons-grid__col ons-col-auto ons-u-flex-shrink">
           <a class="ons-header__title-link" href="#0">
             <div class="ons-header__title header__title--with-description">{serviceTitle}</div>
