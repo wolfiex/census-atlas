@@ -21,12 +21,9 @@ export async function get_data(url) {
     );
   });
 
-  // console.warn("loaded bounds", bounds);
-  // console.warn("loaded lad_dta", get(lad_dta))
-
   // get a random starting location (should geolocation not already be enabled)
   var location = get(lad_dta).get([...get(lad_dta).keys()][Math.floor(Math.random() * get(lad_dta).size)]);
 
-  // console.warn("starting location", location);
   return location;
 }
+

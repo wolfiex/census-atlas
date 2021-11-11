@@ -12,7 +12,8 @@
   import {
     getLsoaData,
     getNomis,
-    getTopo,
+    getNomisBinary,
+    // getTopo,
     storeNewCategoryAndTotals,
     populateColors,
     addLadDataToDataset,
@@ -129,7 +130,6 @@
       });
     });
 
-    console.warn(location, $lad_dta);
     mapLocation = {
       zoom: 11,
       lon: +location.lon,
@@ -165,16 +165,35 @@
   async function loadData() {
     loading = true;
     // let url = `${apiurl}${selectMeta.table.nomis}${selectMeta.cell}&geography=${geography}&uid=${apikey}`;
-    let url = `https://bothness.github.io/census-atlas/data/lsoa/${selectMeta.code}.csv`;
+    // let url = `https://bothness.github.io/census-atlas/data/lsoa/${selectMeta.code}.csv (reprocessed)`;
+
+    // nomisData = await getNomis(`https://bothness.github.io/census-atlas/data/lsoa/${selectMeta.code}.csv`, localDataService, selectedCategoryTotals, selectMeta.cell);
+    // }
+
+    // console.error('binparse',await getNomisBinary(selectMeta.code));
+    // console.error(await getNomis(url, localDataService, selectedCategoryTotals, selectMeta.cell),url
+    // );
+
+    let nomisData = await getNomisBinary(selectMeta.code);
+
     let currentCategoryCode = get(selectedCategory);
+
     if (currentCategoryCode != selectMeta.code) {
-      storeNewCategoryAndTotals(selectedCategory, selectedCategoryTotals, selectMeta, localDataService, url);
+      storeNewCategoryAndTotals(
+        selectedCategory,
+        selectedCategoryTotals,
+        selectMeta,
+        localDataService,
+        nomisData.map((d) => d.count),
+      );
     }
-    let nomisData = await getNomis(url, localDataService, geographicCodes, selectedCategoryTotals, selectMeta.cell);
+
     let dataset = populateColors(nomisData, colors);
     addLadDataToDataset(dataset, lsoalookup, nomisData);
+
     data[selectItem.code] = dataset;
     selectData = dataset;
+
     if (active.lad.selected) {
       setColors(data, active, lsoalookup, ladbounds, selectData, selectItem, ladtopo, map, $lad_dta);
     }
@@ -222,7 +241,7 @@
 
   // CODE
   // Update state based on URL
-  console.warn(window.location.hash);
+  // console.warn(window.location.hash);
   let hash = location.hash == "" ? "" : location.hash.split("/");
   if (hash.length == 5) {
     selectCode = hash[1];
@@ -272,8 +291,8 @@
   // $: indicators, console.warn('indicator change',indicators);
   // $: selectItem, console.warn('selectItem',selectItem);
   // $: selectData, console.warn('selectData',selectData);
-  $: ladvector, console.warn("ladvector", ladvector);
-  $: active.lad, console.warn("active.lad", active.lad);
+  // $: ladvector, console.warn("ladvector", ladvector);
+  // $: active.lad, console.warn("active.lad", active.lad);
 
   $: selectItem && setSelectedDataset(); // Update meta when selection updates
   $: active.lad.highlighted = lsoalookup && active.lsoa.hovered ? lsoalookup[active.lsoa.hovered].parent : null;

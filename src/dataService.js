@@ -11,14 +11,16 @@ LocalDataService.prototype.getGeographicCodes = async function (url) {
   });
 };
 
-LocalDataService.prototype.getCategoryTotals = async function (url) {
-  let response = await fetch(url);
-  let string = await response.text();
-  let data = await csvParse(string, (d) => {
-    return d["0"];
-  });
-  return data;
-};
+// Re downloading the file seems silly when we have already processed it and have an object in memory
+
+// LocalDataService.prototype.getCategoryTotals = async function (url) {
+//   let response = await fetch(url);
+//   let string = await response.text();
+//   let data = await csvParse(string, (d) => {
+//     return d["0"];
+//   });
+//   return data;
+// };
 
 LocalDataService.prototype.getNomisData = async function (
   url,

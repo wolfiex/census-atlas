@@ -1,8 +1,9 @@
 import { feature } from "topojson-client";
 import { csvParse, autoType } from "d3-dsv";
-import { get } from "svelte/store";
-import { bbox } from "@turf/turf";
+// import { bbox } from "@turf/turf";
 import { ckmeans } from "simple-statistics";
+import { geographicCodes } from "./stores.js";
+import { get } from "svelte/store";
 
 export async function getLsoaData(url) {
   let response = await fetch(url);
@@ -11,20 +12,44 @@ export async function getLsoaData(url) {
   return data;
 }
 
-export async function getTopo(url, layer) {
-  let response = await fetch(url);
-  let topojson = await response.json();
-  let geojson = await feature(topojson, layer);
-  return geojson;
+// export async function getTopo(url, layer) {
+//   let response = await fetch(url);
+//   let topojson = await response.json();
+//   let geojson = await feature(topojson, layer);
+//   return geojson;
+// }
+
+export async function getNomisBinary(code) {
+  if (get(geographicCodes).length == 0) {
+    let geoCodes = await fetch('https://raw.githubusercontent.com/wolfiex/census-data/main/data/geocodes.txt').then(d => d.text()).then(eval)
+    geographicCodes.set(geoCodes);
+  }
+  let url = `https://raw.githubusercontent.com/wolfiex/census-data/main/data/indicator_first/${code}.buff`
+  let bs = await fetch(url)
+    .then(response => response.arrayBuffer())
+    .then(d=>new Uint16Array(d));
+
+  // console.warn([...get(geographicCodes)])
+  return [...get(geographicCodes)].map((d,i) => {
+
+    let ix = i * 3 // there are three columns per location
+    // console.error(i,ix,bs[ix],bs[ix+1],bs[ix+2])
+    return {
+      code: d,
+      value: bs[ix],
+      count: bs[ix + 1],
+      perc: bs[ix + 2] / 100.
+    };
+  })
 }
 
-export async function getNomis(url, dataService, geographicCodesStore, selectedCategoryTotals, indicatorCode) {
-  let geoCodesStore = get(geographicCodesStore);
-  if (geoCodesStore.length == 0) {
+
+export async function getNomis(url, dataService, selectedCategoryTotals, indicatorCode) {
+  if (get(geographicCodes).length == 0) {
     let geoCodes = await dataService.getGeographicCodes(url);
-    geographicCodesStore.set(geoCodes);
+    geographicCodes.set(geoCodes);
   }
-  return await dataService.getNomisData(url, geographicCodesStore, selectedCategoryTotals, indicatorCode);
+  return await dataService.getNomisData(url, geographicCodes, selectedCategoryTotals, indicatorCode);
 }
 
 export function processAggregateData(dataset, lookup) {
@@ -113,10 +138,10 @@ export async function storeNewCategoryAndTotals(
   selectedCategoryTotals,
   selectMeta,
   localDataService,
-  url,
+  categoryTotals,
 ) {
   selectedCategory.set(selectMeta.code);
-  let categoryTotals = await localDataService.getCategoryTotals(url);
+  // let categoryTotals = await localDataService.getCategoryTotals(url);
   selectedCategoryTotals.set(categoryTotals);
 }
 
@@ -196,9 +221,8 @@ export function setColors(data, active, lsoalookup, ladbounds, selectData, selec
 
 export function updateURL(location, selectCode, active, mapLocation, history) {
   let hash = location.hash;
-  let newhash = `#/${selectCode}/${active.lad.selected ? active.lad.selected : ""}/${
-    active.lsoa.selected ? active.lsoa.selected : ""
-  }/${mapLocation.zoom},${mapLocation.lon},${mapLocation.lat}`;
+  let newhash = `#/${selectCode}/${active.lad.selected ? active.lad.selected : ""}/${active.lsoa.selected ? active.lsoa.selected : ""
+    }/${mapLocation.zoom},${mapLocation.lon},${mapLocation.lat}`;
   if (hash != newhash) {
     history.pushState(undefined, undefined, newhash);
   }
